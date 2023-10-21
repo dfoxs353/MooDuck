@@ -9,4 +9,9 @@
     <string name="dont_account">Еще нет аккаунта?</string>
     <string name="name_book">Название книги</string>
     <string name="mail_example">example@mail.ru</string>
+    <string name="registration">Регистрация</string>
+    <string name="have_account">Уже есть аккаунт?</string>
+    <string name="enter_name">Введите имя</string>
+    <string name="repeat_password">Повторите пароль</string>
+    <string name="mail">Почта</string>
 </resources>
