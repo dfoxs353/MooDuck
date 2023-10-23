@@ -1,9 +1,8 @@
-package com.example.mooduck
+package com.example.mooduck.ui.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.mooduck.databinding.ActivityLogInBinding
 import com.example.mooduck.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -17,6 +16,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         val intent = Intent(this, LogInActivity::class.java)
-        startActivity(intent    )
+        startActivity(intent)
     }
 }
