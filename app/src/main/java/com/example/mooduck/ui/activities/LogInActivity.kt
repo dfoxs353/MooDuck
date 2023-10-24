@@ -6,6 +6,7 @@ import com.example.mooduck.R
 import com.example.mooduck.databinding.ActivityLogInBinding
 
 class LogInActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityLogInBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
