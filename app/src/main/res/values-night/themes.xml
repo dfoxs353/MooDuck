@@ -3,5 +3,24 @@
     <style name="Base.Theme.MooDuck" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorSecondary">@color/cian</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorError">@color/white</item>
+        <item name="colorOnError">@color/black</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/gray</item>
+
+
+        <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
     </style>
+
+    <style name="Theme.MooDuck" parent="Base.Theme.MooDuck" />
+
+    <style name="Widget.App.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="hintTextColor">?attr/colorOnSurface</item>
+        <item name="boxStrokeColor">?attr/colorOnPrimary</item>
+    </style>
+
 </resources>

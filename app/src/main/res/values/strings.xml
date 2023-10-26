@@ -1,8 +1,21 @@
 <resources>
     <string name="app_name">MooDuck</string>
-    <string name="login">Вход</string>
+    <string name="login">Войти</string>
+    <string name="enter">Вход</string>
+    <string name="user_name">Имя пользователя</string>
+    <string name="password">Пароль</string>
     <string name="signup">Зарегистрироваться</string>
     <string name="forgot_password">Забыли пароль?</string>
     <string name="dont_account">Еще нет аккаунта?</string>
     <string name="name_book">Название книги</string>
+    <string name="mail_example">example@mail.ru</string>
+    <string name="registration">Регистрация</string>
+    <string name="have_account">Уже есть аккаунт?</string>
+    <string name="enter_name">Введите имя</string>
+    <string name="repeat_password">Повторите пароль</string>
+    <string name="mail">Почта</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="check_mail">Проверьте свою почту и следуйте указаниям в инструкции</string>
+    <string name="sign_up_almost_complete">Регистрация почти завершена!\n</string>
 </resources>
