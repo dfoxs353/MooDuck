@@ -6,12 +6,14 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface AuthApi {
-    @POST("api/auth/registration")
+
+    @POST("auth/registration")
     fun registerUser(@Body request: UserRegistrationRequest): Deferred<AuthResponse>
 
-    @POST("api/auth/login")
+    @POST("auth/login")
+
     fun loginUser(@Body request: UserLoginRequest): Deferred<AuthResponse>
 
-    @POST("api/auth/logout")
+    @POST("auth/logout")
     fun logoutUser(): Deferred<Void>
 }

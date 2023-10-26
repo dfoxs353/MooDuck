@@ -18,7 +18,12 @@ class LogInViewModel : ViewModel() {
     suspend fun login(email: String, password: String):Boolean{
         val response = userRepository.login(email, password)
 
-        if(response !=null) return true
+
+        if(response !=null){
+            Log.d("TAG", "user ${response.user.username}")
+            return true
+        }
+
         return false
     }
 }

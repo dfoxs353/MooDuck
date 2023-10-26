@@ -55,7 +55,6 @@ dependencies {
 
     implementation ("com.squareup.retrofit2:retrofit:$retrofit_version")
     implementation ("com.squareup.retrofit2:converter-gson:$retrofit_version")
-    implementation ("com.squareup.retrofit2:adapter-rxjava2:$retrofit_version")
     implementation ("com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2")
     implementation ("com.squareup.okhttp3:okhttp:$okHttp_version")
     implementation ("com.squareup.okhttp3:logging-interceptor:$okHttp_version")
