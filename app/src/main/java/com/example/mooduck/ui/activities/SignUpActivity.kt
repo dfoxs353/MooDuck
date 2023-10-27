@@ -1,15 +1,11 @@
 package com.example.mooduck.ui.activities
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import com.example.mooduck.R
-import com.example.mooduck.databinding.ActivityLogInBinding
 import com.example.mooduck.databinding.ActivitySignUpBinding
-import com.example.mooduck.databinding.FragmentModalMailBinding
 import com.example.mooduck.ui.fragments.ModalMailFragment
 import com.example.mooduck.ui.viewmodel.SignUpViewModel
 import kotlinx.coroutines.Dispatchers

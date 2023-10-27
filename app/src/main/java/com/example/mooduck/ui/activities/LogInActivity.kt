@@ -3,12 +3,9 @@ package com.example.mooduck.ui.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.Settings.Global
 import android.util.Log
 import android.widget.Toast
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.mooduck.R
 import com.example.mooduck.databinding.ActivityLogInBinding
 import com.example.mooduck.ui.viewmodel.LogInViewModel
 import kotlinx.coroutines.Dispatchers
