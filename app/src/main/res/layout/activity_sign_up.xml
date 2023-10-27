@@ -69,6 +69,7 @@
 
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/name_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress" />
@@ -89,6 +90,7 @@
 
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/mail_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress" />
@@ -110,6 +112,7 @@
 
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password_first_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />
@@ -131,6 +134,7 @@
 
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password_second_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />
@@ -138,7 +142,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/login_button"
+            android:id="@+id/signup_button"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -169,7 +173,7 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/signup_button"
+        android:id="@+id/login_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -190,5 +194,5 @@
         android:background="?attr/colorOnSecondary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signup_button"></View>
+        app:layout_constraintTop_toBottomOf="@+id/login_button"></View>
 </androidx.constraintlayout.widget.ConstraintLayout>

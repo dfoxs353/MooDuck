@@ -6,6 +6,7 @@ import com.example.mooduck.data.remote.auth.AuthApi
 import com.example.mooduck.data.remote.auth.AuthResponse
 import com.example.mooduck.data.remote.auth.User
 import com.example.mooduck.data.remote.auth.UserLoginRequest
+import com.example.mooduck.data.remote.auth.UserRegistrationRequest
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.withContext
@@ -15,7 +16,7 @@ class UserRepository(
     private val ioDispatcher: CoroutineDispatcher
 ) {
 
-    suspend fun login(email: String, password: String): AuthResponse? {
+    suspend fun logIn(email: String, password: String): AuthResponse? {
         try {
             return withContext(ioDispatcher) {
                 val response = userApi.loginUser(UserLoginRequest(email, password))
@@ -27,5 +28,16 @@ class UserRepository(
         return null
     }
 
+    suspend fun signUp(email: String, password: String, username: String): AuthResponse? {
+        try {
+            return withContext(ioDispatcher) {
+                val response = userApi.registerUser(UserRegistrationRequest(email, password, username))
+                response.await()
+            }
+        } catch (e: Exception) {
+            Log.d("TAG", e.message.toString())
+        }
+        return null
+    }
 
 }
