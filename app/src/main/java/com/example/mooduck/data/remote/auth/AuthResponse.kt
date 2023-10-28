@@ -1,5 +1,10 @@
 package com.example.mooduck.data.remote.auth
 
+
+data class AuthResult(
+    val success: AuthResponse? = null,
+    val error: Int? = null
+)
 data class AuthResponse(
     val accessToken: String,
     val refreshToken: String,

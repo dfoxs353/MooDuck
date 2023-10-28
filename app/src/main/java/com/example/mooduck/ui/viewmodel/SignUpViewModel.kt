@@ -15,14 +15,14 @@ class SignUpViewModel: ViewModel() {
 
     private val userRepository: UserRepository = UserRepository(userApi, Dispatchers.IO)
 
-    suspend fun signUp(email: String, password: String, username: String): AuthResponse? {
-        val response = userRepository.signUp(email, password, username)
-
-        if(response !=null){
-            Log.d("TAG", "user ${response.user.username}")
-            return response
-        }
-
-        return null
-    }
+//    suspend fun signUp(email: String, password: String, username: String): AuthResponse? {
+//        val response = userRepository.signup(email, password, username)
+//
+//        if(response !=null){
+//            Log.d("TAG", "user ${response.user.username}")
+//            return response
+//        }
+//
+//        return null
+//    }
 }

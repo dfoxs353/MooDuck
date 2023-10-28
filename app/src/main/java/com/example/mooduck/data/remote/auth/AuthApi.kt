@@ -11,7 +11,6 @@ interface AuthApi {
     fun registerUser(@Body request: UserRegistrationRequest): Deferred<AuthResponse>
 
     @POST("auth/login")
-
     fun loginUser(@Body request: UserLoginRequest): Deferred<AuthResponse>
 
     @POST("auth/logout")

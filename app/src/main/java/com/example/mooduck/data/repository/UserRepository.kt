@@ -4,40 +4,47 @@ import android.util.Log
 import com.example.mooduck.MooDuckApp
 import com.example.mooduck.data.remote.auth.AuthApi
 import com.example.mooduck.data.remote.auth.AuthResponse
+import com.example.mooduck.data.remote.auth.Result
 import com.example.mooduck.data.remote.auth.User
 import com.example.mooduck.data.remote.auth.UserLoginRequest
 import com.example.mooduck.data.remote.auth.UserRegistrationRequest
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.withContext
+import java.io.IOException
 
 class UserRepository(
     private val userApi: AuthApi,
     private val ioDispatcher: CoroutineDispatcher
 ) {
 
-    suspend fun logIn(email: String, password: String): AuthResponse? {
+    suspend fun login(email: String, password: String): Result<AuthResponse> {
         try {
-            return withContext(ioDispatcher) {
-                val response = userApi.loginUser(UserLoginRequest(email, password))
-                response.await()
-            }
+            return Result.Success(
+                withContext(ioDispatcher) {
+                    val response = userApi.loginUser(UserLoginRequest(email, password))
+                    response.await()
+                }
+            )
         } catch (e: Exception) {
             Log.d("TAG", e.message.toString())
+            return Result.Error(IOException("Error logging in", e))
         }
-        return null
     }
 
-    suspend fun signUp(email: String, password: String, username: String): AuthResponse? {
+    suspend fun signup(email: String, password: String, username: String): Result<AuthResponse> {
         try {
-            return withContext(ioDispatcher) {
-                val response = userApi.registerUser(UserRegistrationRequest(email, password, username))
-                response.await()
-            }
+            return Result.Success(
+                withContext(ioDispatcher) {
+                    val response = userApi.registerUser(UserRegistrationRequest(email, password, username))
+                    response.await()
+                }
+            )
         } catch (e: Exception) {
             Log.d("TAG", e.message.toString())
+            return Result.Error(IOException("Error signup in", e))
         }
-        return null
+
     }
 
 }

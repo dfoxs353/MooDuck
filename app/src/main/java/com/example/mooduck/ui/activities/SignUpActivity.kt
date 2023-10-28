@@ -33,24 +33,24 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun signUp() {
-        val mail = binding.mailInput.text.toString()
-        val password = binding.passwordFirstInput.text.toString()
-        val username = binding.nameInput.text.toString()
-
-        GlobalScope.launch(Dispatchers.Main) {
-            val fragmentMail = ModalMailFragment()
-            fragmentMail.show(supportFragmentManager, "modalMailFragment")
-
-            val response = viewModel.signUp(mail,password, username)
-            if(response != null){
-                Log.d("TAG","log")
-                showToast("Успешная регистрация ${response.user.username}")
-            }
-            else{
-                Log.d("TAG", "no log")
-                showToast("Ошибка")
-            }
-        }
+//        val mail = binding.mailInput.text.toString()
+//        val password = binding.passwordFirstInput.text.toString()
+//        val username = binding.nameInput.text.toString()
+//
+//        GlobalScope.launch(Dispatchers.Main) {
+//            val fragmentMail = ModalMailFragment()
+//            fragmentMail.show(supportFragmentManager, "modalMailFragment")
+//
+//            val response = viewModel.signup(mail,password, username)
+//            if(response != null){
+//                Log.d("TAG","log")
+//                showToast("Успешная регистрация ${response.user.username}")
+//            }
+//            else{
+//                Log.d("TAG", "no log")
+//                showToast("Ошибка")
+//            }
+//        }
     }
 
     private fun showToast(text: String){
