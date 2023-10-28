@@ -21,9 +21,9 @@
     <string name="test_author">Анна Долгарева</string>
     <string name="test_description">Анна Долгарева — поэтесса, военкор и журналист, победитель множества литературных конкурсов и самый молодой лауреат Григорьевской премии. Поэзия Анны Долгаревой поднимает вечные вопросы бытия...</string>
     <string name="test_books_list">АСТ, 224 страницы</string>
-    <string name="want_to_read">Хочу прочитать</string>
     <string name="welcome">Добро пожаловать</string>
     <string name="error_string">Ошибка авторизации</string>
     <string name="invalid_username">Неверная почта</string>
     <string name="invalid_password">Неверный пароль</string>
+    <string name="want_to_read">Хочу прочитать</string>
 </resources>
