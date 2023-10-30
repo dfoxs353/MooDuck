@@ -1,6 +1,5 @@
 package com.example.mooduck.ui.viewmodel
 
-import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,9 +7,8 @@ import androidx.lifecycle.ViewModel
 import com.example.mooduck.R
 import com.example.mooduck.common.RetrofitClient
 import com.example.mooduck.data.remote.auth.AuthApi
-import com.example.mooduck.data.remote.auth.AuthResponse
 import com.example.mooduck.data.remote.auth.AuthResult
-import com.example.mooduck.data.remote.auth.Result
+import com.example.mooduck.data.remote.Result
 import com.example.mooduck.data.repository.UserRepository
 import com.example.mooduck.ui.model.AuthFormState
 import kotlinx.coroutines.Dispatchers

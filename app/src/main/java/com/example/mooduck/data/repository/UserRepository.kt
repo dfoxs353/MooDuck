@@ -1,15 +1,12 @@
 package com.example.mooduck.data.repository
 
 import android.util.Log
-import com.example.mooduck.MooDuckApp
 import com.example.mooduck.data.remote.auth.AuthApi
 import com.example.mooduck.data.remote.auth.AuthResponse
-import com.example.mooduck.data.remote.auth.Result
-import com.example.mooduck.data.remote.auth.User
+import com.example.mooduck.data.remote.Result
 import com.example.mooduck.data.remote.auth.UserLoginRequest
 import com.example.mooduck.data.remote.auth.UserRegistrationRequest
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.withContext
 import java.io.IOException
 

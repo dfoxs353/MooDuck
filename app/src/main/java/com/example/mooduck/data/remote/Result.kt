@@ -1,4 +1,4 @@
-package com.example.mooduck.data.remote.auth
+package com.example.mooduck.data.remote
 
 sealed class Result<out T : Any> {
 
