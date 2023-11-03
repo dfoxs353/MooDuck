@@ -7,25 +7,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.mooduck.R
+import com.example.mooduck.ui.viewmodel.BookSearchPageViewModel
 
-class BookListFragment : Fragment() {
+class BookSearchPageFragment : Fragment() {
 
     companion object {
-        fun newInstance() = BookListFragment()
+        fun newInstance() = BookSearchPageFragment()
     }
 
-    private lateinit var viewModel: BookListViewModel
+    private lateinit var viewModel: BookSearchPageViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_book_list, container, false)
+        return inflater.inflate(R.layout.fragment_book_search, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(BookListViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(BookSearchPageViewModel::class.java)
         // TODO: Use the ViewModel
     }
 

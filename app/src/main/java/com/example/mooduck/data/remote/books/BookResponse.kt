@@ -1,8 +1,20 @@
 package com.example.mooduck.data.remote.books
 
+import com.example.mooduck.data.remote.auth.AuthResponse
+
+data class BookResult(
+    val success: BookResponse? = null,
+    val error: Int? = null
+)
+
+data class BooksResult(
+    val success: BooksResponse? = null,
+    val error: Int? = null
+)
+
 data class BookResponse(
     val _id: String,
-    val auhthors: List<String>,
+    val authors: List<String>,
     val geners: List<String>,
     val title: String,
     val img: Images,

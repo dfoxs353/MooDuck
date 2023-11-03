@@ -4,12 +4,18 @@ import kotlinx.coroutines.Deferred
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
+import retrofit2.http.QueryMap
 
 interface BookApi {
 
     @GET("books")
-    fun getBooks(@Body request: BooksRequest):Deferred<BooksResponse>
-
+    fun getBooks(
+        @Query("limit") limit: Int? = null,
+        @Query("page") page: Int? = null,
+        @Query("genre") genre: String? = null,
+        @Query("author") author: String? = null
+    ):Deferred<BooksResponse>
 
     @GET("books/{id}")
     fun getBook(@Path("id") id: String):Deferred<BookResponse>
