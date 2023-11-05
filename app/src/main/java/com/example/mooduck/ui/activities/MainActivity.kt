@@ -21,13 +21,6 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        val navController = findNavController(R.id.nav_host_fragment)
-
-        val navView = binding.bottomMenu
-        navView.setupWithNavController(navController)
-//        val intent = Intent(this, LogInActivity::class.java)
-//        startActivity(intent)
-
 
     }
 }

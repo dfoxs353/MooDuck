@@ -11,7 +11,7 @@ import com.example.mooduck.data.remote.books.BooksResult
 import com.example.mooduck.data.repository.BooksRepository
 import kotlinx.coroutines.Dispatchers
 
-class BookListPageViewModel : ViewModel() {
+class BookListViewModel : ViewModel() {
 
     private val _booksResult = MutableLiveData<BooksResult>()
     val booksResult: LiveData<BooksResult> = _booksResult

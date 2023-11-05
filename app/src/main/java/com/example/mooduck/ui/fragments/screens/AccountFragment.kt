@@ -1,4 +1,4 @@
-package com.example.mooduck.ui.fragments
+package com.example.mooduck.ui.fragments.screens
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -7,15 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.mooduck.R
-import com.example.mooduck.ui.viewmodel.AccountPageViewModel
+import com.example.mooduck.ui.viewmodel.AccountViewModel
 
-class AccountPageFragment : Fragment() {
+class AccountFragment : Fragment() {
 
     companion object {
-        fun newInstance() = AccountPageFragment()
+        fun newInstance() = AccountFragment()
     }
 
-    private lateinit var viewModel: AccountPageViewModel
+    private lateinit var viewModel: AccountViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,7 +26,7 @@ class AccountPageFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(AccountPageViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(AccountViewModel::class.java)
         // TODO: Use the ViewModel
     }
 

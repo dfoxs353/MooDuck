@@ -1,35 +1,40 @@
-package com.example.mooduck.ui.activities
+package com.example.mooduck.ui.fragments.screens
 
 import android.app.Activity
-import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.mooduck.R
-import com.example.mooduck.databinding.ActivitySignUpBinding
-import com.example.mooduck.ui.fragments.ModalMailFragment
-import com.example.mooduck.ui.viewmodel.SignUpViewModel
+import com.example.mooduck.databinding.FragmentSignupBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class SignUpActivity : AppCompatActivity() {
-    lateinit var binding: ActivitySignUpBinding
-    lateinit var viewModel: SignUpViewModel
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivitySignUpBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+class SignupFragment : Fragment() {
 
-        viewModel = ViewModelProvider(this).get(SignUpViewModel::class.java)
+    companion object {
+        fun newInstance() = SignupFragment()
+    }
+
+    lateinit var binding: FragmentSignupBinding
+    lateinit var viewModel: SignupViewModel
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        super.onCreate(savedInstanceState)
+        binding = FragmentSignupBinding.inflate(layoutInflater)
+        val view = binding.root
+
+
+        viewModel = ViewModelProvider(this).get(SignupViewModel::class.java)
 
         val signup = binding.signupButton
         val login = binding.loginButton
@@ -45,10 +50,10 @@ class SignUpActivity : AppCompatActivity() {
         val secondPasswordLayout = binding.passwordSecondInputLayout
 
         login.setOnClickListener {
-            finish()
+            TODO("navigate to loginFragment")
         }
 
-        viewModel.signupFormState.observe( this@SignUpActivity, Observer {
+        viewModel.signupFormState.observe( viewLifecycleOwner, Observer {
             val loginState = it ?: return@Observer
 
             login.isEnabled = loginState.isDataValid
@@ -71,7 +76,7 @@ class SignUpActivity : AppCompatActivity() {
             }
         })
 
-        viewModel.signupResult.observe(this@SignUpActivity, Observer {
+        viewModel.signupResult.observe(viewLifecycleOwner, Observer {
             val signupResult = it ?: return@Observer
 
             if (signupResult.error != null) {
@@ -80,7 +85,6 @@ class SignUpActivity : AppCompatActivity() {
             if (signupResult.success != null) {
                 updateUiWithUser(signupResult.success.user.username)
             }
-            setResult(Activity.RESULT_OK)
         })
 
         username.afterTextChanged {
@@ -115,6 +119,7 @@ class SignUpActivity : AppCompatActivity() {
             }
         }
 
+        return view
     }
 
 
@@ -129,26 +134,14 @@ class SignUpActivity : AppCompatActivity() {
         val welcome = getString(R.string.welcome)
         // TODO : initiate successful logged in experience
         Toast.makeText(
-            applicationContext,
+            context,
             "$welcome $name",
             Toast.LENGTH_LONG
         ).show()
     }
 
     private fun showLoginFailed(@StringRes errorString: Int) {
-        Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, errorString, Toast.LENGTH_SHORT).show()
     }
 
-}
-
-fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
-    this.addTextChangedListener(object : TextWatcher {
-        override fun afterTextChanged(editable: Editable?) {
-            afterTextChanged.invoke(editable.toString())
-        }
-
-        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-    })
 }

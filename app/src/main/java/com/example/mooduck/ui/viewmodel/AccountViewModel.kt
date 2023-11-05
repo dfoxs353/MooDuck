@@ -2,6 +2,6 @@ package com.example.mooduck.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 
-class BookSearchPageViewModel : ViewModel() {
+class AccountViewModel : ViewModel() {
     // TODO: Implement the ViewModel
 }

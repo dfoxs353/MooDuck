@@ -1,33 +1,45 @@
-package com.example.mooduck.ui.activities
+package com.example.mooduck.ui.fragments.screens
 
-import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.mooduck.R
-import com.example.mooduck.databinding.ActivityLogInBinding
-import com.example.mooduck.ui.viewmodel.LogInViewModel
+import com.example.mooduck.databinding.FragmentLoginBinding
+import com.example.mooduck.ui.viewmodel.LoginViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class LogInActivity : AppCompatActivity() {
+class LoginFragment : Fragment() {
 
-    private lateinit var binding: ActivityLogInBinding
-    private lateinit var viewModel: LogInViewModel
-    override fun onCreate(savedInstanceState: Bundle?) {
+    companion object {
+        fun newInstance() = LoginFragment()
+    }
+
+    private lateinit var binding: FragmentLoginBinding
+    private lateinit var viewModel: LoginViewModel
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProvider(this).get(LogInViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
 
-        binding = ActivityLogInBinding.inflate(layoutInflater)
+        binding = FragmentLoginBinding.inflate(layoutInflater)
         val view = binding.root
-        setContentView(view)
+
 
         val username = binding.mailInput
         val password = binding.passwordInput
@@ -40,11 +52,10 @@ class LogInActivity : AppCompatActivity() {
 
 
         signup.setOnClickListener {
-            val intentSignUpActivity = Intent(this, SignUpActivity::class.java)
-            startActivity(intentSignUpActivity)
+            TODO("nav to signupfragment")
         }
 
-        viewModel.loginFormState.observe( this@LogInActivity, Observer {
+        viewModel.loginFormState.observe( viewLifecycleOwner, Observer {
             val loginState = it ?: return@Observer
 
             login.isEnabled = loginState.isDataValid
@@ -65,7 +76,7 @@ class LogInActivity : AppCompatActivity() {
             }
         })
 
-        viewModel.loginResult.observe(this@LogInActivity, Observer {
+        viewModel.loginResult.observe(viewLifecycleOwner, Observer {
             val loginResult = it ?: return@Observer
 
             if (loginResult.error != null) {
@@ -74,7 +85,6 @@ class LogInActivity : AppCompatActivity() {
             if (loginResult.success != null) {
                 updateUiWithUser(loginResult.success.user.username)
             }
-            setResult(Activity.RESULT_OK)
         })
 
         username.afterTextChanged {
@@ -107,11 +117,12 @@ class LogInActivity : AppCompatActivity() {
                 login(username.text.toString(), password.text.toString())
             }
         }
+        return view
     }
 
     private fun login(mail:String,password:String) {
         GlobalScope.launch(Dispatchers.Main) {
-                viewModel.login(mail,password)
+            viewModel.login(mail,password)
         }
     }
 
@@ -119,13 +130,25 @@ class LogInActivity : AppCompatActivity() {
         val welcome = getString(R.string.welcome)
         // TODO : initiate successful logged in experience
         Toast.makeText(
-            applicationContext,
+            context,
             "$welcome $name",
             Toast.LENGTH_LONG
         ).show()
     }
 
     private fun showLoginFailed(@StringRes errorString: Int) {
-        Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, errorString, Toast.LENGTH_SHORT).show()
     }
+
+}
+fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
+    this.addTextChangedListener(object : TextWatcher {
+        override fun afterTextChanged(editable: Editable?) {
+            afterTextChanged.invoke(editable.toString())
+        }
+
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+    })
 }

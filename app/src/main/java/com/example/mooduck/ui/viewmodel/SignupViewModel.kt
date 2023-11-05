@@ -6,15 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mooduck.R
 import com.example.mooduck.common.RetrofitClient
+import com.example.mooduck.data.remote.Result
 import com.example.mooduck.data.remote.auth.AuthApi
 import com.example.mooduck.data.remote.auth.AuthResult
-import com.example.mooduck.data.remote.Result
 import com.example.mooduck.data.repository.UserRepository
 import com.example.mooduck.ui.model.AuthFormState
 import kotlinx.coroutines.Dispatchers
 
-class SignUpViewModel: ViewModel() {
-
+class SignupViewModel : ViewModel() {
     private val _signupForm = MutableLiveData<AuthFormState>()
     val signupFormState: LiveData<AuthFormState> = _signupForm
 
@@ -58,6 +57,4 @@ class SignUpViewModel: ViewModel() {
     private fun isPasswordValid(password: String): Boolean{
         return password.length > 5
     }
-
-
 }
