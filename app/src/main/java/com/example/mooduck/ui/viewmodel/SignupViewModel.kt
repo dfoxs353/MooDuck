@@ -9,7 +9,7 @@ import com.example.mooduck.common.RetrofitClient
 import com.example.mooduck.data.remote.Result
 import com.example.mooduck.data.remote.auth.AuthApi
 import com.example.mooduck.data.remote.auth.AuthResult
-import com.example.mooduck.data.repository.UserRepository
+import com.example.mooduck.data.repository.RemoteUserRepository
 import com.example.mooduck.ui.model.AuthFormState
 import kotlinx.coroutines.Dispatchers
 
@@ -23,10 +23,10 @@ class SignupViewModel : ViewModel() {
     private val retrofit = RetrofitClient.instance
     private val userApi = retrofit.create(AuthApi::class.java)
 
-    private val userRepository: UserRepository = UserRepository(userApi, Dispatchers.IO)
+    private val remoteUserRepository: RemoteUserRepository = RemoteUserRepository(userApi, Dispatchers.IO)
 
     suspend fun signup(username: String,email: String, password: String) {
-        val result = userRepository.signup(email, password,username)
+        val result = remoteUserRepository.signup(email, password,username)
 
         if(result is Result.Success){
             _signupResult.value = AuthResult(success = result.data)

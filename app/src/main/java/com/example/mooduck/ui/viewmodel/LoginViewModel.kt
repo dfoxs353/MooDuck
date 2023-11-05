@@ -1,5 +1,6 @@
 package com.example.mooduck.ui.viewmodel
 
+import android.app.Application
 import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,11 +10,12 @@ import com.example.mooduck.common.RetrofitClient
 import com.example.mooduck.data.remote.Result
 import com.example.mooduck.data.remote.auth.AuthApi
 import com.example.mooduck.data.remote.auth.AuthResult
-import com.example.mooduck.data.repository.UserRepository
+import com.example.mooduck.data.repository.LocalUserRepository
+import com.example.mooduck.data.repository.RemoteUserRepository
 import com.example.mooduck.ui.model.AuthFormState
 import kotlinx.coroutines.Dispatchers
 
-class LoginViewModel : ViewModel() {
+class LoginViewModel(application: Application) : ViewModel() {
     private val _loginForm = MutableLiveData<AuthFormState>()
     val loginFormState: LiveData<AuthFormState> = _loginForm
 
@@ -23,13 +25,14 @@ class LoginViewModel : ViewModel() {
     private val retrofit = RetrofitClient.instance
     private val userApi = retrofit.create(AuthApi::class.java)
 
-    private val userRepository: UserRepository = UserRepository(userApi, Dispatchers.IO)
-
+    private val remoteUserRepository: RemoteUserRepository = RemoteUserRepository(userApi, Dispatchers.IO)
+    private val localUserRepository:LocalUserRepository = LocalUserRepository(application)
     suspend fun login(email: String, password: String) {
-        val result = userRepository.login(email, password)
+        val result = remoteUserRepository.login(email, password)
 
         if(result is Result.Success){
             _loginResult.value = AuthResult(success = result.data)
+            saveRefreshToken(result.data.refreshToken,result.data.accessToken)
         }
         else{
             _loginResult.value = AuthResult(error = R.string.error_string)
@@ -56,5 +59,9 @@ class LoginViewModel : ViewModel() {
 
     private fun isPasswordValid(password: String): Boolean{
         return password.length > 5
+    }
+
+    fun saveRefreshToken(refreshToken: String, accessToken: String) {
+        localUserRepository.saveJWToken(refreshToken,accessToken)
     }
 }

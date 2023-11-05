@@ -10,8 +10,9 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import java.io.IOException
 
-class UserRepository(
-    private val userApi: AuthApi,
+
+class RemoteUserRepository(
+    private val userDataSource: AuthApi,
     private val ioDispatcher: CoroutineDispatcher
 ) {
 
@@ -19,7 +20,7 @@ class UserRepository(
         try {
             return Result.Success(
                 withContext(ioDispatcher) {
-                    val response = userApi.loginUser(UserLoginRequest(email, password))
+                    val response = userDataSource.loginUser(UserLoginRequest(email, password))
                     response.await()
                 }
             )
@@ -33,7 +34,7 @@ class UserRepository(
         try {
             return Result.Success(
                 withContext(ioDispatcher) {
-                    val response = userApi.registerUser(UserRegistrationRequest(email, password, username))
+                    val response = userDataSource.registerUser(UserRegistrationRequest(email, password, username))
                     response.await()
                 }
             )
@@ -43,5 +44,7 @@ class UserRepository(
         }
 
     }
+
+
 
 }

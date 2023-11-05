@@ -9,12 +9,15 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
     private const val BASE_URL = "https://mooduck-service-api.onrender.com/api/"
+    private val tokenInterceptor = TokenInterceptor(null)
+
     val instance: Retrofit by lazy {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(httpLoggingInterceptor)
+            .addInterceptor(tokenInterceptor) // Добавляем TokenInterceptor
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
@@ -26,5 +29,9 @@ object RetrofitClient {
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()
+    }
+
+    fun setToken(token: String?) {
+        tokenInterceptor.setToken(token)
     }
 }
