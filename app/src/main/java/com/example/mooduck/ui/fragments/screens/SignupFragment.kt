@@ -13,6 +13,7 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.Observer
 import com.example.mooduck.R
 import com.example.mooduck.databinding.FragmentSignupBinding
+import com.example.mooduck.ui.viewmodel.SignupViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

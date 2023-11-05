@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/book_catalog_page"
-        android:name="com.example.mooduck.ui.fragments.screens.BookListPageFragment"
+        android:name="com.example.mooduck.ui.fragments.screens.BookListFragment"
         android:label="fragment_book_list"
         tools:layout="@layout/fragment_book_list" />
     <fragment
         android:id="@+id/search_page"
-        android:name="com.example.mooduck.ui.fragments.screens.BookSearchPageFragment"
+        android:name="com.example.mooduck.ui.fragments.screens.BookSearchFragment"
         android:label="fragment_book_search"
         tools:layout="@layout/fragment_book_search" />
     <fragment

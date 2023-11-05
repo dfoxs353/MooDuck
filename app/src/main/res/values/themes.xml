@@ -21,8 +21,7 @@
     </style>
 
     <style name="ThemeOverlay.App.BottomNavigationView" parent="">
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorOnPrimary">@color/cian</item>
+
     </style>
 
     <style name="Theme.MooDuck" parent="Base.Theme.MooDuck" />

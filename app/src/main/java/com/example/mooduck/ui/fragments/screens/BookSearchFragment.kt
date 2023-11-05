@@ -9,10 +9,10 @@ import android.view.ViewGroup
 import com.example.mooduck.R
 import com.example.mooduck.ui.viewmodel.BookSearchViewModel
 
-class BookSearchPageFragment : Fragment() {
+class BookSearchFragment : Fragment() {
 
     companion object {
-        fun newInstance() = BookSearchPageFragment()
+        fun newInstance() = BookSearchFragment()
     }
 
     private lateinit var viewModel: BookSearchViewModel

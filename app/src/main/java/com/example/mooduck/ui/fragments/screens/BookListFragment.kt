@@ -54,6 +54,7 @@ class BookListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        binding.loading.visibility = View.VISIBLE
         getBooks()
     }
 

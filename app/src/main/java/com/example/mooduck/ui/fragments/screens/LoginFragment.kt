@@ -14,6 +14,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.example.mooduck.R
 import com.example.mooduck.databinding.FragmentLoginBinding
 import com.example.mooduck.ui.viewmodel.LoginViewModel
@@ -52,7 +53,7 @@ class LoginFragment : Fragment() {
 
 
         signup.setOnClickListener {
-            TODO("nav to signupfragment")
+            findNavController().navigate(R.id.action_loadingFragment_to_loginFragment)
         }
 
         viewModel.loginFormState.observe( viewLifecycleOwner, Observer {
@@ -84,6 +85,10 @@ class LoginFragment : Fragment() {
             }
             if (loginResult.success != null) {
                 updateUiWithUser(loginResult.success.user.username)
+
+                view.postDelayed({
+                    findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
+                },1000)
             }
         })
 
