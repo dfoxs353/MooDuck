@@ -11,14 +11,16 @@ import androidx.navigation.ui.NavigationUI
 import com.example.mooduck.R
 import com.example.mooduck.ui.helpers.setupWithNavController
 import com.example.mooduck.ui.viewmodel.MainViewModel
+import com.example.mooduck.ui.viewmodel.MainViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
-class MainFragment : Fragment() {
+class MainFragment() : Fragment() {
 
     companion object {
         fun newInstance() = MainFragment()
     }
+
 
     private lateinit var viewModel: MainViewModel
 
@@ -32,7 +34,9 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        val viewModelFactory = MainViewModelFactory(requireContext())
+        viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
+        viewModel.setRetrofitToken()
 
         val bottomNavigationView = view.findViewById<BottomNavigationView>(R.id.bottom_menu)
 

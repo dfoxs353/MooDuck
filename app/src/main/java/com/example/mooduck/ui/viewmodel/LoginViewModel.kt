@@ -1,6 +1,7 @@
 package com.example.mooduck.ui.viewmodel
 
-import android.app.Application
+import android.content.Context
+import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -15,7 +16,7 @@ import com.example.mooduck.data.repository.RemoteUserRepository
 import com.example.mooduck.ui.model.AuthFormState
 import kotlinx.coroutines.Dispatchers
 
-class LoginViewModel(application: Application) : ViewModel() {
+class LoginViewModel(context: Context) : ViewModel() {
     private val _loginForm = MutableLiveData<AuthFormState>()
     val loginFormState: LiveData<AuthFormState> = _loginForm
 
@@ -26,13 +27,14 @@ class LoginViewModel(application: Application) : ViewModel() {
     private val userApi = retrofit.create(AuthApi::class.java)
 
     private val remoteUserRepository: RemoteUserRepository = RemoteUserRepository(userApi, Dispatchers.IO)
-    private val localUserRepository:LocalUserRepository = LocalUserRepository(application)
+    private val localUserRepository:LocalUserRepository = LocalUserRepository(context)
     suspend fun login(email: String, password: String) {
         val result = remoteUserRepository.login(email, password)
 
         if(result is Result.Success){
             _loginResult.value = AuthResult(success = result.data)
             saveRefreshToken(result.data.refreshToken,result.data.accessToken)
+            Log.d("TAG", "access token${result.data.accessToken}")
         }
         else{
             _loginResult.value = AuthResult(error = R.string.error_string)
@@ -61,7 +63,8 @@ class LoginViewModel(application: Application) : ViewModel() {
         return password.length > 5
     }
 
-    fun saveRefreshToken(refreshToken: String, accessToken: String) {
+    private fun saveRefreshToken(refreshToken: String, accessToken: String) {
         localUserRepository.saveJWToken(refreshToken,accessToken)
     }
+
 }

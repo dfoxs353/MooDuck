@@ -1,5 +1,6 @@
 package com.example.mooduck.ui.viewmodel
 
+import android.content.Context
 import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,7 +14,7 @@ import com.example.mooduck.data.repository.RemoteUserRepository
 import com.example.mooduck.ui.model.AuthFormState
 import kotlinx.coroutines.Dispatchers
 
-class SignupViewModel : ViewModel() {
+class SignupViewModel(context: Context) : ViewModel() {
     private val _signupForm = MutableLiveData<AuthFormState>()
     val signupFormState: LiveData<AuthFormState> = _signupForm
 

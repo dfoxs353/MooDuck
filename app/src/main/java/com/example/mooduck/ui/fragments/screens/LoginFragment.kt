@@ -1,5 +1,6 @@
 package com.example.mooduck.ui.fragments.screens
 
+import android.app.Application
 import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -18,6 +19,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.mooduck.R
 import com.example.mooduck.databinding.FragmentLoginBinding
 import com.example.mooduck.ui.viewmodel.LoginViewModel
+import com.example.mooduck.ui.viewmodel.LoginViewModelFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -36,7 +38,8 @@ class LoginFragment : Fragment() {
     ): View? {
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+        val viewModelFactory = LoginViewModelFactory(requireContext())
+        viewModel = ViewModelProvider(this, viewModelFactory).get(LoginViewModel::class.java)
 
         binding = FragmentLoginBinding.inflate(layoutInflater)
         val view = binding.root
