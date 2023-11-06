@@ -9,6 +9,7 @@ import com.example.mooduck.data.remote.books.BookResult
 import com.example.mooduck.data.remote.books.BooksRequest
 import com.example.mooduck.data.remote.books.BooksResponse
 import com.example.mooduck.data.remote.books.BooksResult
+import com.example.mooduck.data.remote.books.CertainBookResponse
 import com.example.mooduck.data.remote.books.Comment
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -18,7 +19,7 @@ class BooksRepository(
     private val bookApi: BookApi,
     private val ioDispatcher: CoroutineDispatcher
 ) {
-    suspend fun getBook(id: String): Result<BookResponse> {
+    suspend fun getBook(id: String): Result<CertainBookResponse> {
         try {
             return Result.Success(
                 withContext(ioDispatcher) {

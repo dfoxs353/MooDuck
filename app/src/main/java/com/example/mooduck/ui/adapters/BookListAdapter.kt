@@ -18,6 +18,8 @@ import com.example.mooduck.data.remote.books.BooksResponse
 
 class BookListAdapter(private val dataSet: BooksResponse):
     RecyclerView.Adapter<BookListAdapter.ViewHolder>(){
+
+    private var onClickListener: OnClickListener? = null
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val bookTitle: TextView
         val bookAuthor: TextView
@@ -75,7 +77,20 @@ class BookListAdapter(private val dataSet: BooksResponse):
         }
         catch (e: Exception){
         }
+
+        viewHolder.itemView.setOnClickListener {
+            if (onClickListener != null) {
+                onClickListener!!.onClick(position, dataSet.books[position]._id )
+            }
+        }
     }
 
+    fun setOnClickListener(onClickListener: OnClickListener) {
+        this.onClickListener = onClickListener
+    }
+    interface OnClickListener {
+        fun onClick(position: Int, bookId: String)
+    }
     override fun getItemCount() = dataSet.books.size
 }
+

@@ -23,6 +23,24 @@ data class BookResponse(
     val publisher: String
 )
 
+data class CertainBookResponse(
+    val authors: List<String>,
+    val bookBinding: String,
+    val bookSeries: String,
+    val comments: List<Comment>,
+    val description: String,
+    val genres: List<String>,
+    val img: Images,
+    val pageCount: Int,
+    val painters: List<String>,
+    val publishedDate: String,
+    val _id: String,
+    val publisher:String,
+    val title: String,
+    val translaters: List<String>,
+)
+
+
 data class Comment(
     val bookId: String,
     val date: Int,

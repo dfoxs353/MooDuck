@@ -19,7 +19,7 @@
     <string name="next">Продолжить</string>
     <string name="test_title">Красная ягода. Черная земля. Сборник стихов</string>
     <string name="test_author">Анна Долгарева</string>
-    <string name="test_description">Анна Долгарева — поэтесса, военкор и журналист, победитель множества литературных конкурсов и самый молодой лауреат Григорьевской премии. Поэзия Анны Долгаревой поднимает вечные вопросы бытия...</string>
+    <string name="test_description">Анна Долгарева — поэтесса, военкор и журналист, победитель множества литературных конкурсов и самый молодой лауреат Григорьевской премии. Поэзия Анны Долгаревой поднимает вечные вопросы бытия и отвечает на них языком поколения, рано повзрослевшего в 1990-е, пережившего распад большой страны как личную драму, любившего и терявшего любовь в 2000-е и сейчас взвалившего на свои плечи ответственность за судьбу России. Стихи Анны — пронзительные, бескомпромиссные, нервные — написаны на разрыв души, с глубокой болью и любовью к Родине, Богу, людям, хрупкому миру вокруг нас.</string>
     <string name="test_books_list">АСТ, 224 страницы</string>
     <string name="welcome">Добро пожаловать</string>
     <string name="error_string">Ошибка авторизации</string>
@@ -30,4 +30,23 @@
     <string name="menu_label_2">Поиск</string>
     <string name="menu_label_3">Аккаунт</string>
     <string name="error_loading">Ошибка загрузки</string>
+    <string name="about_book">О книге</string>
+    <string name="genre">Жанр</string>
+    <string name="test_genre">Поэзия</string>
+    <string name="publishing_house">Издательство</string>
+    <string name="series">Серия</string>
+    <string name="binding">Переплет</string>
+    <string name="artist">Художник</string>
+    <string name="translator">Переводчик</string>
+    <string name="year_publishing">Год издания</string>
+    <string name="count_list">Количество страниц</string>
+    <string name="test_publishing_house">АСТ</string>
+    <string name="test_series_book">Мысли о Родине</string>
+    <string name="test_binding_book">Твердый</string>
+    <string name="test_artist_book">Мельникова Елена</string>
+    <string name="test_translator_book">Юсим Марк</string>
+    <string name="test_publishing_year_book">2023</string>
+    <string name="test_list_count_book">224</string>
+    <string name="comments">Комментарии</string>
+    <string name="add_comment">Написать комментарий</string>
 </resources>

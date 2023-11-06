@@ -9,5 +9,14 @@
         android:id="@+id/bookListFragment"
         android:name="com.example.mooduck.ui.fragments.screens.BookListFragment"
         android:label="fragment_book_list"
-        tools:layout="@layout/fragment_book_list" />
+        tools:layout="@layout/fragment_book_list" >
+        <action
+            android:id="@+id/action_bookListFragment_to_bookPageFragment"
+            app:destination="@id/bookPageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookPageFragment"
+        android:name="com.example.mooduck.ui.fragments.screens.BookPageFragment"
+        android:label="fragment_book_page"
+        tools:layout="@layout/fragment_book_page" />
 </navigation>

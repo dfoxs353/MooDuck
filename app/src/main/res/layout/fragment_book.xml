@@ -43,6 +43,7 @@
                         android:textAlignment="textStart"
                         android:textColor="?attr/colorOnPrimary"
                         android:textSize="14sp"
+                        android:textStyle="bold"
                         tools:text="@string/test_title" />
 
                     <TextView

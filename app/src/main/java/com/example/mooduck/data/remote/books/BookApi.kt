@@ -18,7 +18,7 @@ interface BookApi {
     ):Deferred<BooksResponse>
 
     @GET("books/{id}")
-    fun getBook(@Path("id") id: String):Deferred<BookResponse>
+    fun getBook(@Path("id") id: String):Deferred<CertainBookResponse>
 
     @GET("books/{id}/comments")
     fun getBookComments(@Path("id") id: String):Deferred<List<Comment>>
