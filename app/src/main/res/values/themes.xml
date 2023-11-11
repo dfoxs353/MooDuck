@@ -13,6 +13,8 @@
         <item name="colorOnSurface">@color/gray</item>
 
 
+        <item name="android:colorBackground">@color/white</item>
+
         <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
     </style>
 

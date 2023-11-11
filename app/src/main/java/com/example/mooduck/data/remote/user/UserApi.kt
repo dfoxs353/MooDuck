@@ -13,4 +13,10 @@ interface UserApi {
         @Body bookId: String,
         @Path("userId") userId: String,
     ):Deferred<UserSetFavouriteBookResult>
+
+    @GET("users/{userId}/favoritebooks")
+    fun getFavoriteBooks(
+        @Body bookId: String,
+        @Path("userId") userId: String,
+    ):Deferred<UserSetFavouriteBookResult>
 }

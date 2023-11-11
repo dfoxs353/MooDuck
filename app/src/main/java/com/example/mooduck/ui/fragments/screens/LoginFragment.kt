@@ -91,9 +91,6 @@ class LoginFragment : Fragment() {
             }
             if (loginResult.success != null) {
                 updateUiWithUser(loginResult.success.user.username)
-                with(loginResult){
-                    Log.d("LOG", "${success!!.user.id}")
-                }
                 view.postDelayed({
                     findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
                 },1000)
