@@ -9,6 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.mooduck.R
 import com.example.mooduck.ui.viewmodel.BookPageViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class BookPageFragment : Fragment() {
 
@@ -32,7 +35,16 @@ class BookPageFragment : Fragment() {
 
         val bookId = arguments?.getString("id")
         Log.d("TAG", "id book: ${bookId}")
-        // TODO: Use the ViewModel
+
+        if(bookId != null){
+            getBook(bookId)
+        }
+    }
+
+    private fun getBook(bookId: String) {
+        GlobalScope.launch(Dispatchers.Main) {
+            viewModel.getBook(bookId)
+        }
     }
 
 }

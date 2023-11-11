@@ -1,4 +1,4 @@
-package com.example.mooduck.ui.fragments
+package com.example.mooduck.ui.fragments.screens
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.mooduck.ui.viewmodel.BookViewModel
 import com.example.mooduck.R
+import com.example.mooduck.databinding.FragmentBookBinding
 
 class BookFragment : Fragment() {
 
@@ -16,6 +17,7 @@ class BookFragment : Fragment() {
     }
 
     private lateinit var viewModel: BookViewModel
+    private lateinit var binding: FragmentBookBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,10 +26,18 @@ class BookFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_book, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(BookViewModel::class.java)
-        // TODO: Use the ViewModel
+        binding = FragmentBookBinding.inflate(layoutInflater)
+
+        binding.toReadButton.setOnClickListener {
+            setToReadBook()
+        }
+    }
+
+    private fun setToReadBook() {
+
     }
 
 }

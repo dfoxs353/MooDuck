@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="10dp"
-    tools:context=".ui.fragments.BookFragment">
+    tools:context=".ui.fragments.screens.BookFragment">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

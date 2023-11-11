@@ -4,12 +4,17 @@ import com.example.mooduck.data.remote.auth.AuthResponse
 
 data class BookResult(
     val success: BookResponse? = null,
-    val error: Int? = null
+    val error: Int? = null,
+)
+
+data class CertainBookResult(
+    val success: CertainBookResponse? = null,
+    val error: Int? = null,
 )
 
 data class BooksResult(
     val success: BooksResponse? = null,
-    val error: Int? = null
+    val error: Int? = null,
 )
 
 data class BookResponse(
@@ -20,7 +25,7 @@ data class BookResponse(
     val img: Images,
     val description: String,
     val pageCount: Int,
-    val publisher: String
+    val publisher: String,
 )
 
 data class CertainBookResponse(
@@ -50,7 +55,7 @@ data class Comment(
     val text: String,
     val title: String,
     val userId: String,
-    val _id: String
+    val _id: String,
 )
 
 
@@ -63,10 +68,10 @@ data class BooksResponse(
     val hasPrevPage: Boolean,
     val page: Int,
     val comments: List<Comment>,
-    val lines: Boolean
+    val lines: Boolean,
 )
 data class Images(
     val largeFingernail: String,
     val mediumFingernail: String,
-    val smallFingernail: String
+    val smallFingernail: String,
 )

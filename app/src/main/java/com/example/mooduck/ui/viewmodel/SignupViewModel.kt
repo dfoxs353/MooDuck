@@ -10,11 +10,11 @@ import com.example.mooduck.common.RetrofitClient
 import com.example.mooduck.data.remote.Result
 import com.example.mooduck.data.remote.auth.AuthApi
 import com.example.mooduck.data.remote.auth.AuthResult
-import com.example.mooduck.data.repository.RemoteUserRepository
+import com.example.mooduck.data.repository.RemoteAuthRepository
 import com.example.mooduck.ui.model.AuthFormState
 import kotlinx.coroutines.Dispatchers
 
-class SignupViewModel(context: Context) : ViewModel() {
+class SignupViewModel() : ViewModel() {
     private val _signupForm = MutableLiveData<AuthFormState>()
     val signupFormState: LiveData<AuthFormState> = _signupForm
 
@@ -24,10 +24,10 @@ class SignupViewModel(context: Context) : ViewModel() {
     private val retrofit = RetrofitClient.instance
     private val userApi = retrofit.create(AuthApi::class.java)
 
-    private val remoteUserRepository: RemoteUserRepository = RemoteUserRepository(userApi, Dispatchers.IO)
+    private val remoteAuthRepository: RemoteAuthRepository = RemoteAuthRepository(userApi, Dispatchers.IO)
 
     suspend fun signup(username: String,email: String, password: String) {
-        val result = remoteUserRepository.signup(email, password,username)
+        val result = remoteAuthRepository.signup(email, password,username)
 
         if(result is Result.Success){
             _signupResult.value = AuthResult(success = result.data)

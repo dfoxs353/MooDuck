@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,8 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.mooduck.R
+import com.example.mooduck.data.remote.auth.AuthResponse
+import com.example.mooduck.data.repository.LocalUserRepository
 import com.example.mooduck.databinding.FragmentLoginBinding
 import com.example.mooduck.ui.viewmodel.LoginViewModel
 import com.example.mooduck.ui.viewmodel.LoginViewModelFactory
@@ -38,12 +41,13 @@ class LoginFragment : Fragment() {
     ): View? {
         super.onCreate(savedInstanceState)
 
-        val viewModelFactory = LoginViewModelFactory(requireContext())
+        val viewModelFactory = LoginViewModelFactory()
         viewModel = ViewModelProvider(this, viewModelFactory).get(LoginViewModel::class.java)
 
         binding = FragmentLoginBinding.inflate(layoutInflater)
         val view = binding.root
 
+        val localUserRepository = LocalUserRepository(requireContext())
 
         val username = binding.mailInput
         val password = binding.passwordInput
@@ -52,7 +56,6 @@ class LoginFragment : Fragment() {
 
         val login = binding.loginButton
         val signup = binding.signupButton
-
 
 
         signup.setOnClickListener {
@@ -88,7 +91,9 @@ class LoginFragment : Fragment() {
             }
             if (loginResult.success != null) {
                 updateUiWithUser(loginResult.success.user.username)
-
+                with(loginResult){
+                    Log.d("LOG", "${success!!.user.id}")
+                }
                 view.postDelayed({
                     findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
                 },1000)
@@ -131,6 +136,7 @@ class LoginFragment : Fragment() {
     private fun login(mail:String,password:String) {
         GlobalScope.launch(Dispatchers.Main) {
             viewModel.login(mail,password)
+
         }
     }
 

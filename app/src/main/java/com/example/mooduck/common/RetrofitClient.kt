@@ -1,5 +1,6 @@
 package com.example.mooduck.common
 
+import android.util.Log
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -9,10 +10,11 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
     private var BASE_URL = "https://mooduck-service-api.onrender.com/api/"
-    private val tokenInterceptor = TokenInterceptor(null)
-    private val cookieInterceptor = CookieInterceptor(null)
 
     private var originalInstance: Retrofit? = null
+
+    private val tokenManager = TokenManager()
+    private val cookieManager = CookieManager()
 
     val instance: Retrofit
         get() {
@@ -22,11 +24,18 @@ object RetrofitClient {
 
                 val okHttpClient = OkHttpClient.Builder()
                     .addInterceptor(httpLoggingInterceptor)
-                    .addInterceptor(tokenInterceptor)
-                    .addInterceptor(cookieInterceptor)
-                    .connectTimeout(30, TimeUnit.SECONDS)
-                    .readTimeout(30, TimeUnit.SECONDS)
-                    .writeTimeout(30, TimeUnit.SECONDS)
+                    .addInterceptor { chain ->
+                        val request = chain.request().newBuilder()
+                        tokenManager.getAccessToken()?.let { token ->
+                            request.addHeader("Authorization", "Bearer $token")
+                        }
+                        val newRequest = request.build()
+                        chain.proceed(newRequest)
+                    }
+                    .cookieJar(cookieManager)
+                    .connectTimeout(10, TimeUnit.SECONDS)
+                    .readTimeout(10, TimeUnit.SECONDS)
+                    .writeTimeout(10, TimeUnit.SECONDS)
                     .build()
 
                 originalInstance = Retrofit.Builder()
@@ -39,24 +48,9 @@ object RetrofitClient {
             return originalInstance!!
         }
 
-    fun setBaseUrl(newBaseUrl: String) {
-        BASE_URL = newBaseUrl
+    fun setAccessAndRefreshTokens(accessToken: String, refreshToken: String) {
+        tokenManager.setAccessToken(accessToken)
+        cookieManager.setRefreshToken(refreshToken)
         originalInstance = null
     }
-
-    fun setTokens(accessToken:String, refreshToken: String){
-        setAccessToken(accessToken)
-        setRefreshToken(refreshToken)
-    }
-
-    fun setAccessToken(token: String?) {
-        tokenInterceptor.setToken(token)
-        originalInstance = null
-    }
-
-    fun setRefreshToken(token: String){
-        cookieInterceptor.setToken(token)
-        originalInstance = null
-    }
-
 }

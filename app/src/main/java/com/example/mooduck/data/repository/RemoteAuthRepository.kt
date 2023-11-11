@@ -11,7 +11,7 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 
 
-class RemoteUserRepository(
+class RemoteAuthRepository(
     private val userDataSource: AuthApi,
     private val ioDispatcher: CoroutineDispatcher
 ) {
@@ -45,6 +45,17 @@ class RemoteUserRepository(
 
     }
 
-
-
+    suspend fun refresh(): Result<AuthResponse>{
+        try {
+            return Result.Success(
+                withContext(ioDispatcher) {
+                    val response = userDataSource.refreshTokens()
+                    response.await()
+                }
+            )
+        } catch (e: Exception) {
+            Log.d("TAG", e.message.toString())
+            return Result.Error(IOException("Error refresh", e))
+        }
+    }
 }

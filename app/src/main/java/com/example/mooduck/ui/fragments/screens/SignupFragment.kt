@@ -11,7 +11,10 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.example.mooduck.R
+import com.example.mooduck.data.remote.auth.AuthResponse
+import com.example.mooduck.data.repository.LocalUserRepository
 import com.example.mooduck.databinding.FragmentSignupBinding
 import com.example.mooduck.ui.viewmodel.SignupViewModel
 import kotlinx.coroutines.Dispatchers
@@ -34,6 +37,7 @@ class SignupFragment : Fragment() {
         binding = FragmentSignupBinding.inflate(layoutInflater)
         val view = binding.root
 
+        val localUserRepository = LocalUserRepository(requireContext())
 
         viewModel = ViewModelProvider(this).get(SignupViewModel::class.java)
 
@@ -51,7 +55,7 @@ class SignupFragment : Fragment() {
         val secondPasswordLayout = binding.passwordSecondInputLayout
 
         login.setOnClickListener {
-            TODO("navigate to loginFragment")
+            findNavController().navigate(R.id.action_signupFragment_to_loginFragment)
         }
 
         viewModel.signupFormState.observe( viewLifecycleOwner, Observer {
@@ -85,6 +89,10 @@ class SignupFragment : Fragment() {
             }
             if (signupResult.success != null) {
                 updateUiWithUser(signupResult.success.user.username)
+                saveTokens(signupResult.success, localUserRepository)
+                view.postDelayed({
+                    findNavController().navigate(R.id.action_signupFragment_to_mainFragment)
+                },1000)
             }
         })
 
@@ -129,6 +137,10 @@ class SignupFragment : Fragment() {
         GlobalScope.launch(Dispatchers.Main) {
             viewModel.signup(username,mail,password)
         }
+    }
+
+    private fun saveTokens(loginResult: AuthResponse, localUserRepository: LocalUserRepository) {
+        localUserRepository.saveUser(loginResult.user.id,loginResult.user.password,loginResult.refreshToken,loginResult.accessToken)
     }
 
     private fun updateUiWithUser(name: String) {
