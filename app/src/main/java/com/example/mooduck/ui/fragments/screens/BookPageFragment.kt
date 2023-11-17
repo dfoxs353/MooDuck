@@ -1,6 +1,5 @@
 package com.example.mooduck.ui.fragments.screens
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,8 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.example.mooduck.R
-import com.example.mooduck.data.remote.Result
 import com.example.mooduck.data.remote.books.CertainBookResponse
 import com.example.mooduck.databinding.FragmentBookPageBinding
 import com.example.mooduck.ui.viewmodel.BookPageViewModel
@@ -37,9 +34,7 @@ class BookPageFragment : Fragment() {
     ): View? {
         binding = FragmentBookPageBinding.inflate(inflater)
 
-        val view = binding.root
-
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

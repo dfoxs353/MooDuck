@@ -35,10 +35,7 @@ class BookListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = FragmentBookListBinding.inflate(inflater, container, false)
-        val view = binding.root
-
 
         val localUserRepository = LocalUserRepository(requireContext())
 
@@ -48,15 +45,13 @@ class BookListFragment : Fragment() {
         viewModel.booksResult.observe(viewLifecycleOwner, Observer {
             val booksResult = it ?: return@Observer
 
-
             if (booksResult.success !=null){
                 binding.loading.visibility = View.GONE
                 setBookListData(booksResult.success,localUserRepository)
             }
         })
 
-
-        return view
+        return binding.root
     }
 
     override fun onResume() {
@@ -64,8 +59,6 @@ class BookListFragment : Fragment() {
         binding.loading.visibility = View.VISIBLE
         getBooks()
     }
-
-
 
     private fun getBooks() {
         GlobalScope.launch(Dispatchers.Main) {

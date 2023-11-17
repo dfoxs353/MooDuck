@@ -36,18 +36,17 @@ class SignupFragment : Fragment() {
     ): View? {
         super.onCreate(savedInstanceState)
         binding = FragmentSignupBinding.inflate(layoutInflater)
-        val view = binding.root
 
         val signup = binding.signupButton
         val login = binding.loginButton
 
         val username = binding.nameInput
-        val maiil = binding.mailInput
+        val mail = binding.mailInput
         val firstPassword = binding.passwordFirstInput
         val secondPassword = binding.passwordSecondInput
 
         val usernameLayout = binding.nameInputLayout
-        val maiilLayout = binding.mailInputLayout
+        val mailLayout = binding.mailInputLayout
         val firstPasswordLayout = binding.passwordFirstInputLayout
         val secondPasswordLayout = binding.passwordSecondInputLayout
 
@@ -86,9 +85,7 @@ class SignupFragment : Fragment() {
             }
             if (signupResult.success != null) {
                 updateUiWithUser(signupResult.success.user.username)
-                view.postDelayed({
-                    findNavController().navigate(R.id.action_signupFragment_to_mainFragment)
-                },1000)
+                findNavController().navigate(R.id.action_signupFragment_to_mainFragment)
             }
         })
 
@@ -112,7 +109,7 @@ class SignupFragment : Fragment() {
                     EditorInfo.IME_ACTION_DONE ->
                         signup(
                             username.text.toString(),
-                            maiil.text.toString(),
+                            mail.text.toString(),
                             firstPassword.text.toString()
                         )
                 }
@@ -120,11 +117,11 @@ class SignupFragment : Fragment() {
             }
 
             signup.setOnClickListener {
-                signup(username.text.toString(),maiil.text.toString(), firstPassword.text.toString())
+                signup(username.text.toString(),mail.text.toString(), firstPassword.text.toString())
             }
         }
 
-        return view
+        return binding.root
     }
 
 

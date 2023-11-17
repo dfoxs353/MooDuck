@@ -39,8 +39,6 @@ class LoginFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         binding = FragmentLoginBinding.inflate(layoutInflater)
-        val view = binding.root
-
 
         val username = binding.mailInput
         val password = binding.passwordInput
@@ -84,9 +82,7 @@ class LoginFragment : Fragment() {
             }
             if (loginResult.success != null) {
                 updateUiWithUser(loginResult.success.user.username)
-                view.postDelayed({
-                    findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
-                },1000)
+                findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
             }
         })
 
@@ -120,7 +116,7 @@ class LoginFragment : Fragment() {
                 login(username.text.toString(), password.text.toString())
             }
         }
-        return view
+        return binding.root
     }
 
     private fun login(mail:String,password:String) {
