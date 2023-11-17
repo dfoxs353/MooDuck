@@ -10,6 +10,7 @@ import com.example.mooduck.common.RetrofitClient
 import com.example.mooduck.data.remote.Result
 import com.example.mooduck.data.remote.auth.AuthApi
 import com.example.mooduck.data.remote.auth.AuthResult
+import com.example.mooduck.data.repository.LocalUserRepository
 import com.example.mooduck.data.repository.RemoteAuthRepository
 import com.example.mooduck.ui.model.AuthFormState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +19,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignupViewModel @Inject constructor(
-    private val remoteAuthRepository: RemoteAuthRepository
+    private val remoteAuthRepository: RemoteAuthRepository,
+    private val localUserRepository: LocalUserRepository,
 ) : ViewModel() {
     private val _signupForm = MutableLiveData<AuthFormState>()
     val signupFormState: LiveData<AuthFormState> = _signupForm

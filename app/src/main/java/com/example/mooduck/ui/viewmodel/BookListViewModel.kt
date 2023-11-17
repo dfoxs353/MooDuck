@@ -11,20 +11,19 @@ import com.example.mooduck.data.remote.books.BooksResult
 import com.example.mooduck.data.remote.user.UserApi
 import com.example.mooduck.data.repository.BooksRepository
 import com.example.mooduck.data.repository.RemoteUserRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import javax.inject.Inject
 import javax.sql.StatementEvent
 
-class BookListViewModel : ViewModel() {
+@HiltViewModel
+class BookListViewModel @Inject constructor(
+    private val booksRepository: BooksRepository,
+    private val remoteUserRepository: RemoteUserRepository,
+) : ViewModel() {
 
     private val _booksResult = MutableLiveData<BooksResult>()
     val booksResult: LiveData<BooksResult> = _booksResult
-
-    private val retrofit = RetrofitClient.instance
-    private val bookApi = retrofit.create(BookApi::class.java)
-    private val userApi = retrofit.create(UserApi::class.java)
-
-    private val booksRepository: BooksRepository = BooksRepository(bookApi, Dispatchers.IO)
-    private val remoteUserRepository: RemoteUserRepository = RemoteUserRepository(userApi,Dispatchers.IO)
 
     suspend fun getBooks(limit: Int?=null,page: Int?=null, genre: String?=null, author: String?=null){
         val result = booksRepository.getBooks(limit, page, genre, author)

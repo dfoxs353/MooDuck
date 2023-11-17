@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,17 +16,19 @@ import com.example.mooduck.data.repository.LocalUserRepository
 import com.example.mooduck.databinding.FragmentBookListBinding
 import com.example.mooduck.ui.adapters.BookListAdapter
 import com.example.mooduck.ui.viewmodel.BookListViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class BookListFragment : Fragment() {
 
     companion object {
         fun newInstance() = BookListFragment()
     }
 
-    private lateinit var viewModel: BookListViewModel
+    private val viewModel: BookListViewModel by viewModels()
     private lateinit var binding: FragmentBookListBinding
 
     override fun onCreateView(
@@ -35,8 +38,6 @@ class BookListFragment : Fragment() {
 
         binding = FragmentBookListBinding.inflate(inflater, container, false)
         val view = binding.root
-
-        viewModel = ViewModelProvider(this).get(BookListViewModel::class.java)
 
 
         val localUserRepository = LocalUserRepository(requireContext())

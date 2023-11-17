@@ -4,13 +4,14 @@ import androidx.lifecycle.ViewModel
 import com.example.mooduck.common.RetrofitClient
 import com.example.mooduck.data.remote.books.BookApi
 import com.example.mooduck.data.repository.BooksRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import javax.inject.Inject
 
-class BookViewModel : ViewModel() {
-    private val retrofit = RetrofitClient.instance
-    private val bookAPi = retrofit.create(BookApi::class.java)
-
-    private val remoteBookRepository: BooksRepository = BooksRepository(bookAPi, Dispatchers.IO)
+@HiltViewModel
+class BookViewModel @Inject constructor(
+    private val remoteBooksRepository: BooksRepository
+): ViewModel() {
 
     suspend fun setToReadBook(id:String){
 

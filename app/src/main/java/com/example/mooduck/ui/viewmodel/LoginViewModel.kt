@@ -20,14 +20,13 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val remoteAuthRepository: RemoteAuthRepository,
+    private val localUserRepository: RemoteAuthRepository,
 ) : ViewModel() {
     private val _loginForm = MutableLiveData<AuthFormState>()
     val loginFormState: LiveData<AuthFormState> = _loginForm
 
     private val _loginResult = MutableLiveData<AuthResult>()
     val loginResult: LiveData<AuthResult> = _loginResult
-
-
 
     suspend fun login(email: String, password: String) {
         val result = remoteAuthRepository.login(email, password)
@@ -39,7 +38,6 @@ class LoginViewModel @Inject constructor(
             _loginResult.value = AuthResult(error = R.string.error_string)
         }
     }
-
 
     fun loginDataChanged(username: String, password: String) {
         if (!isUserNameValid(username)) {
@@ -62,6 +60,4 @@ class LoginViewModel @Inject constructor(
     private fun isPasswordValid(password: String): Boolean {
         return password.length > 5
     }
-
-
 }

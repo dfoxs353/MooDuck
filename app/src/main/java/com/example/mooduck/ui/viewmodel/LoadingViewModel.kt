@@ -11,18 +11,17 @@ import com.example.mooduck.data.remote.auth.AuthApi
 import com.example.mooduck.data.remote.auth.AuthResponse
 import com.example.mooduck.data.remote.auth.AuthResult
 import com.example.mooduck.data.repository.RemoteAuthRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import retrofit2.Retrofit
+import javax.inject.Inject
 
-class LoadingViewModel : ViewModel() {
+@HiltViewModel
+class LoadingViewModel @Inject constructor(
+    private  val remoteAuthRepository: RemoteAuthRepository,
+): ViewModel() {
     private val _refreshResult = MutableLiveData<AuthResult>()
     val refreshResult: LiveData<AuthResult> = _refreshResult
-
-    private val _retrofitClient = RetrofitClient
-
-    private val userApi = _retrofitClient.instance.create(AuthApi::class.java)
-
-    private val remoteAuthRepository: RemoteAuthRepository = RemoteAuthRepository(userApi, Dispatchers.IO)
 
     suspend fun getTokens(){
         val result = remoteAuthRepository.refresh()

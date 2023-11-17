@@ -65,6 +65,10 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
+    //Hilt
+    implementation("com.google.dagger:hilt-android:2.48.1")
+    kapt("com.google.dagger:hilt-compiler:2.48.1")
+
     // Internet:
     implementation ("com.squareup.retrofit2:retrofit:$retrofit_version")
     implementation ("com.squareup.retrofit2:converter-gson:$retrofit_version")
@@ -78,10 +82,6 @@ dependencies {
     implementation ("com.squareup.okhttp3:okhttp:$okHttp_version")
     implementation ("com.squareup.okhttp3:logging-interceptor:$okHttp_version")
 
-
-    //Hilt
-    implementation("com.google.dagger:hilt-android:2.48.1")
-    kapt("com.google.dagger:hilt-compiler:2.48.1")
 }
 
 kapt {
