@@ -13,31 +13,32 @@ import com.example.mooduck.data.remote.auth.AuthApi
 import com.example.mooduck.data.remote.auth.AuthResult
 import com.example.mooduck.data.repository.RemoteAuthRepository
 import com.example.mooduck.ui.model.AuthFormState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import javax.inject.Inject
 
-class LoginViewModel() : ViewModel() {
+@HiltViewModel
+class LoginViewModel @Inject constructor(
+    private val remoteAuthRepository: RemoteAuthRepository,
+) : ViewModel() {
     private val _loginForm = MutableLiveData<AuthFormState>()
     val loginFormState: LiveData<AuthFormState> = _loginForm
 
     private val _loginResult = MutableLiveData<AuthResult>()
     val loginResult: LiveData<AuthResult> = _loginResult
 
-    private val retrofit = RetrofitClient.instance
-    private val userApi = retrofit.create(AuthApi::class.java)
 
-    private val remoteAuthRepository: RemoteAuthRepository = RemoteAuthRepository(userApi, Dispatchers.IO)
+
     suspend fun login(email: String, password: String) {
         val result = remoteAuthRepository.login(email, password)
 
-        if(result is Result.Success){
+        if (result is Result.Success) {
             _loginResult.value = AuthResult(success = result.data)
             Log.d("TAG", "access token${result.data.accessToken}")
-        }
-        else{
+        } else {
             _loginResult.value = AuthResult(error = R.string.error_string)
         }
     }
-
 
 
     fun loginDataChanged(username: String, password: String) {
@@ -51,14 +52,14 @@ class LoginViewModel() : ViewModel() {
     }
 
     private fun isUserNameValid(username: String): Boolean {
-        return if(username.contains('@')){
+        return if (username.contains('@')) {
             Patterns.EMAIL_ADDRESS.matcher(username).matches()
-        } else{
+        } else {
             username.isNotBlank()
         }
     }
 
-    private fun isPasswordValid(password: String): Boolean{
+    private fun isPasswordValid(password: String): Boolean {
         return password.length > 5
     }
 

@@ -12,19 +12,20 @@ import com.example.mooduck.data.remote.auth.AuthApi
 import com.example.mooduck.data.remote.auth.AuthResult
 import com.example.mooduck.data.repository.RemoteAuthRepository
 import com.example.mooduck.ui.model.AuthFormState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import javax.inject.Inject
 
-class SignupViewModel() : ViewModel() {
+@HiltViewModel
+class SignupViewModel @Inject constructor(
+    private val remoteAuthRepository: RemoteAuthRepository
+) : ViewModel() {
     private val _signupForm = MutableLiveData<AuthFormState>()
     val signupFormState: LiveData<AuthFormState> = _signupForm
 
     private val _signupResult = MutableLiveData<AuthResult>()
     val signupResult: LiveData<AuthResult> = _signupResult
 
-    private val retrofit = RetrofitClient.instance
-    private val userApi = retrofit.create(AuthApi::class.java)
-
-    private val remoteAuthRepository: RemoteAuthRepository = RemoteAuthRepository(userApi, Dispatchers.IO)
 
     suspend fun signup(username: String,email: String, password: String) {
         val result = remoteAuthRepository.signup(email, password,username)

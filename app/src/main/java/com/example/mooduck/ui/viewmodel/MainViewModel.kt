@@ -5,11 +5,11 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.mooduck.common.RetrofitClient
 import com.example.mooduck.data.repository.LocalUserRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class MainViewModel() : ViewModel() {
-
-
-    private val _retrofit = RetrofitClient
+@HiltViewModel
+class MainViewModel @Inject constructor() : ViewModel() {
 
     fun setRetrofitToken(accessToken: String, refreshToken:String){
 

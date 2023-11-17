@@ -7,16 +7,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI
+import androidx.fragment.app.viewModels
 import com.example.mooduck.R
 import com.example.mooduck.data.repository.LocalUserRepository
 import com.example.mooduck.ui.helpers.setupWithNavController
 import com.example.mooduck.ui.viewmodel.MainViewModel
-import com.example.mooduck.ui.viewmodel.MainViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainFragment() : Fragment() {
 
     companion object {
@@ -24,7 +23,7 @@ class MainFragment() : Fragment() {
     }
 
 
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,9 +34,6 @@ class MainFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val viewModelFactory = MainViewModelFactory()
-        viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
 
         val localUserRepository = LocalUserRepository(requireContext())
 

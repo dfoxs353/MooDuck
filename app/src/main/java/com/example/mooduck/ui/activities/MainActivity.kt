@@ -6,7 +6,9 @@ import android.os.Bundle
 import com.example.mooduck.common.RetrofitClient
 import com.example.mooduck.data.repository.LocalUserRepository
 import com.example.mooduck.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding

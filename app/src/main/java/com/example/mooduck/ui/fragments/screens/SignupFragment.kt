@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.mooduck.R
@@ -27,8 +28,8 @@ class SignupFragment : Fragment() {
         fun newInstance() = SignupFragment()
     }
 
-    lateinit var binding: FragmentSignupBinding
-    lateinit var viewModel: SignupViewModel
+    private lateinit var binding: FragmentSignupBinding
+    private val viewModel: SignupViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,10 +37,6 @@ class SignupFragment : Fragment() {
         super.onCreate(savedInstanceState)
         binding = FragmentSignupBinding.inflate(layoutInflater)
         val view = binding.root
-
-        val localUserRepository = LocalUserRepository(requireContext())
-
-        viewModel = ViewModelProvider(this).get(SignupViewModel::class.java)
 
         val signup = binding.signupButton
         val login = binding.loginButton
@@ -89,7 +86,6 @@ class SignupFragment : Fragment() {
             }
             if (signupResult.success != null) {
                 updateUiWithUser(signupResult.success.user.username)
-                saveTokens(signupResult.success, localUserRepository)
                 view.postDelayed({
                     findNavController().navigate(R.id.action_signupFragment_to_mainFragment)
                 },1000)
@@ -139,9 +135,6 @@ class SignupFragment : Fragment() {
         }
     }
 
-    private fun saveTokens(loginResult: AuthResponse, localUserRepository: LocalUserRepository) {
-        localUserRepository.saveUser(loginResult.user.id,loginResult.user.password,loginResult.refreshToken,loginResult.accessToken)
-    }
 
     private fun updateUiWithUser(name: String) {
         val welcome = getString(R.string.welcome)
