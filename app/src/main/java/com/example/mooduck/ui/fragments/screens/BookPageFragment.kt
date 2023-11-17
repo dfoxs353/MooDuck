@@ -72,17 +72,18 @@ class BookPageFragment : Fragment() {
     }
 
     private fun setBookInfo(book: CertainBookResponse) {
+        val toReadButton = binding.toReadButton
+
         val bookCover = binding.bookCoverImage
         val bookTitle = binding.titleTextView
         val bookAuthor = binding.authorTextView
-        val toReadButton = binding.toReadButton
         val bookAbout = binding.aboutTextView
         val bookGenre = binding.genreBook
         val bookPublishingHouse = binding.publishingBook
         val bookSeries = binding.seriesBook
         val bookBinding = binding.bindingBook
         val bookArtist = binding.artistBook
-        val bookTranslator = binding.translator
+        val bookTranslator = binding.translatorBook
         val bookPublishingYear = binding.publishingYearBook
         val bookListCount = binding.listCountBook
 

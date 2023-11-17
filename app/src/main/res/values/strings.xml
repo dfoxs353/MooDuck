@@ -49,4 +49,5 @@
     <string name="test_list_count_book">224</string>
     <string name="comments">Комментарии</string>
     <string name="add_comment">Написать комментарий</string>
+    <string name="none_information">не указано</string>
 </resources>

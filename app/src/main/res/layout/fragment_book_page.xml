@@ -98,169 +98,210 @@
                 android:textSize="16sp"
                 tools:text="@string/test_description"/>
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:layout_marginBottom="30dp"
-                android:orientation="horizontal">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                android:layout_marginBottom="30dp">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:alpha="0.5"
-                        android:textSize="16sp"
-                        android:textColor="?attr/colorOnPrimary"
-                        android:text="@string/genre"/>
+                <TextView
+                    android:id="@+id/genre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.5"
+                    android:text="@string/genre"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/genre_book" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:alpha="0.5"
-                        android:textSize="16sp"
-                        android:textColor="?attr/colorOnPrimary"
-                        android:text="@string/publishing_house"/>
+                <TextView
+                    android:id="@+id/publishing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.5"
+                    android:text="@string/publishing_house"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/publishing_book" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:alpha="0.5"
-                        android:textSize="16sp"
-                        android:textColor="?attr/colorOnPrimary"
-                        android:text="@string/series"/>
+                <TextView
+                    android:id="@+id/series"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.5"
+                    android:text="@string/series"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/series_book" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:alpha="0.5"
-                        android:textSize="16sp"
-                        android:textColor="?attr/colorOnPrimary"
-                        android:text="@string/binding"/>
+                <TextView
+                    android:id="@+id/binding"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.5"
+                    android:text="@string/binding"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/binding_book" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:alpha="0.5"
-                        android:text="@string/artist"
-                        android:textColor="?attr/colorOnPrimary"
-                        android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/artist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.5"
+                    android:text="@string/artist"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/artist_book" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:alpha="0.5"
-                        android:text="@string/translator"
-                        android:textColor="?attr/colorOnPrimary"
-                        android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/translator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.5"
+                    android:text="@string/translator"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/translator_book" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:alpha="0.5"
-                        android:textSize="16sp"
-                        android:textColor="?attr/colorOnPrimary"
-                        android:text="@string/year_publishing"/>
+                <TextView
+                    android:id="@+id/publishing_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.5"
+                    android:text="@string/year_publishing"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/publishing_year_book" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:alpha="0.5"
-                        android:textSize="16sp"
-                        android:textColor="?attr/colorOnPrimary"
-                        android:text="@string/count_list"/>
+                <TextView
+                    android:id="@+id/list_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.5"
+                    android:text="@string/count_list"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/list_count_book" />
 
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/genre_book"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:text="@string/none_information"
+                    tools:text="@string/test_genre" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                <TextView
+                    android:id="@+id/publishing_book"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintTop_toBottomOf="@+id/genre_book"
+                    android:text="@string/none_information"
+                    tools:text="@string/test_publishing_house" />
 
-                    <TextView
-                        android:id="@+id/genre_book"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:textColor="?attr/colorOnPrimary"
-                        tools:text="@string/test_genre"/>
+                <TextView
+                    android:id="@+id/series_book"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintTop_toBottomOf="@+id/publishing_book"
+                    android:text="@string/none_information"
+                    tools:text="@string/test_series_book" />
 
-                    <TextView
-                        android:id="@+id/publishing_book"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:textSize="16sp"
-                        android:textColor="?attr/colorOnPrimary"
-                        tools:text="@string/test_publishing_house"/>
+                <TextView
+                    android:id="@+id/binding_book"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintTop_toBottomOf="@+id/series_book"
+                    android:text="@string/none_information"
+                    tools:text="@string/test_binding_book" />
 
-                    <TextView
-                        android:id="@+id/series_book"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:textSize="16sp"
-                        android:textColor="?attr/colorOnPrimary"
-                        tools:text="@string/test_series_book"/>
+                <TextView
+                    android:id="@+id/artist_book"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintTop_toBottomOf="@+id/binding_book"
+                    android:text="@string/none_information"
+                    tools:text="@string/test_artist_book" />
 
-                    <TextView
-                        android:id="@+id/binding_book"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:textSize="16sp"
-                        android:textColor="?attr/colorOnPrimary"
-                        tools:text="@string/test_binding_book"/>
+                <TextView
+                    android:id="@+id/translator_book"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintTop_toBottomOf="@+id/artist_book"
+                    android:text="@string/none_information"
+                    tools:text="@string/test_translator_book" />
 
-                    <TextView
-                        android:id="@+id/artist_book"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:textSize="16sp"
-                        android:textColor="?attr/colorOnPrimary"
-                        tools:text="@string/test_artist_book"/>
+                <TextView
+                    android:id="@+id/publishing_year_book"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintTop_toBottomOf="@+id/translator_book"
+                    android:text="@string/none_information"
+                    tools:text="@string/test_publishing_year_book" />
 
-                    <TextView
-                        android:id="@+id/translator"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:textSize="16sp"
-                        android:textColor="?attr/colorOnPrimary"
-                        tools:text="@string/test_translator_book"/>
+                <TextView
+                    android:id="@+id/list_count_book"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintTop_toBottomOf="@+id/publishing_year_book"
+                    android:text="@string/none_information"
+                    tools:text="@string/test_list_count_book" />
 
-                    <TextView
-                        android:id="@+id/publishing_year_book"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:textSize="16sp"
-                        android:textColor="?attr/colorOnPrimary"
-                        tools:text="@string/test_publishing_year_book"/>
-
-                    <TextView
-                        android:id="@+id/list_count_book"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:textSize="16sp"
-                        android:textColor="?attr/colorOnPrimary"
-                        tools:text="@string/test_list_count_book"/>
-                </LinearLayout>
-            </LinearLayout>
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="170dp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <View
                 android:id="@+id/view2"
@@ -283,13 +324,13 @@
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:text="@string/comments"
-                    android:layout_weight="3"/>
+                    android:layout_weight="8"/>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/add_comment_button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
+                    android:layout_weight="6"
                     android:layout_gravity="center"
                     android:text="@string/add_comment"
                     android:maxLines="2"
