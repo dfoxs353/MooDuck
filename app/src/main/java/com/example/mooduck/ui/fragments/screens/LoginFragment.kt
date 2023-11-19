@@ -50,7 +50,7 @@ class LoginFragment : Fragment() {
 
 
         signup.setOnClickListener {
-            findNavController().navigate(R.id.action_loadingFragment_to_loginFragment)
+            findNavController().navigate(R.id.action_loginFragment_to_signupFragment)
         }
 
         viewModel.loginFormState.observe( viewLifecycleOwner, Observer {

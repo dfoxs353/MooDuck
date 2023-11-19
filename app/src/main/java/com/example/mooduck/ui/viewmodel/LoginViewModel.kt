@@ -7,14 +7,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mooduck.R
-import com.example.mooduck.common.RetrofitClient
 import com.example.mooduck.data.remote.Result
-import com.example.mooduck.data.remote.auth.AuthApi
 import com.example.mooduck.data.remote.auth.AuthResult
 import com.example.mooduck.data.repository.RemoteAuthRepository
 import com.example.mooduck.ui.model.AuthFormState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,8 +19,8 @@ class LoginViewModel @Inject constructor(
     private val remoteAuthRepository: RemoteAuthRepository,
     private val localUserRepository: RemoteAuthRepository,
 ) : ViewModel() {
-    private val _loginForm = MutableLiveData<AuthFormState>()
-    val loginFormState: LiveData<AuthFormState> = _loginForm
+    private val _loginFormState = MutableLiveData<AuthFormState>()
+    val loginFormState: LiveData<AuthFormState> = _loginFormState
 
     private val _loginResult = MutableLiveData<AuthResult>()
     val loginResult: LiveData<AuthResult> = _loginResult
@@ -41,11 +38,11 @@ class LoginViewModel @Inject constructor(
 
     fun loginDataChanged(username: String, password: String) {
         if (!isUserNameValid(username)) {
-            _loginForm.value = AuthFormState(usernameError = R.string.invalid_username)
+            _loginFormState.value = AuthFormState(usernameError = R.string.invalid_username)
         } else if (!isPasswordValid(password)) {
-            _loginForm.value = AuthFormState(passwordError = R.string.invalid_password)
+            _loginFormState.value = AuthFormState(passwordError = R.string.invalid_password)
         } else {
-            _loginForm.value = AuthFormState(isDataValid = true)
+            _loginFormState.value = AuthFormState(isDataValid = true)
         }
     }
 

@@ -37,7 +37,6 @@ class BookListFragment : Fragment() {
     ): View? {
         binding = FragmentBookListBinding.inflate(inflater, container, false)
 
-        val localUserRepository = LocalUserRepository(requireContext())
 
         val layoutManager = LinearLayoutManager(this.context)
         binding.bookRecyclerView.layoutManager = layoutManager
@@ -47,7 +46,7 @@ class BookListFragment : Fragment() {
 
             if (booksResult.success !=null){
                 binding.loading.visibility = View.GONE
-                setBookListData(booksResult.success,localUserRepository)
+                setBookListData(booksResult.success)
             }
         })
 
@@ -66,14 +65,13 @@ class BookListFragment : Fragment() {
         }
     }
 
-    private fun setBookListData(bookList:    BooksResponse, localUserRepository: LocalUserRepository) {
+    private fun setBookListData(bookList:    BooksResponse) {
         val adapter = BookListAdapter(bookList)
         adapter.setOnClickListener(object :
             BookListAdapter.OnClickListener{
             override fun onClick(position: Int, bookId: String) {
                 val bundle = Bundle()
                 bundle.putString("id", bookId)
-                setFavouriteBook(bookId, localUserRepository)
                 findNavController().navigate(R.id.action_bookListFragment_to_bookPageFragment, bundle)
             }
             }

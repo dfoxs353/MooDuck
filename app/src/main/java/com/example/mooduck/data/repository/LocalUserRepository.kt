@@ -2,16 +2,20 @@ package com.example.mooduck.data.repository
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.mooduck.data.local.User
+import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class LocalUserRepository(context: Context) {
-    private val PREFS_NAME = "user_prefs"
+class LocalUserRepository @Inject constructor(
+    private val sharedPreferences: SharedPreferences,
+    ) {
+
 
     private val KEY_ACCESS_TOKEN = "access_token"
     private val KEY_REFRESH_TOKEN = "refresh_token"
     private val KEY_USER_ID = "user_id"
     private val KEY_USER_PASSWORD = "user_password"
 
-    private val sharedPreferences: SharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
     private val editor: SharedPreferences.Editor = sharedPreferences.edit()
 
     fun saveUser(userID: String, passsword: String, refreshToken: String, accessToken: String){
@@ -22,18 +26,28 @@ class LocalUserRepository(context: Context) {
         editor.apply()
     }
 
-    fun getUserId(): String?{
+    fun getUser(): User {
+        return User(
+            userid = getUserId()!!,
+            userPassword = getUserPassword()!!,
+            accessToken = getAccessToken()!!,
+            refreshToken = getRefreshToken()!!,
+        )
+    }
+
+    fun saveJWToken( accessToken: String, refreshToken: String,) {
+        editor.putString(KEY_REFRESH_TOKEN, refreshToken)
+        editor.putString(KEY_ACCESS_TOKEN, accessToken)
+        editor.apply()
+    }
+
+
+    fun getUserId(): String? {
         return sharedPreferences.getString(KEY_USER_ID, null)
     }
 
     fun getUserPassword(): String?{
-        return sharedPreferences.getString(KEY_USER_PASSWORD, null)
-    }
-
-    fun saveJWToken(refreshToken: String, accessToken: String) {
-        editor.putString(KEY_REFRESH_TOKEN, refreshToken)
-        editor.putString(KEY_ACCESS_TOKEN, accessToken)
-        editor.apply()
+        return sharedPreferences.getString(KEY_USER_PASSWORD,null)
     }
 
     fun getRefreshToken(): String? {

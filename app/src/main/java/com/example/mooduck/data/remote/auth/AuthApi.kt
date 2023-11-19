@@ -19,7 +19,13 @@ interface AuthApi {
     @POST("auth/logout")
     fun logoutUser(): Deferred<Void>
 
-    @Headers("Content-Type: application/json")
     @GET("auth/refresh")
-    fun refreshTokens(): Deferred<AuthResponse>
+    fun refreshToken(
+        @Header("Authorization") token: String,
+    ): Response<AuthResponse>
+
+    @GET("auth/refresh")
+    fun refresh(
+        @Header("Authorization") token: String,
+    ): Deferred<AuthResponse>
 }

@@ -2,25 +2,9 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph_application"
-    app:startDestination="@id/loadingFragment">
+    app:startDestination="@id/loginFragment"
+    android:id="@+id/nav_graph_application">
 
-    <fragment
-        android:id="@+id/loadingFragment"
-        android:name="com.example.mooduck.ui.fragments.screens.LoadingFragment"
-        android:label="fragment_loading"
-        tools:layout="@layout/fragment_loading" >
-        <action
-            android:id="@+id/action_loadingFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:popUpTo="@+id/nav_graph_application"
-            app:popUpToInclusive="true"/>
-        <action
-            android:id="@+id/action_loadingFragment_to_mainFragment"
-            app:destination="@id/mainFragment"
-            app:popUpTo="@+id/nav_graph_application"
-            app:popUpToInclusive="true"/>
-    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.mooduck.ui.fragments.screens.LoginFragment"

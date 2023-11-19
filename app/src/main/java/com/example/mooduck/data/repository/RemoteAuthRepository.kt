@@ -1,5 +1,6 @@
 package com.example.mooduck.data.repository
 
+import android.util.JsonToken
 import android.util.Log
 import com.example.mooduck.data.remote.auth.AuthApi
 import com.example.mooduck.data.remote.auth.AuthResponse
@@ -45,11 +46,11 @@ class RemoteAuthRepository(
 
     }
 
-    suspend fun refresh(): Result<AuthResponse>{
+    suspend fun refresh(token: String): Result<AuthResponse>{
         try {
             return Result.Success(
                 withContext(ioDispatcher) {
-                    val response = userDataSource.refreshTokens()
+                    val response = userDataSource.refresh(token)
                     response.await()
                 }
             )

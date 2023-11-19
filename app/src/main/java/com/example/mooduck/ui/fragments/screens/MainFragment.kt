@@ -35,16 +35,6 @@ class MainFragment() : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val localUserRepository = LocalUserRepository(requireContext())
-
-        with(localUserRepository){
-           if(getAccessToken() != null && getRefreshToken() != null)
-           {
-               viewModel.setRetrofitToken(getAccessToken()!!,getRefreshToken()!!)
-               Log.d("TAG","tokens: ${getAccessToken()}")
-           }
-        }
-
         val bottomNavigationView = view.findViewById<BottomNavigationView>(R.id.bottom_menu)
 
         bottomNavigationView.setupWithNavController(

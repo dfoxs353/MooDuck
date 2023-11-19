@@ -4,17 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mooduck.R
-import com.example.mooduck.common.RetrofitClient
 import com.example.mooduck.data.remote.Result
-import com.example.mooduck.data.remote.books.BookApi
 import com.example.mooduck.data.remote.books.BooksResult
-import com.example.mooduck.data.remote.user.UserApi
 import com.example.mooduck.data.repository.BooksRepository
 import com.example.mooduck.data.repository.RemoteUserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
-import javax.sql.StatementEvent
 
 @HiltViewModel
 class BookListViewModel @Inject constructor(

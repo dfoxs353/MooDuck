@@ -1,10 +1,7 @@
 package com.example.mooduck.ui.activities
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.mooduck.common.RetrofitClient
-import com.example.mooduck.data.repository.LocalUserRepository
 import com.example.mooduck.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
