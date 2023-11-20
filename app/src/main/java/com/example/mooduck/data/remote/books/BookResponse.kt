@@ -2,10 +2,6 @@ package com.example.mooduck.data.remote.books
 
 import com.example.mooduck.data.remote.auth.AuthResponse
 
-data class BookResult(
-    val success: BookResponse? = null,
-    val error: Int? = null,
-)
 
 data class CertainBookResult(
     val success: CertainBookResponse? = null,

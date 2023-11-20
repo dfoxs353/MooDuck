@@ -2,7 +2,20 @@ package com.example.mooduck.data.remote.user
 
 import com.example.mooduck.data.remote.books.BooksResponse
 
-data class UserSetFavouriteBookResult(
-    val success: Boolean? = null,
-    val error: Int? = null,
+data class UserResponse<T>(
+    val data: T?,
+    val error: Throwable?
+)
+
+
+data class ChangeUserData(
+    val id: String,
+    val username: String,
+    val email: String,
+    val password: String
+)
+
+data class ChangeResetPasswordData(
+    val token: String,
+    val password: String
 )

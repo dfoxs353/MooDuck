@@ -62,7 +62,7 @@ class LoginFragment : Fragment() {
             val user = it ?: return@Observer
 
             if(user != null)
-                findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
+                findNavController().navigate(R.id.mainFragment)
         })
 
         viewModel.loginFormState.observe( viewLifecycleOwner, Observer {
@@ -95,7 +95,7 @@ class LoginFragment : Fragment() {
             if (loginResult.success != null) {
                 updateUiWithUser(loginResult.success.user.username)
                 userViewModel.saveUser(User(loginResult.success.user.id, password.text.toString(), loginResult.success.accessToken, loginResult.success.refreshToken))
-                findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
+                findNavController().navigate(R.id.mainFragment)
             }
         })
 

@@ -85,7 +85,7 @@ class SignupFragment : Fragment() {
             }
             if (signupResult.success != null) {
                 updateUiWithUser(signupResult.success.user.username)
-                findNavController().navigate(R.id.action_signupFragment_to_mainFragment)
+                findNavController().navigate(R.id.mainFragment)
             }
         })
 
