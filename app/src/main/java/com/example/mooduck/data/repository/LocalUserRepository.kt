@@ -26,8 +26,15 @@ class LocalUserRepository @Inject constructor(
         editor.apply()
     }
 
-    fun getUser(): User {
-        return User(
+    fun getUser(): User? {
+        val userId = getUserId()
+        val userPassword = getUserPassword()
+        val accessToken = getAccessToken()
+        val refreshToken = getRefreshToken()
+
+        return if(userId.isNullOrEmpty() || userPassword.isNullOrEmpty() || accessToken.isNullOrEmpty() || refreshToken.isNullOrEmpty()){
+            null
+        } else User(
             userid = getUserId()!!,
             userPassword = getUserPassword()!!,
             accessToken = getAccessToken()!!,

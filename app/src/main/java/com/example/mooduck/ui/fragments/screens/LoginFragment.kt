@@ -11,13 +11,16 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.mooduck.R
+import com.example.mooduck.data.local.User
 import com.example.mooduck.data.repository.LocalUserRepository
 import com.example.mooduck.databinding.FragmentLoginBinding
 import com.example.mooduck.ui.viewmodel.LoginViewModel
+import com.example.mooduck.ui.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -31,7 +34,9 @@ class LoginFragment : Fragment() {
     }
 
     private lateinit var binding: FragmentLoginBinding
+
     private val viewModel: LoginViewModel by viewModels()
+    private val userViewModel: UserViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,6 +57,13 @@ class LoginFragment : Fragment() {
         signup.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_signupFragment)
         }
+
+        userViewModel.user.observe(viewLifecycleOwner, Observer {
+            val user = it ?: return@Observer
+
+            if(user != null)
+                findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
+        })
 
         viewModel.loginFormState.observe( viewLifecycleOwner, Observer {
             val loginState = it ?: return@Observer
@@ -82,6 +94,7 @@ class LoginFragment : Fragment() {
             }
             if (loginResult.success != null) {
                 updateUiWithUser(loginResult.success.user.username)
+                userViewModel.saveUser(User(loginResult.success.user.id, password.text.toString(), loginResult.success.accessToken, loginResult.success.refreshToken))
                 findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
             }
         })
