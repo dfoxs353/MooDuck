@@ -35,11 +35,15 @@ class BookPageViewModel @Inject constructor(
         }
     }
 
+    suspend fun getFavoriteBook(id: String){
+        val result = remoteUserRepository.
+    }
+
     suspend fun setToReadBook(id: String, userId: String){
         val result = remoteUserRepository.setFavouriteBook(id, userId)
 
         if (result is Result.Success){
-
+            _bookState.value!!.bookToRead = result.data
         }
         else{
 
