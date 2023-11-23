@@ -58,12 +58,12 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.action_loginFragment_to_signupFragment)
         }
 
-        userViewModel.user.observe(viewLifecycleOwner, Observer {
-            val user = it ?: return@Observer
-
-            if(user != null)
-                findNavController().navigate(R.id.mainFragment)
-        })
+        userViewModel
+        userViewModel.user.observe(viewLifecycleOwner){user ->
+            if (user != null) run {
+                findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
+            }
+        }
 
         viewModel.loginFormState.observe( viewLifecycleOwner, Observer {
             val loginState = it ?: return@Observer

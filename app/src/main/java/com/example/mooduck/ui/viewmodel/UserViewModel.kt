@@ -3,6 +3,7 @@ package com.example.mooduck.ui.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.mooduck.data.local.User
 import com.example.mooduck.data.repository.LocalUserRepository
@@ -14,23 +15,24 @@ import javax.inject.Inject
 @HiltViewModel
 class UserViewModel @Inject constructor(
     private val userManager: LocalUserRepository
-): ViewModel() {
+) : ViewModel() {
 
-    val user = MutableLiveData<User?>()
+    private val _user = MutableLiveData<User?>()
+    val user: LiveData<User?> get() = _user
 
     init {
-        user.value = userManager.getUser()
-    }
-
-    fun saveUser(user: User) {
-        this.user.value = user
-        with(user){
-            userManager.saveUser(userid, userPassword, accessToken, refreshToken)
+        viewModelScope.launch {
+            userManager.userFlow.collect { user ->
+                _user.value = user
+            }
         }
     }
 
+    fun saveUser(user: User) {
+        userManager.saveUser(user)
+    }
+
     fun deleteUser() {
-        user.value = null
         userManager.clearUserData()
     }
 }

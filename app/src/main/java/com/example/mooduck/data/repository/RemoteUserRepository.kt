@@ -4,6 +4,8 @@ import android.util.Log
 import com.example.mooduck.data.remote.Result
 import com.example.mooduck.data.remote.auth.AuthApi
 import com.example.mooduck.data.remote.auth.UserLoginRequest
+import com.example.mooduck.data.remote.books.BooksResponse
+import com.example.mooduck.data.remote.books.BooksResult
 import com.example.mooduck.data.remote.user.UserApi
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -14,9 +16,9 @@ class RemoteUserRepository(
     private val ioDispatcher: CoroutineDispatcher
 ) {
 
-    suspend fun setFavouriteBook(bookId: String, userId: String): Result<Boolean> {
-        try {
-            return Result.Success(
+    suspend fun addBookToFavourite(bookId: String, userId: String): Result<Boolean> {
+        return try {
+            Result.Success(
                 withContext(ioDispatcher) {
                     val response = userDataSource.addBookToFavorite(bookId, userId)
                     response.await()
@@ -24,21 +26,35 @@ class RemoteUserRepository(
             )
         } catch (e: Exception) {
             Log.d("TAG", e.message.toString())
-            return Result.Error(IOException("Error setFavourite book id $bookId", e))
+            Result.Error(IOException("Error addFavourite book id $bookId", e))
         }
     }
 
-    suspend fun getFavouriteBook(userId: String): Result<Any> {
-        try {
-            return Result.Success(
+    suspend fun getFavouriteBooks(userId: String, limit: Int, page: Int): Result<BooksResponse> {
+        return try {
+            Result.Success(
                 withContext(ioDispatcher) {
-                    val response = userDataSource.getFavoriteBooks(userId)
+                    val response = userDataSource.getUserFavoriteBooks(userId, limit , page)
                     response.await()
                 }
             )
         } catch (e: Exception) {
             Log.d("TAG", e.message.toString())
-            return Result.Error(IOException("Error get Favourite books $userId", e))
+            Result.Error(IOException("Error get Favourite books $userId", e))
+        }
+    }
+
+    suspend fun deleteBookFromFavorite(bookId: String,userId: String): Result<Any>{
+        return try {
+            Result.Success(
+                withContext(ioDispatcher) {
+                    val response = userDataSource.deleteBookFromFavorite(bookId, userId)
+                    response.await()
+                }
+            )
+        } catch (e: Exception) {
+            Log.d("TAG", e.message.toString())
+            Result.Error(IOException("Error delete book from favorite id $bookId", e))
         }
     }
 }

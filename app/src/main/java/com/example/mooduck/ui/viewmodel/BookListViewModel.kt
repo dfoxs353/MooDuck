@@ -32,7 +32,7 @@ class BookListViewModel @Inject constructor(
     }
 
     suspend fun setFavouriteBook(booId: String, userId: String){
-        val result = remoteUserRepository.setFavouriteBook(booId,userId)
+        val result = remoteUserRepository.addBookToFavourite(booId,userId)
 
         if (result is Result.Success){
             //TODO//

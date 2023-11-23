@@ -35,18 +35,32 @@ class BookPageViewModel @Inject constructor(
         }
     }
 
-    suspend fun getFavoriteBook(id: String){
-        val result = remoteUserRepository.
+    suspend fun checkFavoriteBook(userId: String, bookId: String){
+        val result = remoteUserRepository.getFavouriteBooks(userId,100,1)
+
+        if(result is Result.Success){
+            result.data.books.map {
+                if (it._id == bookId){
+                    _bookState.value = BookState(bookToRead = true)
+                    return
+                }
+            }
+        }
     }
 
-    suspend fun setToReadBook(id: String, userId: String){
-        val result = remoteUserRepository.setFavouriteBook(id, userId)
+    suspend fun addBookToFavorite(id: String, userId: String){
+        val result = remoteUserRepository.addBookToFavourite(id, userId)
 
         if (result is Result.Success){
-            _bookState.value!!.bookToRead = result.data
+            _bookState.value = BookState(bookToRead = result.data)
         }
-        else{
+    }
 
+    suspend fun deleteBookFromFavorite(id: String, userId: String){
+        val result = remoteUserRepository.deleteBookFromFavorite(id, userId)
+
+        if (result is Result.Success){
+            _bookState.value = BookState(bookToRead = false)
         }
     }
 }

@@ -6,13 +6,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.example.mooduck.R
 import com.example.mooduck.data.remote.books.CertainBookResponse
 import com.example.mooduck.databinding.FragmentBookPageBinding
 import com.example.mooduck.ui.viewmodel.BookPageViewModel
+import com.example.mooduck.ui.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -25,6 +28,7 @@ class BookPageFragment : Fragment() {
         fun newInstance() = BookPageFragment()
     }
 
+    private val userModel: UserViewModel by viewModels()
     private val viewModel: BookPageViewModel by viewModels()
     private lateinit var binding: FragmentBookPageBinding
 
@@ -43,8 +47,15 @@ class BookPageFragment : Fragment() {
         val bookId = arguments?.getString("id")
         Log.d("TAG", "id book: ${bookId}")
 
-        if(bookId != null){
+        if(bookId != null ){
             getBook(bookId)
+            onDestroyView()
+        }
+
+        if (userModel.user.value != null){
+            if (bookId != null) {
+                checkFavoriteBook(userModel.user.value!!.userid,bookId)
+            }
         }
 
         viewModel.bookResult.observe(viewLifecycleOwner, Observer {
@@ -56,7 +67,16 @@ class BookPageFragment : Fragment() {
             }
             if(bookResult.success != null){
                 Log.d("TAG", "get book success")
-                setBookInfo(bookResult.success)
+                setBookData(bookResult.success)
+            }
+        })
+
+        viewModel.bookState.observe(viewLifecycleOwner, Observer {
+            val bookState = it ?: return@Observer
+
+            if (bookState.bookToRead){
+                binding.toReadButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.black))
+                binding.toReadButton.setTextColor(ContextCompat.getColor(requireContext(),R.color.white))
             }
         })
 
@@ -66,8 +86,17 @@ class BookPageFragment : Fragment() {
         }
     }
 
-    private fun setBookInfo(book: CertainBookResponse) {
-        val toReadButton = binding.toReadButton
+
+
+    private fun setBookData(book: CertainBookResponse) {
+        binding.toReadButton.setOnClickListener{
+            if (viewModel.bookState.value!!.bookToRead){
+                addFavoriteBook(book._id, userModel.user.value!!.userid)
+            }
+            else{
+                deleteBookFromFavorite(book._id, userModel.user.value!!.userid)
+            }
+        }
 
         val bookCover = binding.bookCoverImage
         val bookTitle = binding.titleTextView
@@ -103,6 +132,23 @@ class BookPageFragment : Fragment() {
         }
         catch (e: Exception){
             Log.d("EXCEPTION", e.toString())
+        }
+    }
+
+    private fun checkFavoriteBook(userid: String, bookId: String) {
+        GlobalScope.launch(Dispatchers.Main) {
+            viewModel.checkFavoriteBook( userid, bookId)
+        }
+    }
+    private fun addFavoriteBook(id: String, userid: String) {
+        GlobalScope.launch(Dispatchers.Main) {
+            viewModel.addBookToFavorite( userid,id)
+        }
+    }
+
+    private fun deleteBookFromFavorite(id: String, userid: String){
+        GlobalScope.launch(Dispatchers.Main) {
+            viewModel.deleteBookFromFavorite(id,userid)
         }
     }
 
