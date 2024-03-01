@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mooduck.R
-import com.example.mooduck.data.remote.Result
+import com.mooduck.domain.models.Result
 import com.example.mooduck.data.remote.books.CertainBookResult
 import com.example.mooduck.data.repository.BooksRepository
 import com.example.mooduck.data.repository.UserRepository
@@ -27,7 +27,7 @@ class BookPageViewModel @Inject constructor(
     suspend fun getBook(id: String){
         val result = remoteBookRepository.getBook(id)
 
-        if(result is Result.Success){
+        if(result is com.mooduck.domain.models.Result.Success){
             _bookResult.value = CertainBookResult(success = result.data)
         }
         else{
@@ -38,7 +38,7 @@ class BookPageViewModel @Inject constructor(
     suspend fun checkFavoriteBook(userId: String, bookId: String){
         val result = userRepository.getFavouriteBooks(userId)
 
-        if (result is Result.Success){
+        if (result is com.mooduck.domain.models.Result.Success){
             result.data.books.map {
                 if (it._id == bookId){
                     _bookState.value!!.bookToRead = true
@@ -51,7 +51,7 @@ class BookPageViewModel @Inject constructor(
     suspend fun setToReadBook(id: String, userId: String){
         val result = userRepository.setFavouriteBook(id, userId)
 
-        if (result is Result.Success){
+        if (result is com.mooduck.domain.models.Result.Success){
             _bookState.value!!.bookToRead = result.data
         }
         else{

@@ -42,6 +42,10 @@ android {
 
 
 dependencies {
+
+    implementation(project(":domain"))
+    implementation(project(":data"))
+
     val okHttp_version = "4.8.0"
     val retrofit_version =  "2.9.0"
 

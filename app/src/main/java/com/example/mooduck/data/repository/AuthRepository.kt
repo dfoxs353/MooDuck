@@ -3,7 +3,7 @@ package com.example.mooduck.data.repository
 import android.util.Log
 import com.example.mooduck.data.remote.auth.AuthApi
 import com.example.mooduck.data.remote.auth.AuthResponse
-import com.example.mooduck.data.remote.Result
+import com.mooduck.domain.models.Result
 import com.example.mooduck.data.remote.auth.UserLoginRequest
 import com.example.mooduck.data.remote.auth.UserRegistrationRequest
 import kotlinx.coroutines.CoroutineDispatcher
@@ -45,7 +45,7 @@ class AuthRepository(
 
     }
 
-    suspend fun refresh(token: String): Result<AuthResponse>{
+    suspend fun refresh(token: String): Result<AuthResponse> {
         try {
             return Result.Success(
                 withContext(ioDispatcher) {

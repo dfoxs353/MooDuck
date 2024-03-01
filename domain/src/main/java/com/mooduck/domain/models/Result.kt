@@ -1,4 +1,4 @@
-package com.example.mooduck.data.remote
+package com.mooduck.domain.models
 
 sealed class Result<out T : Any> {
 

@@ -1,7 +1,8 @@
 package com.example.mooduck.data.repository
 
 import android.util.Log
-import com.example.mooduck.data.remote.Result
+import com.example.mooduck.data.local.LocalUserDataSource
+import com.mooduck.domain.models.Result
 import com.example.mooduck.data.remote.books.BooksResponse
 import com.example.mooduck.data.remote.user.UserApi
 import kotlinx.coroutines.CoroutineDispatcher
@@ -9,7 +10,8 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 
 class UserRepository(
-    private val userDataSource: UserApi,
+    private val remoteUserDataSource: UserApi,
+    private val localUserDataSource: LocalUserDataSource,
     private val ioDispatcher: CoroutineDispatcher
 ) {
 
@@ -17,7 +19,7 @@ class UserRepository(
         try {
             return Result.Success(
                 withContext(ioDispatcher) {
-                    val response = userDataSource.addBookToFavorite(bookId, userId)
+                    val response = remoteUserDataSource.addBookToFavorite(bookId, userId)
                     response.await()
                 }
             )
@@ -31,7 +33,7 @@ class UserRepository(
         try {
             return Result.Success(
                 withContext(ioDispatcher) {
-                    val response = userDataSource.getFavoriteBooks(userId)
+                    val response = remoteUserDataSource.getFavoriteBooks(userId)
                     response.await()
                 }
             )

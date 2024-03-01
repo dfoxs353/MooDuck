@@ -5,9 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mooduck.R
-import com.example.mooduck.data.remote.Result
+import com.mooduck.domain.models.Result
 import com.example.mooduck.data.remote.auth.AuthResult
-import com.example.mooduck.data.repository.LocalUserRepository
 import com.example.mooduck.data.repository.AuthRepository
 import com.example.mooduck.ui.model.AuthFormState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,7 +27,7 @@ class SignupViewModel @Inject constructor(
     suspend fun signup(username: String,email: String, password: String) {
         val result = authRepository.signup(email, password,username)
 
-        if(result is Result.Success){
+        if(result is com.mooduck.domain.models.Result.Success){
             _signupResult.value = AuthResult(success = result.data)
         }
         else{

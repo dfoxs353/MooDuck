@@ -1,6 +1,5 @@
 package com.example.mooduck.data.remote.user
 
-import com.example.mooduck.data.remote.Result
 import com.example.mooduck.data.remote.auth.User
 import com.example.mooduck.data.remote.books.BooksResponse
 import com.example.mooduck.data.remote.books.Comment

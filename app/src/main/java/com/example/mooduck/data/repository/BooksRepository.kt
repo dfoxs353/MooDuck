@@ -1,7 +1,7 @@
 package com.example.mooduck.data.repository
 
 import android.util.Log
-import com.example.mooduck.data.remote.Result
+import com.mooduck.domain.models.Result
 import com.example.mooduck.data.remote.books.BookApi
 import com.example.mooduck.data.remote.books.BooksResponse
 import com.example.mooduck.data.remote.books.CertainBookResponse
@@ -42,7 +42,7 @@ class BooksRepository(
         }
     }
 
-    suspend fun getBookComments(id: String):Result<List<Comment>>{
+    suspend fun getBookComments(id: String): Result<List<Comment>> {
         try {
             return Result.Success(
                 withContext(ioDispatcher) {

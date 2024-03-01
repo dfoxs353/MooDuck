@@ -8,7 +8,6 @@ import com.example.mooduck.data.remote.auth.AuthApi
 import com.example.mooduck.data.remote.books.BookApi
 import com.example.mooduck.data.remote.user.UserApi
 import com.example.mooduck.data.repository.BooksRepository
-import com.example.mooduck.data.repository.LocalUserRepository
 import com.example.mooduck.data.repository.AuthRepository
 import com.example.mooduck.data.repository.UserRepository
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory

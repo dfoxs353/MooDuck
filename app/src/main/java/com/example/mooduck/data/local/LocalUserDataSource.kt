@@ -1,14 +1,12 @@
-package com.example.mooduck.data.repository
+package com.example.mooduck.data.local
 
-import android.content.Context
 import android.content.SharedPreferences
-import com.example.mooduck.data.local.User
-import kotlinx.coroutines.flow.Flow
+import com.mooduck.domain.models.User
 import javax.inject.Inject
 
-class LocalUserRepository @Inject constructor(
+class LocalUserDataSource @Inject constructor(
     private val sharedPreferences: SharedPreferences,
-    ) {
+) {
 
 
     private val KEY_ACCESS_TOKEN = "access_token"
@@ -18,31 +16,31 @@ class LocalUserRepository @Inject constructor(
 
     private val editor: SharedPreferences.Editor = sharedPreferences.edit()
 
-    fun saveUser(userID: String, passsword: String, refreshToken: String, accessToken: String){
-        editor.putString(KEY_USER_ID,userID)
-        editor.putString(KEY_USER_PASSWORD,passsword)
-        editor.putString(KEY_REFRESH_TOKEN, refreshToken)
-        editor.putString(KEY_ACCESS_TOKEN, accessToken)
-        editor.apply()
+    fun saveUser(user: User) {
+        with(user){
+            editor.putString(KEY_USER_ID, userid)
+            editor.putString(KEY_USER_PASSWORD, userPassword)
+            editor.putString(KEY_REFRESH_TOKEN, refreshToken)
+            editor.putString(KEY_ACCESS_TOKEN, accessToken)
+            editor.apply()
+        }
     }
 
     fun getUser(): User? {
         val userId = getUserId()
-        val userPassword = getUserPassword()
         val accessToken = getAccessToken()
         val refreshToken = getRefreshToken()
 
-        return if(userId.isNullOrEmpty() || userPassword.isNullOrEmpty() || accessToken.isNullOrEmpty() || refreshToken.isNullOrEmpty()){
+        return if (userId.isNullOrEmpty() || accessToken.isNullOrEmpty() || refreshToken.isNullOrEmpty()) {
             null
         } else User(
             userid = getUserId()!!,
-            userPassword = getUserPassword()!!,
             accessToken = getAccessToken()!!,
             refreshToken = getRefreshToken()!!,
         )
     }
 
-    fun saveJWToken( accessToken: String, refreshToken: String,) {
+    fun saveJWToken(accessToken: String, refreshToken: String, ) {
         editor.putString(KEY_REFRESH_TOKEN, refreshToken)
         editor.putString(KEY_ACCESS_TOKEN, accessToken)
         editor.apply()
@@ -51,10 +49,6 @@ class LocalUserRepository @Inject constructor(
 
     fun getUserId(): String? {
         return sharedPreferences.getString(KEY_USER_ID, null)
-    }
-
-    fun getUserPassword(): String?{
-        return sharedPreferences.getString(KEY_USER_PASSWORD,null)
     }
 
     fun getRefreshToken(): String? {
@@ -72,6 +66,4 @@ class LocalUserRepository @Inject constructor(
         editor.remove(KEY_USER_PASSWORD)
         editor.apply()
     }
-
-
 }

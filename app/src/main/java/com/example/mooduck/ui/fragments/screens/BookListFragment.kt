@@ -1,6 +1,5 @@
 package com.example.mooduck.ui.fragments.screens
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mooduck.R
 import com.example.mooduck.data.remote.books.BooksResponse
-import com.example.mooduck.data.repository.LocalUserRepository
 import com.example.mooduck.databinding.FragmentBookListBinding
 import com.example.mooduck.ui.adapters.BookListAdapter
 import com.example.mooduck.ui.viewmodel.BookListViewModel

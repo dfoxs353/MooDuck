@@ -16,8 +16,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.mooduck.R
-import com.example.mooduck.data.local.User
-import com.example.mooduck.data.repository.LocalUserRepository
+import com.mooduck.domain.models.User
 import com.example.mooduck.databinding.FragmentLoginBinding
 import com.example.mooduck.ui.viewmodel.LoginViewModel
 import com.example.mooduck.ui.viewmodel.UserViewModel

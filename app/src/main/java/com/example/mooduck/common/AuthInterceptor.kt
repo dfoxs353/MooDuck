@@ -1,6 +1,5 @@
 package com.example.mooduck.common
 
-import com.example.mooduck.data.repository.LocalUserRepository
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
