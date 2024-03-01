@@ -9,15 +9,15 @@ import androidx.lifecycle.ViewModel
 import com.example.mooduck.R
 import com.example.mooduck.data.remote.Result
 import com.example.mooduck.data.remote.auth.AuthResult
-import com.example.mooduck.data.repository.RemoteAuthRepository
+import com.example.mooduck.data.repository.AuthRepository
 import com.example.mooduck.ui.model.AuthFormState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val remoteAuthRepository: RemoteAuthRepository,
-    private val localUserRepository: RemoteAuthRepository,
+    private val authRepository: AuthRepository,
+    private val localUserRepository: AuthRepository,
 ) : ViewModel() {
     private val _loginFormState = MutableLiveData<AuthFormState>()
     val loginFormState: LiveData<AuthFormState> = _loginFormState
@@ -26,7 +26,7 @@ class LoginViewModel @Inject constructor(
     val loginResult: LiveData<AuthResult> = _loginResult
 
     suspend fun login(email: String, password: String) {
-        val result = remoteAuthRepository.login(email, password)
+        val result = authRepository.login(email, password)
 
         if (result is Result.Success) {
             _loginResult.value = AuthResult(success = result.data)

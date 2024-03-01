@@ -2,14 +2,13 @@ package com.example.mooduck.data.repository
 
 import android.util.Log
 import com.example.mooduck.data.remote.Result
-import com.example.mooduck.data.remote.auth.AuthApi
-import com.example.mooduck.data.remote.auth.UserLoginRequest
+import com.example.mooduck.data.remote.books.BooksResponse
 import com.example.mooduck.data.remote.user.UserApi
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import java.io.IOException
 
-class RemoteUserRepository(
+class UserRepository(
     private val userDataSource: UserApi,
     private val ioDispatcher: CoroutineDispatcher
 ) {
@@ -28,7 +27,7 @@ class RemoteUserRepository(
         }
     }
 
-    suspend fun getFavouriteBook(userId: String): Result<Any> {
+    suspend fun getFavouriteBooks(userId: String): Result<BooksResponse> {
         try {
             return Result.Success(
                 withContext(ioDispatcher) {

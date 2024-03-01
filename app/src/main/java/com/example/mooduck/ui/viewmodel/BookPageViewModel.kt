@@ -7,7 +7,7 @@ import com.example.mooduck.R
 import com.example.mooduck.data.remote.Result
 import com.example.mooduck.data.remote.books.CertainBookResult
 import com.example.mooduck.data.repository.BooksRepository
-import com.example.mooduck.data.repository.RemoteUserRepository
+import com.example.mooduck.data.repository.UserRepository
 import com.example.mooduck.ui.model.BookState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class BookPageViewModel @Inject constructor(
     private val remoteBookRepository: BooksRepository,
-    private val remoteUserRepository: RemoteUserRepository,
+    private val userRepository: UserRepository,
 ) : ViewModel() {
     private val _bookResult = MutableLiveData<CertainBookResult>()
     val bookResult : LiveData<CertainBookResult> = _bookResult
@@ -35,12 +35,21 @@ class BookPageViewModel @Inject constructor(
         }
     }
 
-    suspend fun getFavoriteBook(id: String){
-        val result = remoteUserRepository.
+    suspend fun checkFavoriteBook(userId: String, bookId: String){
+        val result = userRepository.getFavouriteBooks(userId)
+
+        if (result is Result.Success){
+            result.data.books.map {
+                if (it._id == bookId){
+                    _bookState.value!!.bookToRead = true
+                    return
+                }
+            }
+        }
     }
 
     suspend fun setToReadBook(id: String, userId: String){
-        val result = remoteUserRepository.setFavouriteBook(id, userId)
+        val result = userRepository.setFavouriteBook(id, userId)
 
         if (result is Result.Success){
             _bookState.value!!.bookToRead = result.data

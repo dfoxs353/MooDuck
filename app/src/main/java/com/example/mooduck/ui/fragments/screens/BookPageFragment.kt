@@ -6,13 +6,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.example.mooduck.R
 import com.example.mooduck.data.remote.books.CertainBookResponse
 import com.example.mooduck.databinding.FragmentBookPageBinding
 import com.example.mooduck.ui.viewmodel.BookPageViewModel
+import com.example.mooduck.ui.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -23,8 +26,10 @@ class BookPageFragment : Fragment() {
 
     companion object {
         fun newInstance() = BookPageFragment()
+        var bookId: String? = ""
     }
 
+    private val userViewModel: UserViewModel by activityViewModels()
     private val viewModel: BookPageViewModel by viewModels()
     private lateinit var binding: FragmentBookPageBinding
 
@@ -37,15 +42,32 @@ class BookPageFragment : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        bookId?.let { checkFavoriteBook(userViewModel.user.value!!.userid, it) }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val bookId = arguments?.getString("id")
+        bookId = arguments?.getString("id")
         Log.d("TAG", "id book: ${bookId}")
 
-        if(bookId != null){
-            getBook(bookId)
-        }
+        bookId?.let { getBook(it) }
+
+        viewModel.bookState.observe(viewLifecycleOwner, Observer {
+            val bookState = it ?: return@Observer
+
+            if (bookState.bookToRead){
+                binding.toReadButton.setBackgroundColor(getResources().getColor(R.color.white))
+                binding.toReadButton.setBackgroundColor(getResources().getColor(R.color.black))
+            }
+            else{
+                binding.toReadButton.setBackgroundColor(getResources().getColor(R.color.black))
+                binding.toReadButton.setBackgroundColor(getResources().getColor(R.color.white))
+            }
+        })
 
         viewModel.bookResult.observe(viewLifecycleOwner, Observer {
             val bookResult = it ?: return@Observer
@@ -68,6 +90,9 @@ class BookPageFragment : Fragment() {
 
     private fun setBookInfo(book: CertainBookResponse) {
         val toReadButton = binding.toReadButton
+        toReadButton.setOnClickListener{
+            addToFavoriteBook(bookId, userViewModel.user.value!!.userid)
+        }
 
         val bookCover = binding.bookCoverImage
         val bookTitle = binding.titleTextView
@@ -106,9 +131,21 @@ class BookPageFragment : Fragment() {
         }
     }
 
+    private fun addToFavoriteBook(bookId: String?, userId: String) {
+        GlobalScope.launch(Dispatchers.IO) {
+            bookId?.let { viewModel.setToReadBook(it, userId) }
+        }
+    }
+
     private fun getBook(bookId: String) {
-        GlobalScope.launch(Dispatchers.Main) {
+        GlobalScope.launch(Dispatchers.IO) {
             viewModel.getBook(bookId)
+        }
+    }
+
+    private fun checkFavoriteBook(userId: String, bookId: String){
+        GlobalScope.launch(Dispatchers.IO) {
+            viewModel.checkFavoriteBook(userId,bookId)
         }
     }
 

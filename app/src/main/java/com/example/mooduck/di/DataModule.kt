@@ -9,8 +9,8 @@ import com.example.mooduck.data.remote.books.BookApi
 import com.example.mooduck.data.remote.user.UserApi
 import com.example.mooduck.data.repository.BooksRepository
 import com.example.mooduck.data.repository.LocalUserRepository
-import com.example.mooduck.data.repository.RemoteAuthRepository
-import com.example.mooduck.data.repository.RemoteUserRepository
+import com.example.mooduck.data.repository.AuthRepository
+import com.example.mooduck.data.repository.UserRepository
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
@@ -109,14 +109,14 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideRemoteAuthRepository(authApi: AuthApi): RemoteAuthRepository {
-        return RemoteAuthRepository(authApi, Dispatchers.IO)
+    fun provideRemoteAuthRepository(authApi: AuthApi): AuthRepository {
+        return AuthRepository(authApi, Dispatchers.IO)
     }
 
     @Provides
     @Singleton
-    fun provideRemoteUserRepository(userApi: UserApi): RemoteUserRepository{
-        return RemoteUserRepository(userApi,Dispatchers.IO)
+    fun provideRemoteUserRepository(userApi: UserApi): UserRepository{
+        return UserRepository(userApi,Dispatchers.IO)
     }
 
     @Provides

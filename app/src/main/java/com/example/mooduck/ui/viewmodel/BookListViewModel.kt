@@ -7,14 +7,14 @@ import com.example.mooduck.R
 import com.example.mooduck.data.remote.Result
 import com.example.mooduck.data.remote.books.BooksResult
 import com.example.mooduck.data.repository.BooksRepository
-import com.example.mooduck.data.repository.RemoteUserRepository
+import com.example.mooduck.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class BookListViewModel @Inject constructor(
     private val booksRepository: BooksRepository,
-    private val remoteUserRepository: RemoteUserRepository,
+    private val userRepository: UserRepository,
 ) : ViewModel() {
 
     private val _booksResult = MutableLiveData<BooksResult>()
@@ -32,7 +32,7 @@ class BookListViewModel @Inject constructor(
     }
 
     suspend fun setFavouriteBook(booId: String, userId: String){
-        val result = remoteUserRepository.setFavouriteBook(booId,userId)
+        val result = userRepository.setFavouriteBook(booId,userId)
 
         if (result is Result.Success){
             //TODO//

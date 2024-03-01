@@ -1,6 +1,5 @@
 package com.example.mooduck.data.repository
 
-import android.util.JsonToken
 import android.util.Log
 import com.example.mooduck.data.remote.auth.AuthApi
 import com.example.mooduck.data.remote.auth.AuthResponse
@@ -12,7 +11,7 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 
 
-class RemoteAuthRepository(
+class AuthRepository(
     private val userDataSource: AuthApi,
     private val ioDispatcher: CoroutineDispatcher
 ) {

@@ -29,9 +29,8 @@ interface UserApi {
 
     @GET("users/{userId}/favoritebooks")
     fun getFavoriteBooks(
-        @Body bookId: String,
         @Path("userId") userId: String,
-    ):Deferred<Any>
+    ):Deferred<BooksResponse>
 
     @GET("/users/{id}")
     fun getUser(@Path("id") id: String): Deferred<User>
