@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mooduck.R
-import com.example.mooduck.data.remote.books.BooksResponse
+import com.mooduck.data.remote.books.BooksResponse
 import com.example.mooduck.databinding.FragmentBookListBinding
 import com.example.mooduck.ui.adapters.BookListAdapter
 import com.example.mooduck.ui.viewmodel.BookListViewModel
@@ -63,7 +63,7 @@ class BookListFragment : Fragment() {
         }
     }
 
-    private fun setBookListData(bookList:    BooksResponse) {
+    private fun setBookListData(bookList: BooksResponse) {
         val adapter = BookListAdapter(bookList)
         adapter.setOnClickListener(object :
             BookListAdapter.OnClickListener{

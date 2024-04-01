@@ -1,17 +1,10 @@
-package com.example.mooduck.data.remote.books
+package com.mooduck.data.remote.books
 
-import com.example.mooduck.data.remote.auth.AuthResponse
+import com.mooduck.domain.models.Book
+import com.mooduck.domain.models.CertainBook
+import com.mooduck.domain.models.Comment
+import com.mooduck.domain.models.Images
 
-
-data class CertainBookResult(
-    val success: CertainBookResponse? = null,
-    val error: Int? = null,
-)
-
-data class BooksResult(
-    val success: BooksResponse? = null,
-    val error: Int? = null,
-)
 
 data class BookResponse(
     val _id: String,
@@ -24,11 +17,13 @@ data class BookResponse(
     val publisher: String,
 )
 
+
+
 data class CertainBookResponse(
     val authors: List<String>,
     val bookBinding: String,
     val bookSeries: String,
-    val comments: List<Comment>,
+    val commentResponses: List<CommentResponse>,
     val description: String,
     val genres: List<String>,
     val img: Images,
@@ -36,23 +31,27 @@ data class CertainBookResponse(
     val painters: List<String>,
     val publishedDate: String,
     val _id: String,
-    val publisher:String,
+    val publisher: String,
     val title: String,
     val translaters: List<String>,
 )
 
 
-data class Comment(
+
+
+data class CommentResponse(
     val bookId: String,
     val date: Int,
-    val dislikes: ArrayList<Int>,
-    val likes: ArrayList<Int>,
+    val dislikes: Int,
+    val likes: Int,
     val rating: Int,
     val text: String,
     val title: String,
     val userId: String,
     val _id: String,
 )
+
+
 
 
 data class BooksResponse(
@@ -63,11 +62,15 @@ data class BooksResponse(
     val hasNextPage: Boolean,
     val hasPrevPage: Boolean,
     val page: Int,
-    val comments: List<Comment>,
+    val commentResponses: List<CommentResponse>,
     val lines: Boolean,
 )
-data class Images(
+
+data class ImagesResponse(
     val largeFingernail: String,
     val mediumFingernail: String,
     val smallFingernail: String,
 )
+
+
+

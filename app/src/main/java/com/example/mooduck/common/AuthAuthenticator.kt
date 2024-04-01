@@ -1,7 +1,7 @@
 package com.example.mooduck.common
 
-import com.example.mooduck.data.remote.auth.AuthApi
-import com.example.mooduck.data.remote.auth.AuthResponse
+import com.mooduck.data.remote.auth.AuthApi
+import com.mooduck.data.remote.auth.AuthResponse
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator

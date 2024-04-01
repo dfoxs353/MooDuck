@@ -1,4 +1,4 @@
-package com.example.mooduck.data.remote.books
+package com.mooduck.data.remote.books
 
 data class BookRequest(
     val id: String

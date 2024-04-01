@@ -14,7 +14,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.example.mooduck.R
-import com.example.mooduck.data.remote.books.BooksResponse
+import com.mooduck.data.remote.books.BooksResponse
 
 class BookListAdapter(private val dataSet: BooksResponse):
     RecyclerView.Adapter<BookListAdapter.ViewHolder>(){

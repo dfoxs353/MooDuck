@@ -1,11 +1,9 @@
-package com.example.mooduck.data.remote.books
+package com.mooduck.data.remote.books
 
 import kotlinx.coroutines.Deferred
-import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-import retrofit2.http.QueryMap
 
 interface BookApi {
 
@@ -21,5 +19,5 @@ interface BookApi {
     fun getBook(@Path("id") id: String):Deferred<CertainBookResponse>
 
     @GET("books/{id}/comments")
-    fun getBookComments(@Path("id") id: String):Deferred<List<Comment>>
+    fun getBookComments(@Path("id") id: String):Deferred<List<CommentResponse>>
 }

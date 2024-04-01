@@ -1,8 +1,8 @@
-package com.example.mooduck.data.remote.user
+package com.mooduck.data.remote.user
 
-import com.example.mooduck.data.remote.auth.User
-import com.example.mooduck.data.remote.books.BooksResponse
-import com.example.mooduck.data.remote.books.Comment
+import com.mooduck.data.remote.auth.User
+import com.mooduck.data.remote.books.BooksResponse
+import com.mooduck.data.remote.books.CommentResponse
 import kotlinx.coroutines.Deferred
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -38,7 +38,7 @@ interface UserApi {
     fun getUserFavoriteBooks(@Path("id") id: String, @Query("limit") limit: Int, @Query("page") page: Int): Deferred<BooksResponse>
 
     @GET("/users/{id}/comments")
-    fun getUserComments(@Path("id") id: String): Deferred<List<Comment>>
+    fun getUserComments(@Path("id") id: String): Deferred<List<CommentResponse>>
 
     @PUT("/users/{id}/username")
     fun changeUserUsername(@Path("id") id: String, @Body data: ChangeUserData): Deferred<Any>

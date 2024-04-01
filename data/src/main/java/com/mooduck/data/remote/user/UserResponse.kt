@@ -1,6 +1,6 @@
-package com.example.mooduck.data.remote.user
+package com.mooduck.data.remote.user
 
-import com.example.mooduck.data.remote.books.BooksResponse
+import com.mooduck.data.remote.books.BooksResponse
 
 data class UserResponse<T>(
     val data: T?,

@@ -7,17 +7,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mooduck.R
-import com.mooduck.domain.models.Result
-import com.example.mooduck.data.remote.auth.AuthResult
-import com.example.mooduck.data.repository.AuthRepository
+import com.mooduck.data.remote.auth.AuthResult
+import com.mooduck.data.repository.AuthRepositoryIml
 import com.example.mooduck.ui.model.AuthFormState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val authRepository: AuthRepository,
-    private val localUserRepository: AuthRepository,
+    private val authRepository: AuthRepositoryIml,
+    private val localUserRepository: AuthRepositoryIml,
 ) : ViewModel() {
     private val _loginFormState = MutableLiveData<AuthFormState>()
     val loginFormState: LiveData<AuthFormState> = _loginFormState

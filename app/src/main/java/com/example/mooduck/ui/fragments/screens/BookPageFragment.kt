@@ -12,7 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.mooduck.R
-import com.example.mooduck.data.remote.books.CertainBookResponse
+import com.mooduck.data.remote.books.CertainBookResponse
 import com.example.mooduck.databinding.FragmentBookPageBinding
 import com.example.mooduck.ui.viewmodel.BookPageViewModel
 import com.example.mooduck.ui.viewmodel.UserViewModel

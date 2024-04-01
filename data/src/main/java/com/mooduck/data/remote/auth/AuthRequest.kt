@@ -1,4 +1,4 @@
-package com.example.mooduck.data.remote.auth
+package com.mooduck.data.remote.auth
 
 data class UserRegistrationRequest(
     val email: String,

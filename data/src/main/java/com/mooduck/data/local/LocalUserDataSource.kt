@@ -1,4 +1,4 @@
-package com.example.mooduck.data.local
+package com.mooduck.data.local
 
 import android.content.SharedPreferences
 import com.mooduck.domain.models.User

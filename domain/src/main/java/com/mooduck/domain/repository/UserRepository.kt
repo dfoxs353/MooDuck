@@ -2,6 +2,7 @@ package com.mooduck.domain.repository
 
 import com.mooduck.domain.models.Book
 import com.mooduck.domain.models.User
+import com.mooduck.domain.models.Result
 
 interface UserRepository {
 
@@ -9,13 +10,12 @@ interface UserRepository {
 
     suspend fun getFavouriteBooks(userId: String): Result<List<Book>>
 
-    suspend fun saveUser(): Result<User>
+    suspend fun saveUser(user: User)
 
-    suspend fun getUser(): Result<User?>
+    suspend fun getUser(): User?
 
+    suspend fun getUserId(): String?
     fun getRefreshToken(): String?
-
-    fun getUserId(): String?
 
     fun getAccessToken(): String?
 

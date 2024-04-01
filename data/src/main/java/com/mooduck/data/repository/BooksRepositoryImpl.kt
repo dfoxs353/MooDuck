@@ -1,26 +1,33 @@
-package com.example.mooduck.data.repository
+package com.mooduck.data.repository
 
 import android.util.Log
+import com.mooduck.data.mappers.toBooks
+import com.mooduck.data.mappers.toCertainBook
+import com.mooduck.data.mappers.toComment
 import com.mooduck.domain.models.Result
-import com.example.mooduck.data.remote.books.BookApi
-import com.example.mooduck.data.remote.books.BooksResponse
-import com.example.mooduck.data.remote.books.CertainBookResponse
-import com.example.mooduck.data.remote.books.Comment
+import com.mooduck.data.remote.books.BookApi
+import com.mooduck.data.remote.books.BooksResponse
+import com.mooduck.data.remote.books.CertainBookResponse
+import com.mooduck.data.remote.books.CommentResponse
+import com.mooduck.domain.models.Book
+import com.mooduck.domain.models.CertainBook
+import com.mooduck.domain.models.Comment
+import com.mooduck.domain.repository.BooksRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import java.io.IOException
 
-class BooksRepository(
+class BooksRepositoryImpl(
     private val bookApi: BookApi,
     private val ioDispatcher: CoroutineDispatcher
-) {
-    suspend fun getBook(id: String): Result<CertainBookResponse> {
+) : BooksRepository {
+    override suspend fun getBook(id: String): Result<CertainBook> {
         try {
             return Result.Success(
                 withContext(ioDispatcher) {
                     val response = bookApi.getBook(id)
                     response.await()
-                }
+                }.toCertainBook()
             )
         } catch (e: Exception) {
             Log.d("TAG", e.message.toString())
@@ -28,13 +35,18 @@ class BooksRepository(
         }
     }
 
-    suspend fun getBooks(limit: Int?, page: Int?, genre: String?, author: String?): Result<BooksResponse> {
+    override suspend fun getBooks(
+        limit: Int?,
+        page: Int?,
+        genre: String?,
+        author: String
+    ): Result<List<Book>> {
         try {
             return Result.Success(
                 withContext(ioDispatcher) {
                     val response = bookApi.getBooks(limit,page,genre,author)
                     response.await()
-                }
+                }.toBooks()
             )
         } catch (e: Exception) {
             Log.d("TAG", e.message.toString())
@@ -42,12 +54,14 @@ class BooksRepository(
         }
     }
 
-    suspend fun getBookComments(id: String): Result<List<Comment>> {
+    override suspend fun getBookComments(id: String): Result<List<Comment>> {
         try {
             return Result.Success(
                 withContext(ioDispatcher) {
                     val response = bookApi.getBookComments(id)
                     response.await()
+                }.map {
+                    it.toComment()
                 }
             )
         } catch (e: Exception) {

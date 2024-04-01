@@ -4,17 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mooduck.R
-import com.mooduck.domain.models.Result
-import com.example.mooduck.data.remote.books.BooksResult
-import com.example.mooduck.data.repository.BooksRepository
-import com.example.mooduck.data.repository.UserRepository
+import com.mooduck.data.remote.books.BooksResult
+import com.mooduck.data.repository.BooksRepositoryImpl
+import com.mooduck.data.repository.UserRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class BookListViewModel @Inject constructor(
-    private val booksRepository: BooksRepository,
-    private val userRepository: UserRepository,
+    private val booksRepository: BooksRepositoryImpl,
+    private val userRepository: UserRepositoryImpl,
 ) : ViewModel() {
 
     private val _booksResult = MutableLiveData<BooksResult>()

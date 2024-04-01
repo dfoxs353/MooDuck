@@ -1,4 +1,4 @@
-package com.example.mooduck.data.remote.auth
+package com.mooduck.data.remote.auth
 
 import kotlinx.coroutines.Deferred
 import retrofit2.Response

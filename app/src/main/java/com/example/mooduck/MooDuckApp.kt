@@ -1,7 +1,7 @@
 package com.example.mooduck
 
 import android.app.Application
-import com.example.mooduck.data.remote.auth.AuthApi
+import com.mooduck.data.remote.auth.AuthApi
 import dagger.hilt.android.HiltAndroidApp
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

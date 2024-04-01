@@ -11,7 +11,7 @@ data class Book(
     val publisher: String,
 )
 
-data class CertainBookResponse(
+data class CertainBook(
     val authors: List<String>,
     val bookBinding: String,
     val bookSeries: String,
@@ -31,8 +31,8 @@ data class CertainBookResponse(
 data class Comment(
     val bookId: String,
     val date: Int,
-    val dislikes: ArrayList<Int>,
-    val likes: ArrayList<Int>,
+    val dislikes: Int,
+    val likes: Int,
     val rating: Int,
     val text: String,
     val title: String,

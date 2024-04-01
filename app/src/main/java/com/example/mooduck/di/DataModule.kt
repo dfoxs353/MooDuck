@@ -4,13 +4,14 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.example.mooduck.common.AuthAuthenticator
 import com.example.mooduck.common.AuthInterceptor
-import com.example.mooduck.data.remote.auth.AuthApi
-import com.example.mooduck.data.remote.books.BookApi
-import com.example.mooduck.data.remote.user.UserApi
-import com.example.mooduck.data.repository.BooksRepository
-import com.example.mooduck.data.repository.AuthRepository
-import com.example.mooduck.data.repository.UserRepository
+import com.mooduck.data.remote.auth.AuthApi
+import com.mooduck.data.remote.books.BookApi
+import com.mooduck.data.remote.user.UserApi
+import com.mooduck.data.repository.BooksRepositoryImpl
+import com.mooduck.data.repository.AuthRepositoryIml
+import com.mooduck.data.repository.UserRepositoryImpl
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.mooduck.domain.repository.UserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,8 +31,8 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideLocalUserRepository(sharedPreferences: SharedPreferences): LocalUserRepository{
-        return LocalUserRepository(sharedPreferences)
+    fun provideLocalUserRepository(sharedPreferences: SharedPreferences): UserRepository{
+        return UserRepositoryImpl(sharedPreferences)
     }
 
     @Provides
@@ -43,12 +44,12 @@ class DataModule {
 
     @Singleton
     @Provides
-    fun provideAuthInterceptor(tokenManager: LocalUserRepository): AuthInterceptor =
+    fun provideAuthInterceptor(tokenManager: UserRepository): AuthInterceptor =
         AuthInterceptor(tokenManager)
 
     @Singleton
     @Provides
-    fun provideAuthAuthenticator(tokenManager: LocalUserRepository): AuthAuthenticator =
+    fun provideAuthAuthenticator(tokenManager: UserRepository): AuthAuthenticator =
         AuthAuthenticator(tokenManager)
 
     @Singleton
@@ -108,20 +109,20 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideRemoteAuthRepository(authApi: AuthApi): AuthRepository {
-        return AuthRepository(authApi, Dispatchers.IO)
+    fun provideRemoteAuthRepository(authApi: AuthApi): AuthRepositoryIml {
+        return AuthRepositoryIml(authApi, Dispatchers.IO)
     }
 
     @Provides
     @Singleton
-    fun provideRemoteUserRepository(userApi: UserApi): UserRepository{
-        return UserRepository(userApi,Dispatchers.IO)
+    fun provideRemoteUserRepository(userApi: UserApi): UserRepositoryImpl {
+        return UserRepositoryImpl(userApi,Dispatchers.IO)
     }
 
     @Provides
     @Singleton
-    fun provideRemoteBookRepository(bookApi: BookApi): BooksRepository{
-        return BooksRepository(bookApi,Dispatchers.IO)
+    fun provideRemoteBookRepository(bookApi: BookApi): BooksRepositoryImpl {
+        return BooksRepositoryImpl(bookApi,Dispatchers.IO)
     }
 
 
