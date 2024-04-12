@@ -3,6 +3,7 @@ package com.example.mooduck.common
 import com.mooduck.data.remote.auth.AuthApi
 import com.mooduck.data.remote.auth.AuthResponse
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.mooduck.domain.repository.UserRepository
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.OkHttpClient
@@ -15,19 +16,24 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 
 class AuthAuthenticator @Inject constructor(
-    private val tokenManager: LocalUserRepository,
+    private val tokenManager: UserRepository,
 ): Authenticator {
     override fun authenticate(route: Route?, response: Response): Request? {
-        val token = runBlocking {
-            tokenManager.getRefreshToken()
+        val user = runBlocking {
+            tokenManager.getUser()
         }
         return runBlocking {
-            val newToken = getNewToken(token)
-            if (!newToken.isSuccessful  || newToken.body() == null) { //Couldn't refresh the token, so restart the login process
-                tokenManager.clearUserData()
+            val newToken = getNewToken(user?.refreshToken)
+            if (!newToken.isSuccessful  || newToken.body() == null) {
+                tokenManager.clearUser()
             }
             newToken.body()?.let {
-                tokenManager.saveJWToken(it.refreshToken,it.accessToken)
+                tokenManager.saveUser(
+                    user!!.copy(
+                        refreshToken = it.refreshToken,
+                        accessToken = it.accessToken,
+                    )
+                )
                 response.request.newBuilder()
                     .header("Authorization", "Bearer ${it.accessToken}")
                     .build()

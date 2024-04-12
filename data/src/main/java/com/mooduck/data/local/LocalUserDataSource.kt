@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 import com.mooduck.domain.models.User
 import javax.inject.Inject
 
-class LocalUserDataSource @Inject constructor(
+class LocalUserDataSource(
     private val sharedPreferences: SharedPreferences,
 ) {
 

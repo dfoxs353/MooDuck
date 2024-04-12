@@ -11,6 +11,7 @@ import com.mooduck.data.repository.BooksRepositoryImpl
 import com.mooduck.data.repository.AuthRepositoryIml
 import com.mooduck.data.repository.UserRepositoryImpl
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.mooduck.data.local.LocalUserDataSource
 import com.mooduck.domain.repository.UserRepository
 import dagger.Module
 import dagger.Provides
@@ -28,12 +29,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class DataModule {
-
-    @Provides
-    @Singleton
-    fun provideLocalUserRepository(sharedPreferences: SharedPreferences): UserRepository{
-        return UserRepositoryImpl(sharedPreferences)
-    }
 
     @Provides
     @Singleton
@@ -113,16 +108,25 @@ class DataModule {
         return AuthRepositoryIml(authApi, Dispatchers.IO)
     }
 
-    @Provides
-    @Singleton
-    fun provideRemoteUserRepository(userApi: UserApi): UserRepositoryImpl {
-        return UserRepositoryImpl(userApi,Dispatchers.IO)
-    }
+
 
     @Provides
     @Singleton
     fun provideRemoteBookRepository(bookApi: BookApi): BooksRepositoryImpl {
         return BooksRepositoryImpl(bookApi,Dispatchers.IO)
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideUserRepository(userApi: UserApi,localUserDataSource: LocalUserDataSource): UserRepository{
+        return UserRepositoryImpl(userApi,localUserDataSource,Dispatchers.IO)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLocalUserDataSource(sharedPreferences: SharedPreferences): LocalUserDataSource{
+        return LocalUserDataSource(sharedPreferences)
     }
 
 
