@@ -3,7 +3,7 @@ package com.example.mooduck.common
 import com.mooduck.data.remote.auth.AuthApi
 import com.mooduck.data.remote.auth.AuthResponse
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.mooduck.domain.repository.UserRepository
+import com.mooduck.domain.repository.LocalUserRepository
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.OkHttpClient
@@ -16,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 
 class AuthAuthenticator @Inject constructor(
-    private val tokenManager: UserRepository,
+    private val tokenManager: LocalUserRepository,
 ): Authenticator {
     override fun authenticate(route: Route?, response: Response): Request? {
         val user = runBlocking {

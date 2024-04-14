@@ -36,18 +36,22 @@ android {
 
 dependencies {
 
-    implementation(project(":domain"))
-    implementation(libs.core.ktx)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.ext.junit)
-    androidTestImplementation(libs.espresso.core)
+    implementation(project(path = ":domain"))
 
-    implementation (libs.retrofit)
-    implementation (libs.converter.gson)
-    implementation (libs.retrofit2.kotlin.coroutines.adapter)
-    implementation (libs.okhttp)
-    implementation (libs.logging.interceptor)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 
     implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
+    kapt(libs.hilt.compailer)
+
+    implementation(libs.kotlinx.serialization.json)
+
+    implementation(libs.kotlinx.coroutines.android)
+
+    implementation(libs.retrofit2.retrofit)
+    implementation(libs.retrofit2.retrofit.converter.gson)
+    implementation(libs.retrofit2.kotlin.coroutines.adapter)
+    implementation(libs.okhttp3.okhttp)
+    implementation(libs.okhttp3.logging.interceptor)
 }

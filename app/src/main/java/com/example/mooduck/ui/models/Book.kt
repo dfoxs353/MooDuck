@@ -1,6 +1,6 @@
 package com.example.mooduck.ui.models
 
-
+import com.mooduck.domain.models.Book
 
 
 data class Book(

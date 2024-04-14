@@ -3,7 +3,6 @@ package com.mooduck.data.repository
 import android.util.Log
 import com.mooduck.data.mappers.toUser
 import com.mooduck.data.remote.auth.AuthApi
-import com.mooduck.data.remote.auth.AuthResponse
 import com.mooduck.domain.models.Result
 import com.mooduck.data.remote.auth.UserLoginRequest
 import com.mooduck.data.remote.auth.UserRegistrationRequest
@@ -12,9 +11,10 @@ import com.mooduck.domain.repository.AuthRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import java.io.IOException
+import javax.inject.Inject
 
 
-class AuthRepositoryIml(
+class AuthRepositoryImpl @Inject constructor(
     private val userDataSource: AuthApi,
     private val ioDispatcher: CoroutineDispatcher
 ) : AuthRepository {

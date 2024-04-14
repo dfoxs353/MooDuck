@@ -2,17 +2,22 @@ package com.example.mooduck.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.media3.common.BuildConfig
 import com.example.mooduck.common.AuthAuthenticator
 import com.example.mooduck.common.AuthInterceptor
 import com.mooduck.data.remote.auth.AuthApi
 import com.mooduck.data.remote.books.BookApi
 import com.mooduck.data.remote.user.UserApi
 import com.mooduck.data.repository.BooksRepositoryImpl
-import com.mooduck.data.repository.AuthRepositoryIml
-import com.mooduck.data.repository.UserRepositoryImpl
+import com.mooduck.data.repository.AuthRepositoryImpl
+import com.mooduck.data.repository.LocalUserRepositoryImpl
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.mooduck.data.local.LocalUserDataSource
-import com.mooduck.domain.repository.UserRepository
+import com.mooduck.data.repository.RemoteUserRepositoryImpl
+import com.mooduck.domain.repository.AuthRepository
+import com.mooduck.domain.repository.BooksRepository
+import com.mooduck.domain.repository.LocalUserRepository
+import com.mooduck.domain.repository.RemoteUserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,12 +44,12 @@ class DataModule {
 
     @Singleton
     @Provides
-    fun provideAuthInterceptor(tokenManager: UserRepository): AuthInterceptor =
+    fun provideAuthInterceptor(tokenManager: LocalUserRepository): AuthInterceptor =
         AuthInterceptor(tokenManager)
 
     @Singleton
     @Provides
-    fun provideAuthAuthenticator(tokenManager: UserRepository): AuthAuthenticator =
+    fun provideAuthAuthenticator(tokenManager: LocalUserRepository): AuthAuthenticator =
         AuthAuthenticator(tokenManager)
 
     @Singleton
@@ -55,6 +60,7 @@ class DataModule {
     ): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+
 
         return OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
@@ -74,10 +80,15 @@ class DataModule {
 
     @Singleton
     @Provides
-    fun provideAuthAPIService(retrofit: Retrofit.Builder): AuthApi =
-        retrofit
+    fun provideAuthAPIService(retrofit: Retrofit.Builder): AuthApi
+    {
+        val loggingInterceptor = HttpLoggingInterceptor()
+        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+
+        return retrofit
             .client(
                 OkHttpClient.Builder()
+                    .addInterceptor(loggingInterceptor)
                     .connectTimeout(10, TimeUnit.SECONDS)
                     .readTimeout(10, TimeUnit.SECONDS)
                     .writeTimeout(10, TimeUnit.SECONDS)
@@ -85,6 +96,7 @@ class DataModule {
             )
             .build()
             .create(AuthApi::class.java)
+    }
 
     @Singleton
     @Provides
@@ -104,23 +116,8 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideRemoteAuthRepository(authApi: AuthApi): AuthRepositoryIml {
-        return AuthRepositoryIml(authApi, Dispatchers.IO)
-    }
-
-
-
-    @Provides
-    @Singleton
-    fun provideRemoteBookRepository(bookApi: BookApi): BooksRepositoryImpl {
-        return BooksRepositoryImpl(bookApi,Dispatchers.IO)
-    }
-
-
-    @Provides
-    @Singleton
-    fun provideUserRepository(userApi: UserApi,localUserDataSource: LocalUserDataSource): UserRepository{
-        return UserRepositoryImpl(userApi,localUserDataSource,Dispatchers.IO)
+    fun provideAuthRepository(authApi: AuthApi): AuthRepository {
+        return AuthRepositoryImpl(authApi, Dispatchers.IO)
     }
 
     @Provides
@@ -129,5 +126,22 @@ class DataModule {
         return LocalUserDataSource(sharedPreferences)
     }
 
+    @Provides
+    @Singleton
+    fun provideRemoteBookRepository(bookApi: BookApi): BooksRepository {
+        return BooksRepositoryImpl(bookApi,Dispatchers.IO)
+    }
 
+
+    @Provides
+    @Singleton
+    fun provideLocalUserRepository(localUserDataSource: LocalUserDataSource): LocalUserRepository{
+        return LocalUserRepositoryImpl(localUserDataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRemoteUserRepository(userApi: UserApi): RemoteUserRepository{
+        return RemoteUserRepositoryImpl(userApi,Dispatchers.IO)
+    }
 }

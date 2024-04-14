@@ -42,16 +42,16 @@ fun AppBar(
 ) {
     when (searchWidgetState) {
         SearchWidgetState.OPENED -> {
-            ClosedAppBar(
-                onSearchClick = onSearchTriggered
-            )
-        }
-        SearchWidgetState.CLOSED -> {
             OpenedAppBar(
                 text = searchText,
                 onTextChange = onTextChange,
                 onCloseClick = onCloseClick,
                 onSearchClick = onSearchClick,
+            )
+        }
+        SearchWidgetState.CLOSED -> {
+            ClosedAppBar(
+                onSearchClick = onSearchTriggered
             )
         }
     }

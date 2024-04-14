@@ -1,5 +1,6 @@
 package com.example.mooduck.ui.screens.auth.views
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -32,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mooduck.MooDuckApp
 import com.example.mooduck.R
+import com.example.mooduck.ui.components.CircularDialog
 import com.example.mooduck.ui.components.LogoWithText
 import com.example.mooduck.ui.components.TextInput
 import com.example.mooduck.ui.theme.Cian
@@ -49,10 +51,15 @@ fun SignInView(
     forgotPasswordClick: () -> Unit,
     signInClick: () -> Unit,
     signUpCLick: () -> Unit,
+    isProgress: Boolean = false,
 ){
     Box(
         modifier = modifier,
     ){
+        AnimatedVisibility(visible = isProgress) {
+            CircularDialog(titleText = stringResource(id = R.string.enter))
+        }
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -84,7 +91,7 @@ fun SignInView(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 25.dp),
-                    textInputLabel = stringResource(id = R.string.mail_example),
+                    textInputLabel = stringResource(id = R.string.mail),
                     onValueChanged =  onEmailValueChanged ,
                     value = emailValue,
                 )

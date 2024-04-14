@@ -60,6 +60,12 @@ dependencies {
     implementation(libs.compose.material.material)
     implementation(libs.compose.material3.material3)
 
+    implementation(libs.media3)
+    implementation(libs.media3.exoplayer)
+    implementation(libs.media3.exoplayer.hls)
+    implementation(libs.media3.ui)
+    implementation(libs.media3.session)
+
     implementation(libs.kotlinx.coroutines.android)
 
     implementation(libs.hilt.android)
@@ -80,15 +86,6 @@ dependencies {
     implementation(libs.okhttp3.okhttp)
     implementation(libs.okhttp3.logging.interceptor)
 
-
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
-
-    implementation (libs.retrofit)
-    implementation (libs.converter.gson)
-    implementation (libs.retrofit2.kotlin.coroutines.adapter)
-    implementation (libs.okhttp)
-    implementation (libs.logging.interceptor)
     implementation(libs.coil)
 
     val composeBom = platform(libs.androidx.compose.bom)
@@ -97,11 +94,4 @@ dependencies {
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.tooling)
     implementation(libs.compose.ui.tooling.preview)
-
-
-
-}
-
-kapt {
-    correctErrorTypes = true
 }

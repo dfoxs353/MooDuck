@@ -1,41 +1,5 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.MooDuck" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
 
-        <item name="colorPrimary">@color/white</item> 
-        <item name="colorOnPrimary">@color/black</item>
-        <item name="colorSecondary">@color/cian</item>
-        <item name="colorOnSecondary">@color/white</item>
-        <item name="colorError">@color/white</item>
-        <item name="colorOnError">@color/black</item>
-        <item name="colorSurface">@color/white</item>
-        <item name="colorOnSurface">@color/gray</item>
-
-
-        <item name="android:colorBackground">@color/white</item>
-
-        <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
-    </style>
-
-    <style name="Widget.App.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
-        <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
-    </style>
-
-    <style name="ThemeOverlay.App.BottomNavigationView" parent="">
-
-    </style>
-
-    <style name="Theme.MooDuck" parent="Base.Theme.MooDuck" />
-
-    <style name="Widget.App.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
-        <item name="helperTextTextColor">@color/red</item>
-        <item name="boxStrokeErrorColor">@color/red</item>
-        <item name="errorTextColor">@color/red</item>
-        <item name="android:textColor">?attr/colorOnPrimary</item>
-        <item name="hintTextColor">?attr/colorOnSurface</item>
-        <item name="boxStrokeColor">?attr/colorOnPrimary</item>
-    </style>
-
-
+    <style name="Theme.MooDuck" parent="android:Theme.Material.Light.NoActionBar" />
 </resources>

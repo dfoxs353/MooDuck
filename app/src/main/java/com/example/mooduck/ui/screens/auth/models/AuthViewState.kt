@@ -2,14 +2,15 @@ package com.example.mooduck.ui.screens.auth.models
 
 
 
-enum class LoginSubState{
-    SignIn, SignUp, Forgot
+enum class AuthSubState{
+    SignIn, SignUp,
 }
-data class LoginViewState (
-    val loginSubState: LoginSubState = LoginSubState.SignIn,
+data class AuthViewState (
+    val authSubState: AuthSubState = AuthSubState.SignIn,
     val usernameValue: String = "",
     val emailValue: String = "",
     val passwordValue: String = "",
+    val repeatPasswordValue: String = "",
     val fullNameValue: String = "",
     val isProgress: Boolean = false,
 )

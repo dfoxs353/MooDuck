@@ -16,8 +16,9 @@ import com.mooduck.domain.repository.BooksRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import java.io.IOException
+import javax.inject.Inject
 
-class BooksRepositoryImpl(
+class BooksRepositoryImpl  @Inject constructor(
     private val bookApi: BookApi,
     private val ioDispatcher: CoroutineDispatcher
 ) : BooksRepository {
@@ -39,7 +40,7 @@ class BooksRepositoryImpl(
         limit: Int?,
         page: Int?,
         genre: String?,
-        author: String
+        author: String?
     ): Result<List<Book>> {
         try {
             return Result.Success(

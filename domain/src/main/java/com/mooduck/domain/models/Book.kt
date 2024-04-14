@@ -3,7 +3,7 @@ package com.mooduck.domain.models
 data class Book(
     val _id: String,
     val authors: List<String>,
-    val geners: List<String>,
+    val geners: List<String>?,
     val title: String,
     val img: Images,
     val description: String,

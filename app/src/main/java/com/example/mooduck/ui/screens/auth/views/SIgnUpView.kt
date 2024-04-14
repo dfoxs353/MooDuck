@@ -36,6 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mooduck.R
+import com.example.mooduck.ui.components.CircularDialog
 import com.example.mooduck.ui.components.LogoWithText
 import com.example.mooduck.ui.components.TextInput
 import com.example.mooduck.ui.theme.Cian
@@ -53,25 +54,29 @@ fun SignUpView(
     onEmailValueChanged: (String) -> Unit,
     onPasswordValueChanged: (String) -> Unit,
     onRepeatPasswordValueChanged: (String) -> Unit,
-    forgotPasswordClick: () -> Unit,
     signInClick: () -> Unit,
     signUpCLick: () -> Unit,
     isShowModalMail: Boolean = false,
+    isProgress: Boolean = false
 ) {
     Box(
         modifier = modifier,
     ) {
+        AnimatedVisibility(visible = isProgress) {
+            CircularDialog(titleText = stringResource(id = R.string.registration))
+        }
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(Cian),
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             LogoWithText(
+                modifier = Modifier.padding(bottom = 30.dp, top = 20.dp),
                 logo = painterResource(id = R.drawable.duck_picture),
                 title = stringResource(id = R.string.app_name),
-                modifier = Modifier.padding(bottom = 30.dp)
             )
 
             Column(
@@ -93,8 +98,8 @@ fun SignUpView(
                         .fillMaxWidth()
                         .padding(top = 25.dp),
                     textInputLabel = stringResource(id = R.string.user_name),
-                    onValueChanged = onEmailValueChanged,
-                    value = emailValue,
+                    onValueChanged = onUserNameValueChanged,
+                    value = userNameValue,
                 )
 
                 TextInput(
@@ -121,9 +126,9 @@ fun SignUpView(
                         .fillMaxWidth()
                         .padding(top = 15.dp),
                     textInputLabel = stringResource(id = R.string.repeat_password),
-                    onValueChanged = onPasswordValueChanged,
+                    onValueChanged = onRepeatPasswordValueChanged,
                     secureText = true,
-                    value = passwordValue,
+                    value = repeatPasswordValue,
                 )
 
 
@@ -206,7 +211,7 @@ fun SignUpView(
     }
 }
 
-@Preview(device = "id:pixel_5", showSystemUi = true, showBackground = true)
+@Preview
 @Composable
 fun SignUpView_Preview() {
     SignUpView(
@@ -220,8 +225,8 @@ fun SignUpView_Preview() {
         onUserNameValueChanged = {},
         signInClick = {},
         signUpCLick = {},
-        forgotPasswordClick = {},
         isShowModalMail = false,
+        isProgress = false,
     )
 }
 

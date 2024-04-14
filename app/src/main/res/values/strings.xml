@@ -53,5 +53,7 @@
     <string name="log_out">Выйти из аккаунта</string>
     <string name="not_want_to_read">Добавить в избранное</string>
     <string name="search">Поиск</string>
-    <string name="error_auth">Ошибка авторизации</string>
+    <string name="error_sign_in">Ошибка авторизации</string>
+    <string name="error_sign_up">Ошибка регистрации</string>
+    <string name="home">Главная</string>
 </resources>
