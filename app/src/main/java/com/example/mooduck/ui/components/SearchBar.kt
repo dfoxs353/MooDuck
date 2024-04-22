@@ -28,6 +28,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.example.mooduck.R
 import com.example.mooduck.ui.models.SearchWidgetState
+import com.example.mooduck.ui.theme.Cian
 import com.example.mooduck.ui.theme.TintBlack
 import com.example.mooduck.ui.theme.White
 
@@ -77,6 +78,7 @@ fun ClosedAppBar(
                 )
             }
         },
+        backgroundColor = Cian,
     )
 }
 

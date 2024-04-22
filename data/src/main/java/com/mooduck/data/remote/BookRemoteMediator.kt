@@ -1,0 +1,71 @@
+package com.mooduck.data.remote
+
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.LoadType
+import androidx.paging.PagingState
+import androidx.paging.RemoteMediator
+import androidx.room.withTransaction
+import com.mooduck.data.local.BookDatabase
+import com.mooduck.data.local.models.BookEntity
+import com.mooduck.data.mappers.toBook
+import com.mooduck.data.mappers.toBookEntity
+import com.mooduck.data.mappers.toBooks
+import com.mooduck.data.remote.books.BookApi
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
+import retrofit2.HttpException
+import java.io.IOException
+
+@OptIn(ExperimentalPagingApi::class)
+class BookRemoteMediator(
+    private val bookDb: BookDatabase,
+    private val bookApi: BookApi,
+    private val ioDispatcher: CoroutineDispatcher
+): RemoteMediator<Int, BookEntity>() {
+    override suspend fun load(
+        loadType: LoadType,
+        state: PagingState<Int, BookEntity>
+    ): MediatorResult {
+        return try {
+            val loadKey = when(loadType){
+                LoadType.REFRESH -> 1
+                LoadType.PREPEND -> return MediatorResult.Success(
+                    endOfPaginationReached = true
+                )
+                LoadType.APPEND -> {
+                    val lastItem = state.lastItemOrNull()
+                    if (lastItem == null){
+                        1
+                    }else{
+                        (lastItem.id / state.config.pageSize) + 1
+                    }
+                }
+            }
+
+            val books = withContext(ioDispatcher) {
+                val response = bookApi.getBooks(limit = 100,page = loadKey)
+                response.await()
+            }.toBooks()
+
+            bookDb.withTransaction {
+                if (loadType == LoadType.REFRESH){
+                    bookDb.dao.clearAll()
+                }
+
+                val bookEntities = books.map {
+                    it.toBookEntity()
+                }
+                bookDb.dao.upsertAll(bookEntities)
+            }
+
+            MediatorResult.Success(
+                endOfPaginationReached = books.isEmpty()
+            )
+
+        } catch (e: IOException){
+            MediatorResult.Error(e)
+        } catch (e: HttpException){
+            MediatorResult.Error(e)
+        }
+    }
+}

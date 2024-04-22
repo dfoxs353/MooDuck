@@ -9,7 +9,6 @@ import com.mooduck.domain.models.Images
 data class BookResponse(
     val _id: String,
     val authors: List<String>,
-    val geners: List<String>,
     val title: String,
     val img: Images,
     val description: String,

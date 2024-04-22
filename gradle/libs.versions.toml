@@ -1,5 +1,7 @@
 [versions]
 okHttp = "4.8.0"
+pagingCompose = "3.3.0-beta01"
+pagingRuntime = "3.2.1"
 retrofit =  "2.9.0"
 nav= "2.7.6"
 androidx-junit = "1.1.5"
@@ -9,6 +11,9 @@ junit = "4.13.2"
 lifecycle = "2.1.0"
 bom =  "2023.10.01"
 activity-compose = "1.6.1"
+roomCompiler = "2.5.1"
+roomPaging = "2.5.1"
+roomRuntime = "2.5.1"
 view-model-compose = "2.6.1"
 compose = "1.5.4"
 coil = "2.5.0"
@@ -23,6 +28,8 @@ kotlin = "1.8.10"
 appcompat = "1.6.1"
 material = "1.9.0"
 org-jetbrains-kotlin-jvm = "1.9.22"
+pagingCommonKtx = "3.2.1"
+roomKtx = "2.6.1"
 
 
 [libraries]
@@ -84,6 +91,14 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+androidx-paging-common-ktx = { group = "androidx.paging", name = "paging-common-ktx", version.ref = "pagingCommonKtx" }
+androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "pagingCompose" }
+androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "pagingRuntime" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
+androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "roomPaging" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
 
 [plugins]
 androidLibrary = { id = "com.android.library", version.ref = "agp" }

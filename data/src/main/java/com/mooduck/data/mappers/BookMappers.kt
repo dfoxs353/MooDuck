@@ -1,5 +1,6 @@
 package com.mooduck.data.mappers
 
+import com.mooduck.data.local.models.BookEntity
 import com.mooduck.data.remote.books.BookResponse
 import com.mooduck.data.remote.books.BooksResponse
 import com.mooduck.data.remote.books.CertainBookResponse
@@ -10,6 +11,40 @@ import com.mooduck.domain.models.CertainBook
 import com.mooduck.domain.models.Comment
 import com.mooduck.domain.models.Images
 
+internal fun Book.toBookEntity(): BookEntity{
+    return BookEntity(
+        id = _id.hashCode(),
+        _id = _id,
+        title = title,
+        description = description,
+        authors = authors.joinToString(separator = ","),
+        publisher = publisher,
+        pageCount = pageCount,
+        imgUrls =
+            "${img.largeFingernail}," +
+            "${img.mediumFingernail}," +
+                    img.smallFingernail
+    )
+}
+
+fun BookEntity.toBook(): Book{
+    val images = imgUrls.split(",")
+
+    return Book(
+        _id = _id,
+        title = title,
+        description = description,
+        authors = authors.split(","),
+        publisher = publisher,
+        pageCount = pageCount,
+        img = Images(
+            largeFingernail =images[0],
+            mediumFingernail =images[1],
+            smallFingernail =images[2],
+        ),
+    )
+}
+
 internal fun BooksResponse.toBooks() : List<Book>{
     return this.books.map {
         it.toBook()
@@ -18,12 +53,24 @@ internal fun BooksResponse.toBooks() : List<Book>{
 internal fun BookResponse.toBook() = Book(
     _id,
     authors,
-    geners,
     title,
     img,
     description,
     pageCount,
     publisher
+)
+
+internal fun BookResponse.toBookEntity() = BookEntity(
+    id = _id.hashCode(),
+    _id = _id,
+    authors = authors.joinToString(separator = ","),
+    title = title,
+    imgUrls = "${img.largeFingernail}," +
+            "${img.mediumFingernail}," +
+            img.smallFingernail,
+    description = description,
+    pageCount = pageCount,
+    publisher = publisher,
 )
 
 internal fun CertainBookResponse.toCertainBook() = CertainBook(

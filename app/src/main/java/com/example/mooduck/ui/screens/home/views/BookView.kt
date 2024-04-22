@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -17,7 +16,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -30,18 +28,17 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.mooduck.R
-import com.example.mooduck.ui.models.Book
-import com.example.mooduck.ui.theme.Cian
+import com.example.mooduck.ui.models.BookUI
 import com.example.mooduck.ui.theme.TintBlack
 import com.example.mooduck.ui.theme.White
 
 @Composable
 fun BookView(
     modifier: Modifier = Modifier,
-    bookData: Book,
+    bookUIData: BookUI,
     onWantToReadClick: (String) -> Unit,
 ) {
-    val authors = bookData.authors.joinToString()
+    val authors = bookUIData.authors.joinToString()
 
     Card(
         modifier = modifier,
@@ -57,7 +54,7 @@ fun BookView(
             AsyncImage(
                 modifier = Modifier.width(160.dp).padding(10.dp),
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(bookData.imgUri)
+                    .data(bookUIData.imgUri)
                     .crossfade(true)
                     .build(),
                 contentDescription = "Cover",
@@ -66,7 +63,7 @@ fun BookView(
                 )
             Column {
                 Text(
-                    text = bookData.title,
+                    text = bookUIData.title,
                     fontSize = 17.sp,
                     fontWeight = FontWeight.Bold,
                 )
@@ -75,12 +72,12 @@ fun BookView(
                     fontWeight = FontWeight(200),
                 )
                 Text(
-                    text = bookData.description,
+                    text = bookUIData.description,
                     maxLines = 6,
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = bookData.publisher + ", " + bookData.pageCount,
+                    text = bookUIData.publisher + ", " + bookUIData.pageCount,
                     fontWeight = FontWeight(200),
                 )
             }
@@ -93,19 +90,19 @@ fun BookView(
             shape = RoundedCornerShape(size = 2.dp),
             border = BorderStroke(1.dp, TintBlack),
             colors = ButtonDefaults.buttonColors(
-                containerColor = if(bookData.isWantToRead) TintBlack else White
+                containerColor = if(bookUIData.isWantToRead) TintBlack else White
             ),
-            onClick = { onWantToReadClick(bookData.imgUri) },
+            onClick = { onWantToReadClick(bookUIData.imgUri) },
             contentPadding = PaddingValues(vertical = 14.dp, horizontal = 33.dp)
         ) {
             Text(
                 text = stringResource(
-                    id = if(bookData.isWantToRead)
+                    id = if(bookUIData.isWantToRead)
                             R.string.want_to_read
                         else R.string.not_want_to_read
                 ),
                 style = TextStyle(
-                    color = if(bookData.isWantToRead) White else TintBlack,
+                    color = if(bookUIData.isWantToRead) White else TintBlack,
                     fontSize = 17.sp,
                     fontWeight = FontWeight(600),
                 )
@@ -117,7 +114,7 @@ fun BookView(
 @Preview
 @Composable
 fun BookView_Preview() {
-    val previewBook = Book(
+    val previewBookUI = BookUI(
         id ="",
         title = "Красная ягода. Черная земля. Сборник стихов",
         description = "Анна Долгарева — поэтесса, военкор и журналист, победитель множества" +
@@ -130,7 +127,7 @@ fun BookView_Preview() {
     )
 
     BookView(
-        bookData = previewBook,
+        bookUIData = previewBookUI,
         onWantToReadClick = {},
     )
 }

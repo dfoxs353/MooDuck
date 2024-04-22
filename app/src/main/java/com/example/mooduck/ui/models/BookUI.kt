@@ -1,9 +1,7 @@
 package com.example.mooduck.ui.models
 
-import com.mooduck.domain.models.Book
 
-
-data class Book(
+data class BookUI(
     val id: String,
     val title: String,
     val description: String,
