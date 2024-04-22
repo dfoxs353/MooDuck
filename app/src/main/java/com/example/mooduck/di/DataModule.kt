@@ -3,6 +3,10 @@ package com.example.mooduck.di
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.media3.common.BuildConfig
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.room.Room
 import com.example.mooduck.common.AuthAuthenticator
 import com.example.mooduck.common.AuthInterceptor
 import com.mooduck.data.remote.auth.AuthApi
@@ -12,7 +16,10 @@ import com.mooduck.data.repository.BooksRepositoryImpl
 import com.mooduck.data.repository.AuthRepositoryImpl
 import com.mooduck.data.repository.LocalUserRepositoryImpl
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.mooduck.data.local.BookDatabase
 import com.mooduck.data.local.LocalUserDataSource
+import com.mooduck.data.local.models.BookEntity
+import com.mooduck.data.remote.BookRemoteMediator
 import com.mooduck.data.repository.RemoteUserRepositoryImpl
 import com.mooduck.domain.repository.AuthRepository
 import com.mooduck.domain.repository.BooksRepository
@@ -31,9 +38,36 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
+@OptIn(ExperimentalPagingApi::class)
 @Module
 @InstallIn(SingletonComponent::class)
 class DataModule {
+
+    @Provides
+    @Singleton
+    fun provideBookDataBase(@ApplicationContext context: Context): BookDatabase{
+        return Room.databaseBuilder(
+            context,
+            BookDatabase::class.java,
+            "books.db"
+        ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideBookPager(bookDb: BookDatabase, bookApi: BookApi): Pager<Int, BookEntity>{
+        return Pager(
+            config = PagingConfig(pageSize = 20),
+            remoteMediator = BookRemoteMediator(
+                bookDb = bookDb,
+                bookApi = bookApi,
+                ioDispatcher = Dispatchers.IO
+            ),
+            pagingSourceFactory = {
+                bookDb.dao.pagingSource()
+            }
+        )
+    }
 
     @Provides
     @Singleton
