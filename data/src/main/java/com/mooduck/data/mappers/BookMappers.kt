@@ -7,6 +7,7 @@ import com.mooduck.data.remote.books.CertainBookResponse
 import com.mooduck.data.remote.books.CommentResponse
 import com.mooduck.data.remote.books.ImagesResponse
 import com.mooduck.domain.models.Book
+import com.mooduck.domain.models.BooksPage
 import com.mooduck.domain.models.CertainBook
 import com.mooduck.domain.models.Comment
 import com.mooduck.domain.models.Images
@@ -45,10 +46,14 @@ fun BookEntity.toBook(): Book{
     )
 }
 
-internal fun BooksResponse.toBooks() : List<Book>{
-    return this.books.map {
-        it.toBook()
-    }
+internal fun BooksResponse.toBooksPage() : BooksPage{
+    return BooksPage(
+        bookList = this.books.map {
+            it.toBook()
+        },
+        page = page,
+        pageCount = totalPages,
+    )
 }
 internal fun BookResponse.toBook() = Book(
     _id,

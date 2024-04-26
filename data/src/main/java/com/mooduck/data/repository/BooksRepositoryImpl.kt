@@ -1,7 +1,7 @@
 package com.mooduck.data.repository
 
 import android.util.Log
-import com.mooduck.data.mappers.toBooks
+import com.mooduck.data.mappers.toBooksPage
 import com.mooduck.data.mappers.toCertainBook
 import com.mooduck.data.mappers.toComment
 import com.mooduck.domain.models.Result
@@ -10,6 +10,7 @@ import com.mooduck.data.remote.books.BooksResponse
 import com.mooduck.data.remote.books.CertainBookResponse
 import com.mooduck.data.remote.books.CommentResponse
 import com.mooduck.domain.models.Book
+import com.mooduck.domain.models.BooksPage
 import com.mooduck.domain.models.CertainBook
 import com.mooduck.domain.models.Comment
 import com.mooduck.domain.repository.BooksRepository
@@ -41,19 +42,21 @@ class BooksRepositoryImpl  @Inject constructor(
         page: Int?,
         genre: String?,
         author: String?
-    ): Result<List<Book>> {
+    ): Result<BooksPage> {
         try {
             return Result.Success(
                 withContext(ioDispatcher) {
                     val response = bookApi.getBooks(limit,page,genre,author)
                     response.await()
-                }.toBooks()
+                }.toBooksPage()
             )
         } catch (e: Exception) {
             Log.d("TAG", e.message.toString())
             return Result.Error(IOException("Error loading books", e))
         }
     }
+
+
 
     override suspend fun getBookComments(id: String): Result<List<Comment>> {
         try {

@@ -37,7 +37,8 @@ import com.example.mooduck.ui.theme.White
 fun BookView(
     modifier: Modifier = Modifier,
     bookUIData: BookUI,
-    onWantToReadClick: (String) -> Unit,
+    onAddToFavoriteClick: (String) -> Unit,
+    onDeleteFromFavoriteClick: (String) -> Unit,
 ) {
     val authors = bookUIData.authors.joinToString()
 
@@ -94,7 +95,12 @@ fun BookView(
             colors = ButtonDefaults.buttonColors(
                 containerColor = if(bookUIData.isWantToRead) TintBlack else White
             ),
-            onClick = { onWantToReadClick(bookUIData.imgUri) },
+            onClick = {
+                      if (bookUIData.isWantToRead)
+                          onDeleteFromFavoriteClick(bookUIData.id)
+                      else
+                          onAddToFavoriteClick(bookUIData.id)
+            },
             contentPadding = PaddingValues(vertical = 14.dp, horizontal = 33.dp)
         ) {
             Text(
@@ -130,6 +136,7 @@ fun BookView_Preview() {
 
     BookView(
         bookUIData = previewBookUI,
-        onWantToReadClick = {},
+        onAddToFavoriteClick = {},
+        onDeleteFromFavoriteClick = {},
     )
 }
