@@ -1,5 +1,12 @@
 package com.mooduck.domain.models
 
+
+data class BooksPage(
+    val bookList: List<Book>,
+    val page: Int,
+    val pageCount: Int,
+)
+
 data class Book(
     val _id: String,
     val authors: List<String>,

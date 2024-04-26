@@ -9,6 +9,7 @@ import androidx.paging.PagingConfig
 import androidx.room.Room
 import com.example.mooduck.common.AuthAuthenticator
 import com.example.mooduck.common.AuthInterceptor
+import com.google.gson.GsonBuilder
 import com.mooduck.data.remote.auth.AuthApi
 import com.mooduck.data.remote.books.BookApi
 import com.mooduck.data.remote.user.UserApi
@@ -110,7 +111,11 @@ class DataModule {
         Retrofit.Builder()
             .baseUrl("https://mooduck-service-api.onrender.com/api/")
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(
+                GsonBuilder()
+                    .setLenient()
+                    .create()
+            ))
 
     @Singleton
     @Provides

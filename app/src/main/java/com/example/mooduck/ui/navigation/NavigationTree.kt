@@ -10,4 +10,6 @@ sealed class MainNavigationTree( val route: String) {
     object Home : NavigationTree("home")
     object Search : NavigationTree("search")
     object Account : NavigationTree("account")
+
+    object DetailBook : NavigationTree("detail-book")
 }

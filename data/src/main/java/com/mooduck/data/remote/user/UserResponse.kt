@@ -19,3 +19,4 @@ data class ChangeResetPasswordData(
     val token: String,
     val password: String
 )
+

@@ -10,7 +10,7 @@ import com.mooduck.data.local.BookDatabase
 import com.mooduck.data.local.models.BookEntity
 import com.mooduck.data.mappers.toBook
 import com.mooduck.data.mappers.toBookEntity
-import com.mooduck.data.mappers.toBooks
+import com.mooduck.data.mappers.toBooksPage
 import com.mooduck.data.remote.books.BookApi
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -46,14 +46,16 @@ class BookRemoteMediator(
             val books = withContext(ioDispatcher) {
                 val response = bookApi.getBooks(limit = state.config.pageSize,page = loadKey)
                 response.await()
-            }.toBooks()
+            }.toBooksPage()
+
+            val endOfPaginationReached = books.pageCount == books.page
 
             bookDb.withTransaction {
                 if (loadType == LoadType.REFRESH){
                     bookDb.dao.clearAll()
                 }
 
-                val bookEntities = books.mapIndexed { index, book ->
+                val bookEntities = books.bookList.mapIndexed{ index, book ->
                     BookEntity(
                         id = index + 1 + (loadKey - 1) * state.config.pageSize,
                         _id = book._id,
@@ -68,12 +70,11 @@ class BookRemoteMediator(
                                 book.img.smallFingernail
                     )
                 }
-                Log.d("TAG", "id: "+ bookEntities.last().id)
                 bookDb.dao.upsertAll(bookEntities)
             }
 
             MediatorResult.Success(
-                endOfPaginationReached = books.isEmpty()
+                endOfPaginationReached = books.bookList.isEmpty() || endOfPaginationReached
             )
 
         } catch (e: IOException){

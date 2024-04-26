@@ -4,38 +4,42 @@ import com.mooduck.data.remote.auth.User
 import com.mooduck.data.remote.books.BooksResponse
 import com.mooduck.data.remote.books.CommentResponse
 import kotlinx.coroutines.Deferred
+import retrofit2.Response
 import retrofit2.http.Body
-import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.HTTP
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
+data class ChangeFavoriteRequest(
+    val bookId: String
+)
+
 interface UserApi {
 
+
     @POST("users/{userId}/favoritebooks")
-    fun addBookToFavorite(
-        @Body bookId: String,
+    suspend fun addBookToFavorite(
         @Path("userId") userId: String,
-    ):Deferred<Boolean>
+        @Body request: ChangeFavoriteRequest
+    ): Response<Boolean>
 
-    @DELETE("users/{userId}/favoritebooks")
+    @HTTP(method = "DELETE", path = "users/{userId}/favoritebooks", hasBody = true)
     suspend fun deleteBookFromFavorite(
-        @Body bookId: String,
         @Path("userId") userId: String,
-    ): Deferred<Any>
-
+        @Body bookId: ChangeFavoriteRequest
+    ): Response<Boolean>
     @GET("users/{userId}/favoritebooks")
     fun getFavoriteBooks(
         @Path("userId") userId: String,
+        @Query("limit") limit: Int? = null,
+        @Query("page") page: Int? = null,
     ):Deferred<BooksResponse>
 
     @GET("/users/{id}")
     fun getUser(@Path("id") id: String): Deferred<User>
-
-    @GET("/users/{id}/favoritebooks")
-    fun getUserFavoriteBooks(@Path("id") id: String, @Query("limit") limit: Int, @Query("page") page: Int): Deferred<BooksResponse>
 
     @GET("/users/{id}/comments")
     fun getUserComments(@Path("id") id: String): Deferred<List<CommentResponse>>

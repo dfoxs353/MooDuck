@@ -1,14 +1,16 @@
 package com.mooduck.data.repository
 
 import android.util.Log
-import com.mooduck.data.local.LocalUserDataSource
-import com.mooduck.data.mappers.toBooks
+import com.mooduck.data.mappers.toBooksPage
+import com.mooduck.data.remote.user.ChangeFavoriteRequest
 import com.mooduck.data.remote.user.UserApi
-import com.mooduck.domain.models.Book
+import com.mooduck.domain.models.BooksPage
 import com.mooduck.domain.models.Result
 import com.mooduck.domain.repository.RemoteUserRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import okhttp3.internal.http2.Http2
+import retrofit2.http.HTTP
 import java.io.IOException
 
 class RemoteUserRepositoryImpl(
@@ -20,23 +22,38 @@ class RemoteUserRepositoryImpl(
         try {
             return Result.Success(
                 withContext(ioDispatcher) {
-                    val response = userDataSource.addBookToFavorite(bookId, userId)
-                    response.await()
+                    val response = userDataSource.addBookToFavorite(userId, ChangeFavoriteRequest(bookId))
+                    response.isSuccessful
+                }
+            )
+        }
+        catch (e: Exception) {
+            Log.d("TAG", e.message.toString())
+            return Result.Error(IOException("Error set favourite book id $bookId", e))
+        }
+    }
+
+    override suspend fun deleteFavoriteBook(bookId: String, userId: String): Result<Boolean> {
+        try {
+            return Result.Success(
+                withContext(ioDispatcher) {
+                    val response = userDataSource.deleteBookFromFavorite(userId, ChangeFavoriteRequest(bookId))
+                    response.isSuccessful
                 }
             )
         } catch (e: Exception) {
             Log.d("TAG", e.message.toString())
-            return Result.Error(IOException("Error setFavourite book id $bookId", e))
+            return Result.Error(IOException("Error delete favourite book id $bookId", e))
         }
     }
 
-    override suspend fun getFavouriteBooks(userId: String): Result<List<Book>> {
+    override suspend fun getFavouriteBooks(userId: String, limit: Int, page: Int): Result<BooksPage> {
         return try {
             Result.Success(
                 withContext(ioDispatcher) {
                     val response = userDataSource.getFavoriteBooks(userId)
                     response.await()
-                }.toBooks()
+                }.toBooksPage()
             )
         } catch (e: Exception) {
             Log.d("TAG", e.message.toString())

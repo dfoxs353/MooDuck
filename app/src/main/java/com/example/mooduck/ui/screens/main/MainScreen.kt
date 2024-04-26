@@ -34,6 +34,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.mooduck.R
 import com.example.mooduck.ui.navigation.MainNavigationTree
+import com.example.mooduck.ui.navigation.NavigationArgs
+import com.example.mooduck.ui.screens.detailbook.DetailBookScreen
+import com.example.mooduck.ui.screens.detailbook.DetailBookViewModel
 import com.example.mooduck.ui.screens.home.HomeScreen
 import com.example.mooduck.ui.screens.home.HomeViewModel
 import com.example.mooduck.ui.screens.profile.ProfileScreen
@@ -141,6 +144,14 @@ fun MainScreen(
                 }
                 composable(MainNavigationTree.Search.route){ SearchScreen() }
                 composable(MainNavigationTree.Account.route){ ProfileScreen() }
+                composable("${MainNavigationTree.DetailBook.route}/${NavigationArgs.BookId}"){
+                    val detailBookViewModel = hiltViewModel<DetailBookViewModel>()
+
+                    DetailBookScreen(
+                        detailBookViewModel = detailBookViewModel,
+                        navController = mainNavController,
+                    )
+                }
             }
         }
     }

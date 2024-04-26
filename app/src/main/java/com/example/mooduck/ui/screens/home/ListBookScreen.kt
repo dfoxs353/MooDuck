@@ -37,16 +37,18 @@ import com.example.mooduck.ui.models.BookUI
 import com.example.mooduck.ui.screens.home.views.BookView
 import com.mooduck.domain.models.Book
 import com.example.mooduck.ui.theme.White
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ListBookScreen(
     books: LazyPagingItems<Book>,
+    favoriteBooks: List<Book>,
+    onRefreshList: () -> Unit,
     onBookClick: (String) -> Unit,
-    onWantToReadClick: (String) -> Unit,
-){
+    onAddToFavoriteClick: (String) -> Unit,
+    onDeleteFromFavoriteClick: (String) -> Unit,
+) {
 
 
     val context = LocalContext.current
@@ -57,34 +59,39 @@ fun ListBookScreen(
 
     fun refresh() = refreshScope.launch {
         books.refresh()
+        onRefreshList()
     }
 
     val state = rememberPullRefreshState(refreshing, ::refresh)
 
     LaunchedEffect(key1 = books.loadState) {
-        if (books.loadState.refresh is LoadState.Error){
+        if (books.loadState.refresh is LoadState.Error) {
             Toast.makeText(
                 context,
                 errorLoadText,
                 Toast.LENGTH_LONG
             ).show()
 
-            Log.d("TAG", "Error: " +  (books.loadState.refresh as LoadState.Error).error.message)
+            Log.d("TAG", "Error: " + (books.loadState.refresh as LoadState.Error).error.message)
         }
 
-        if (books.loadState.refresh is LoadState.Loading){
+        if (books.loadState.refresh is LoadState.Loading) {
             refreshing = true
         }
 
-        if (books.loadState.refresh is LoadState.NotLoading){
+        if (books.loadState.refresh is LoadState.NotLoading) {
             refreshing = false
         }
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
-        PullRefreshIndicator(refreshing = refreshing, state = state, Modifier.align(Alignment.TopCenter))
+        PullRefreshIndicator(
+            refreshing = refreshing,
+            state = state,
+            Modifier.align(Alignment.TopCenter)
+        )
 
-        if (!refreshing){
+        if (!refreshing) {
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
@@ -105,8 +112,12 @@ fun ListBookScreen(
                                 pageCount = books[index]!!.pageCount,
                                 publisher = books[index]!!.publisher,
                                 imgUri = books[index]!!.img.mediumFingernail,
+                                isWantToRead = favoriteBooks.any {
+                                    it._id == books[index]!!._id
+                                }
                             ),
-                            onWantToReadClick = { onWantToReadClick(books[index]!!._id) }
+                            onAddToFavoriteClick = { onAddToFavoriteClick(books[index]!!._id) },
+                            onDeleteFromFavoriteClick = { onDeleteFromFavoriteClick(books[index]!!._id) }
                         )
                         Spacer(
                             modifier = Modifier
