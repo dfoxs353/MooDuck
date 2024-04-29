@@ -100,7 +100,6 @@ fun MainScreen(
                                 popUpTo(mainNavController.graph.findStartDestination().id) {
                                     saveState = true
                                 }
-                                launchSingleTop = true
                                 restoreState = true
                             }
                         },
@@ -144,7 +143,7 @@ fun MainScreen(
                 }
                 composable(MainNavigationTree.Search.route){ SearchScreen() }
                 composable(MainNavigationTree.Account.route){ ProfileScreen() }
-                composable("${MainNavigationTree.DetailBook.route}/${NavigationArgs.BookId}"){
+                composable("${MainNavigationTree.DetailBook.route}/{${NavigationArgs.BookId}}"){
                     val detailBookViewModel = hiltViewModel<DetailBookViewModel>()
 
                     DetailBookScreen(

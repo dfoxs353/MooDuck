@@ -1,5 +1,6 @@
 package com.example.mooduck.ui.screens.detailbook
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
@@ -51,11 +52,13 @@ class DetailBookViewModel @Inject constructor(
 
             when(result){
                 is Result.Error -> {
+                    Log.d("TAG", result.exception.message.toString())
                     _viewState.postValue(
                         _viewState.value?.copy(subState = DetailBookSubState.Error)
                     )
                 }
                 is Result.Success -> {
+                    Log.d("TAG", "loaded")
                     _viewState.postValue(
                         _viewState.value?.copy(
                             subState = DetailBookSubState.DetailBook,

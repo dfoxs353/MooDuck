@@ -57,6 +57,7 @@ fun DetailBookView(
     isWantToRead: Boolean = false,
     onAddToFavoriteClick: (String) -> Unit,
     onDeleteFromFavoriteClick: (String) -> Unit,
+    onBackClick: () -> Unit,
 ){
     Column(modifier = Modifier
         .fillMaxSize()
@@ -68,7 +69,7 @@ fun DetailBookView(
         Box(
             modifier = Modifier.fillMaxWidth(),
         ) {
-            IconButton(modifier = Modifier.align(Alignment.CenterStart), onClick = { /*TODO*/ }) {
+            IconButton(modifier = Modifier.align(Alignment.CenterStart), onClick = onBackClick) {
                 Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Arrow Back")
             }
             Row(
@@ -235,7 +236,9 @@ fun AboutBookItem(
 }
 
 @Composable
-fun DetailBookLoadingView(){
+fun DetailBookLoadingView(
+    onBackClick: () -> Unit,
+){
     Column(modifier = Modifier
         .fillMaxSize()
         .background(Color.White)
@@ -248,7 +251,7 @@ fun DetailBookLoadingView(){
             Box(
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                IconButton(modifier = Modifier.align(Alignment.CenterStart), onClick = { /*TODO*/ }) {
+                IconButton(modifier = Modifier.align(Alignment.CenterStart), onClick = onBackClick) {
                     Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Arrow Back")
                 }
                 Row(
@@ -298,7 +301,9 @@ fun DetailBookLoadingView(){
 
 
 @Composable
-fun DetailBookErrorView(){
+fun DetailBookErrorView(
+    onBackClick: () -> Unit,
+){
     Column(modifier = Modifier
         .fillMaxSize()
         .background(Color.White)
@@ -311,7 +316,7 @@ fun DetailBookErrorView(){
             Box(
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                IconButton(modifier = Modifier.align(Alignment.CenterStart), onClick = { /*TODO*/ }) {
+                IconButton(modifier = Modifier.align(Alignment.CenterStart), onClick = onBackClick) {
                     Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Arrow Back")
                 }
                 Row(
@@ -377,7 +382,9 @@ fun DetailBookErrorView(){
 @Composable
 fun DetailBookLoading_Preview(){
     MooDuckTheme {
-        DetailBookLoadingView()
+        DetailBookLoadingView(
+            onBackClick = {}
+        )
     }
 }
 
@@ -385,7 +392,9 @@ fun DetailBookLoading_Preview(){
 @Composable
 fun DetailBookError_Preview(){
     MooDuckTheme {
-        DetailBookErrorView()
+        DetailBookErrorView(
+            onBackClick = {},
+        )
     }
 }
 
@@ -408,19 +417,6 @@ fun DetailBookView_Preview(){
         _id = "test",
         bookBinding = "test",
         bookSeries = "test",
-        comments = listOf(
-            Comment(
-                bookId = "test",
-                date = 2,
-                dislikes = 1,
-                likes = 2,
-                rating = 2,
-                text = "text",
-                title = "text",
-                userId = "text",
-                _id = "text",
-            )
-        ),
     )
 
     MooDuckTheme {
@@ -428,6 +424,7 @@ fun DetailBookView_Preview(){
             detailBook = detailBook,
             onDeleteFromFavoriteClick = {},
             onAddToFavoriteClick = {},
+            onBackClick = {},
             )
     }
 }

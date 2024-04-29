@@ -1,5 +1,6 @@
 package com.mooduck.data.mappers
 
+import android.util.Log
 import com.mooduck.data.local.models.BookEntity
 import com.mooduck.data.remote.books.BookResponse
 import com.mooduck.data.remote.books.BooksResponse
@@ -78,24 +79,26 @@ internal fun BookResponse.toBookEntity() = BookEntity(
     publisher = publisher,
 )
 
-internal fun CertainBookResponse.toCertainBook() = CertainBook(
-    authors,
-    bookBinding,
-    bookSeries,
-    commentResponses.map {
-        it.toComment()
-    },
-    description,
-    genres,
-    img,
-    pageCount,
-    painters,
-    publishedDate,
-    _id,
-    publisher,
-    title,
-    translaters
-)
+internal fun CertainBookResponse.toCertainBook() : CertainBook{
+    Log.d("TAG", this.toString())
+
+    return CertainBook(
+        authors,
+        bookBinding,
+        bookSeries,
+        description,
+        genres,
+        img.toImages(),
+        pageCount,
+        painters,
+        publishedDate,
+        _id,
+        publisher,
+        title,
+        translaters
+    )
+}
+
 
 
 internal fun CommentResponse.toComment() = Comment(

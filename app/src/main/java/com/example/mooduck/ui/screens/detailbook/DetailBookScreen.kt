@@ -23,9 +23,14 @@ fun DetailBookScreen(
                 detailBook = book!!,
                 onAddToFavoriteClick = {detailBookViewModel.obtainEvent(DetailBookEvent.AddFavoriteBookClick)},
                 onDeleteFromFavoriteClick = {detailBookViewModel.obtainEvent(DetailBookEvent.AddFavoriteBookClick)},
+                onBackClick = {navController.navigateUp()}
             )
-            DetailBookSubState.Loading -> DetailBookLoadingView()
-            DetailBookSubState.Error -> DetailBookErrorView()
+            DetailBookSubState.Loading -> DetailBookLoadingView(
+                onBackClick = {navController.navigateUp()}
+            )
+            DetailBookSubState.Error -> DetailBookErrorView(
+                onBackClick = {navController.navigateUp()}
+            )
         }
 
     }

@@ -21,7 +21,6 @@ data class CertainBook(
     val authors: List<String>,
     val bookBinding: String,
     val bookSeries: String,
-    val comments: List<Comment>,
     val description: String,
     val genres: List<String>,
     val img: Images,
