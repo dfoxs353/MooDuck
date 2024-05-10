@@ -2,7 +2,6 @@ package com.example.mooduck.di
 
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.media3.common.BuildConfig
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -26,6 +25,7 @@ import com.mooduck.domain.repository.AuthRepository
 import com.mooduck.domain.repository.BooksRepository
 import com.mooduck.domain.repository.LocalUserRepository
 import com.mooduck.domain.repository.RemoteUserRepository
+import com.mooduck.domain.usecases.GetUserNameByIdUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -182,5 +182,11 @@ class DataModule {
     @Singleton
     fun provideRemoteUserRepository(userApi: UserApi): RemoteUserRepository{
         return RemoteUserRepositoryImpl(userApi,Dispatchers.IO)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetUserUseCase(remoteUserRepository: RemoteUserRepository): GetUserNameByIdUseCase{
+        return GetUserNameByIdUseCase(remoteUserRepository)
     }
 }

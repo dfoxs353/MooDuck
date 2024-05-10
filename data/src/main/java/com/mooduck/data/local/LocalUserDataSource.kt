@@ -1,8 +1,7 @@
 package com.mooduck.data.local
 
 import android.content.SharedPreferences
-import com.mooduck.domain.models.User
-import javax.inject.Inject
+import com.mooduck.domain.models.AuthUser
 
 class LocalUserDataSource(
     private val sharedPreferences: SharedPreferences,
@@ -17,8 +16,8 @@ class LocalUserDataSource(
 
     private val editor: SharedPreferences.Editor = sharedPreferences.edit()
 
-    fun saveUser(user: User) {
-        with(user){
+    fun saveUser(authUser: AuthUser) {
+        with(authUser){
             editor.putString(KEY_USER_ID, userid)
             editor.putString(KEY_USER_PASSWORD, userPassword)
             editor.putString(KEY_REFRESH_TOKEN, refreshToken)
@@ -28,7 +27,7 @@ class LocalUserDataSource(
         }
     }
 
-    fun getUser(): User? {
+    fun getUser(): AuthUser? {
         val userId = getUserId()
         val userName = getUserName()
         val accessToken = getAccessToken()
@@ -37,7 +36,7 @@ class LocalUserDataSource(
         return if (userId.isNullOrEmpty() || accessToken.isNullOrEmpty()
             || refreshToken.isNullOrEmpty() || userName.isNullOrEmpty()) {
             null
-        } else User(
+        } else AuthUser(
             userid = userId,
             accessToken = accessToken,
             userName = userName,

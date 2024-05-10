@@ -57,20 +57,16 @@ dependencies {
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.foundation)
-    implementation(libs.compose.material.material)
     implementation(libs.compose.material3.material3)
-
-    implementation(libs.media3)
-    implementation(libs.media3.exoplayer)
-    implementation(libs.media3.exoplayer.hls)
-    implementation(libs.media3.ui)
-    implementation(libs.media3.session)
+    implementation(libs.compose.material.material)
 
     implementation(libs.kotlinx.coroutines.android)
 
     implementation(libs.hilt.android)
     implementation(libs.androidx.paging.common.ktx)
+    implementation(libs.androidx.junit.ktx)
     kapt(libs.hilt.compailer)
+
 
     implementation(libs.navigation.compose)
     implementation(libs.hilt.navigation.compose)
@@ -100,4 +96,9 @@ dependencies {
     implementation(libs.androidx.paging.runtime)
     implementation(libs.androidx.paging.compose)
     implementation(libs.room.ktx)
+
+
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 }

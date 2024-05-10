@@ -24,8 +24,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val userRemoteRepository: RemoteUserRepository,
-    private val userLocalRepository: LocalUserRepository,
+    private val remoteUserRepository: RemoteUserRepository,
+    private val localUserRepository: LocalUserRepository,
     pager: Pager<Int, BookEntity>,
 ) : ViewModel(), EventHandler<HomeEvent>{
 
@@ -55,8 +55,8 @@ class HomeViewModel @Inject constructor(
 
     private fun getFavoriteBooks(){
         viewModelScope.launch{
-            val result = userLocalRepository.getUserId()?.let {
-                userRemoteRepository.getFavouriteBooks(it,1000,1)
+            val result = localUserRepository.getUserId()?.let {
+                remoteUserRepository.getFavouriteBooks(it,1000,1)
             }
 
             when(result){
@@ -72,7 +72,6 @@ class HomeViewModel @Inject constructor(
                     )
                 }
                 is Result.Success -> {
-                    Log.d("TAG", result.data.toString())
                     _viewState.postValue(
                         _viewState.value?.copy(
                             favoriteBooks = result.data
@@ -86,8 +85,8 @@ class HomeViewModel @Inject constructor(
 
     private fun addToFavoriteBooks(bookId: String){
         viewModelScope.launch {
-            val result = userLocalRepository.getUserId()?.let {
-                userRemoteRepository.setFavoriteBook(bookId = bookId, userId = it)
+            val result = localUserRepository.getUserId()?.let {
+                remoteUserRepository.setFavoriteBook(bookId = bookId, userId = it)
             }
 
             when(result){
@@ -100,8 +99,8 @@ class HomeViewModel @Inject constructor(
 
     private fun deleteFromFavoriteBooks(bookId: String){
         viewModelScope.launch {
-            val result = userLocalRepository.getUserId()?.let {
-                userRemoteRepository.deleteFavoriteBook(bookId, it)
+            val result = localUserRepository.getUserId()?.let {
+                remoteUserRepository.deleteFavoriteBook(bookId, it)
             }
 
             when(result){

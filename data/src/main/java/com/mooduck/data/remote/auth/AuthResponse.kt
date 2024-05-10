@@ -1,17 +1,14 @@
 package com.mooduck.data.remote.auth
 
 
-data class AuthResult(
-    val success: AuthResponse? = null,
-    val error: Int? = null
-)
+
 data class AuthResponse(
     val accessToken: String,
     val refreshToken: String,
-    val user: User
+    val user: AuthUserResponse
 )
 
-data class User(
+data class AuthUserResponse(
     val id: String,
     val email: String,
     val username: String,

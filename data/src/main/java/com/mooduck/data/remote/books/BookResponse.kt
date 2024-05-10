@@ -38,18 +38,20 @@ data class CertainBookResponse(
 
 
 data class CommentResponse(
-    val bookId: String,
-    val date: Int,
-    val dislikes: Int,
-    val likes: Int,
-    val rating: Int,
-    val text: String,
-    val title: String,
-    val userId: String,
     val _id: String,
+    val bookId: String,
+    val userId: String,
+    val title: String,
+    val text: String,
+    val rating: Int,
+    val date: Long,
+    val likes: List<LikeResponse>,
+    val dislikes: List<LikeResponse>
 )
 
-
+data class LikeResponse(
+    val userId: String
+)
 
 
 data class BooksResponse(

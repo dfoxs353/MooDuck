@@ -1,7 +1,7 @@
 package com.mooduck.data.repository
 
 import com.mooduck.data.local.LocalUserDataSource
-import com.mooduck.domain.models.User
+import com.mooduck.domain.models.AuthUser
 import com.mooduck.domain.repository.LocalUserRepository
 
 class LocalUserRepositoryImpl (
@@ -9,11 +9,11 @@ class LocalUserRepositoryImpl (
 ) : LocalUserRepository {
 
 
-    override suspend fun saveUser(user: User) {
-        return userDataSource.saveUser(user)
+    override suspend fun saveUser(authUser: AuthUser) {
+        return userDataSource.saveUser(authUser)
     }
 
-    override suspend fun getUser(): User? {
+    override suspend fun getUser(): AuthUser? {
         return userDataSource.getUser()
     }
 
@@ -31,5 +31,9 @@ class LocalUserRepositoryImpl (
 
     override fun clearUser() {
         userDataSource.clearUserData()
+    }
+
+    override fun setTokens(accessToken: String, refreshToken: String) {
+        userDataSource.saveJWToken(accessToken,refreshToken)
     }
 }

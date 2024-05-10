@@ -1,12 +1,12 @@
 package com.mooduck.data.repository
 
 import android.util.Log
-import com.mooduck.data.mappers.toUser
+import com.mooduck.data.mappers.toAuthUser
 import com.mooduck.data.remote.auth.AuthApi
 import com.mooduck.domain.models.Result
 import com.mooduck.data.remote.auth.UserLoginRequest
 import com.mooduck.data.remote.auth.UserRegistrationRequest
-import com.mooduck.domain.models.User
+import com.mooduck.domain.models.AuthUser
 import com.mooduck.domain.repository.AuthRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -19,13 +19,13 @@ class AuthRepositoryImpl @Inject constructor(
     private val ioDispatcher: CoroutineDispatcher
 ) : AuthRepository {
 
-    override suspend fun login(email: String, password: String): Result<User> {
+    override suspend fun login(email: String, password: String): Result<AuthUser> {
         try {
             return Result.Success(
                 withContext(ioDispatcher) {
                     val response = userDataSource.loginUser(UserLoginRequest(email, password))
                     response.await()
-                }.toUser()
+                }.toAuthUser()
             )
         } catch (e: Exception) {
             Log.d("TAG", e.message.toString())
@@ -33,13 +33,13 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun signup(email: String, password: String, username: String): Result<User> {
+    override suspend fun signup(email: String, password: String, username: String): Result<AuthUser> {
         try {
             return Result.Success(
                 withContext(ioDispatcher) {
                     val response = userDataSource.registerUser(UserRegistrationRequest(email, password, username))
                     response.await()
-                }.toUser()
+                }.toAuthUser()
             )
         } catch (e: Exception) {
             Log.d("TAG", e.message.toString())
@@ -54,7 +54,7 @@ class AuthRepositoryImpl @Inject constructor(
                 withContext(ioDispatcher) {
                     val response = userDataSource.refresh(token)
                     response.await()
-                }.toUser().refreshToken
+                }.toAuthUser().refreshToken
             )
         } catch (e: Exception) {
             Log.d("TAG", e.message.toString())

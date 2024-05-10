@@ -22,7 +22,7 @@ interface AuthApi {
     @GET("auth/refresh")
     fun refreshToken(
         @Header("Authorization") token: String,
-    ): Response<AuthResponse>
+    ): Deferred<AuthResponse>
 
     @GET("auth/refresh")
     fun refresh(

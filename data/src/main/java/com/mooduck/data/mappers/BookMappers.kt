@@ -7,11 +7,13 @@ import com.mooduck.data.remote.books.BooksResponse
 import com.mooduck.data.remote.books.CertainBookResponse
 import com.mooduck.data.remote.books.CommentResponse
 import com.mooduck.data.remote.books.ImagesResponse
+import com.mooduck.data.remote.books.LikeResponse
 import com.mooduck.domain.models.Book
 import com.mooduck.domain.models.BooksPage
 import com.mooduck.domain.models.CertainBook
 import com.mooduck.domain.models.Comment
 import com.mooduck.domain.models.Images
+import java.util.Date
 
 internal fun Book.toBookEntity(): BookEntity{
     return BookEntity(
@@ -104,8 +106,12 @@ internal fun CertainBookResponse.toCertainBook() : CertainBook{
 internal fun CommentResponse.toComment() = Comment(
     bookId,
     date,
-    dislikes,
-    likes,
+    dislikes = dislikes.map {
+                            it.userId
+    },
+    likes = likes.map {
+              it.userId
+    },
     rating,
     text,
     title,

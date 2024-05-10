@@ -10,3 +10,9 @@ data class BooksRequest(
     val genre: String?,
     val author: String?
 )
+
+data class CommentRequest(
+    val title: String,
+    val text: String,
+    val rating: Int,
+)

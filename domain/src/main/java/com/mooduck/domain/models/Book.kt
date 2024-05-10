@@ -18,32 +18,22 @@ data class Book(
 )
 
 data class CertainBook(
-    val authors: List<String>,
-    val bookBinding: String,
-    val bookSeries: String,
-    val description: String,
-    val genres: List<String>,
-    val img: Images,
-    val pageCount: Int,
-    val painters: List<String>,
-    val publishedDate: String,
-    val _id: String,
-    val publisher:String,
-    val title: String,
-    val translaters: List<String>,
+    val authors: List<String> = listOf(),
+    val bookBinding: String = "",
+    val bookSeries: String = "",
+    val description: String = "",
+    val genres: List<String> = listOf(),
+    val img: Images = Images("","",""),
+    val pageCount: Int = 0,
+    val painters: List<String> = listOf(),
+    val publishedDate: String = "",
+    val _id: String = "",
+    val publisher:String = "",
+    val title: String = "",
+    val translaters: List<String> = listOf(),
 )
 
-data class Comment(
-    val bookId: String,
-    val date: Int,
-    val dislikes: Int,
-    val likes: Int,
-    val rating: Int,
-    val text: String,
-    val title: String,
-    val userId: String,
-    val _id: String,
-)
+
 
 data class Images(
     val largeFingernail: String,

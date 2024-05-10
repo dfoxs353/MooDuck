@@ -8,6 +8,7 @@ import com.mooduck.domain.models.Result
 import com.mooduck.data.remote.books.BookApi
 import com.mooduck.data.remote.books.BooksResponse
 import com.mooduck.data.remote.books.CertainBookResponse
+import com.mooduck.data.remote.books.CommentRequest
 import com.mooduck.data.remote.books.CommentResponse
 import com.mooduck.domain.models.Book
 import com.mooduck.domain.models.BooksPage
@@ -37,7 +38,83 @@ class BooksRepositoryImpl  @Inject constructor(
         }
     }
 
+    override suspend fun addLikeToComment(commentId: String): Result<Boolean> {
+        try {
+            return Result.Success(
+                withContext(ioDispatcher) {
+                    val response = bookApi.addLikeToComment(commentId)
+                    response.isSuccessful
+                }
+            )
+        } catch (e: Exception) {
+            Log.d("TAG", e.message.toString())
+            return Result.Error(IOException("Error add like to comment id:=$commentId", e))
+        }
+    }
+
+    override suspend fun addDisLikeToComment(commentId: String): Result<Boolean> {
+        try {
+            return Result.Success(
+                withContext(ioDispatcher) {
+                    val response = bookApi.addDislikeToComment(commentId)
+                    response.isSuccessful
+                }
+            )
+        } catch (e: Exception) {
+            Log.d("TAG", e.message.toString())
+            return Result.Error(IOException("Error add dislike to comment id:=$commentId", e))
+        }
+    }
+
+    override suspend fun deleteLikeToComment(commentId: String): Result<Boolean> {
+        try {
+            return Result.Success(
+                withContext(ioDispatcher) {
+                    val response = bookApi.deleteLikeFromComment(commentId)
+                    response.isSuccessful
+                }
+            )
+        } catch (e: Exception) {
+            Log.d("TAG", e.message.toString())
+            return Result.Error(IOException("Error delete like to comment id:=$commentId", e))
+        }
+    }
+
+    override suspend fun deleteDisLikeToComment(commentId: String): Result<Boolean> {
+        try {
+            return Result.Success(
+                withContext(ioDispatcher) {
+                    val response = bookApi.deleteDislikeFromComment(commentId)
+                    response.isSuccessful
+                }
+            )
+        } catch (e: Exception) {
+            Log.d("TAG", e.message.toString())
+            return Result.Error(IOException("Error delete dislike to comment id:=$commentId", e))
+        }
+    }
+
+    override suspend fun addCommentToBook(
+        bookId: String,
+        title: String,
+        text: String,
+        rating: Int
+    ): Result<Boolean> {
+        try {
+            return Result.Success(
+                withContext(ioDispatcher) {
+                    val response = bookApi.addCommentToBook(id = bookId, params = CommentRequest(title,text, rating))
+                    response.isSuccessful
+                }
+            )
+        } catch (e: Exception) {
+            Log.d("TAG", e.message.toString())
+            return Result.Error(IOException("Error add comment to book id:=$bookId", e))
+        }
+    }
+
     override suspend fun getBooks(
+        text: String?,
         limit: Int?,
         page: Int?,
         genre: String?,
@@ -46,7 +123,7 @@ class BooksRepositoryImpl  @Inject constructor(
         try {
             return Result.Success(
                 withContext(ioDispatcher) {
-                    val response = bookApi.getBooks(limit,page,genre,author)
+                    val response = bookApi.getBooks(text,limit,page,genre,author)
                     response.await()
                 }.toBooksPage()
             )

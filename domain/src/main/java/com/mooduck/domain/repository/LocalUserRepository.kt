@@ -1,17 +1,17 @@
 package com.mooduck.domain.repository
 
-import com.mooduck.domain.models.Book
-import com.mooduck.domain.models.User
-import com.mooduck.domain.models.Result
+import com.mooduck.domain.models.AuthUser
 
 interface LocalUserRepository {
 
 
-    suspend fun saveUser(user: User)
+    suspend fun saveUser(authUser: AuthUser)
 
-    suspend fun getUser(): User?
+    suspend fun getUser(): AuthUser?
 
     suspend fun getUserId(): String?
+
+    fun setTokens(accessToken: String, refreshToken: String)
     fun getRefreshToken(): String?
 
     fun getAccessToken(): String?

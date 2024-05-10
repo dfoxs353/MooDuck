@@ -74,7 +74,7 @@ fun ClosedAppBar(
                 Icon(
                     imageVector = Icons.Filled.Search,
                     contentDescription = "SearchIcon",
-                    tint = TintBlack
+                    tint = White
                 )
             }
         },

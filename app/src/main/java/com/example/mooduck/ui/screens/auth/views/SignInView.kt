@@ -93,7 +93,6 @@ fun SignInView(
                         .padding(top = 25.dp),
                     textInputLabel = stringResource(id = R.string.mail),
                     onValueChanged =  onEmailValueChanged ,
-                    value = emailValue,
                 )
 
                 TextInput(
@@ -103,7 +102,6 @@ fun SignInView(
                     textInputLabel = stringResource(id = R.string.password),
                     onValueChanged = onPasswordValueChanged,
                     secureText = true,
-                    value = passwordValue,
                 )
 
                 TextButton(

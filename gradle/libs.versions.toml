@@ -30,6 +30,7 @@ material = "1.9.0"
 org-jetbrains-kotlin-jvm = "1.9.22"
 pagingCommonKtx = "3.2.1"
 roomKtx = "2.6.1"
+junitKtx = "1.1.5"
 
 
 [libraries]
@@ -99,6 +100,7 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref =
 androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "roomPaging" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
+androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitKtx" }
 
 [plugins]
 androidLibrary = { id = "com.android.library", version.ref = "agp" }

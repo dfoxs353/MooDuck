@@ -8,7 +8,7 @@ import com.example.mooduck.common.EventHandler
 import com.example.mooduck.ui.screens.auth.models.AuthEvent
 import com.example.mooduck.ui.screens.auth.models.AuthSubState
 import com.example.mooduck.ui.screens.auth.models.AuthViewState
-import com.mooduck.domain.models.User
+import com.mooduck.domain.models.AuthUser
 import com.mooduck.domain.models.Result
 import com.mooduck.domain.repository.AuthRepository
 import com.mooduck.domain.repository.LocalUserRepository
@@ -28,7 +28,7 @@ class AuthViewModel @Inject constructor(
     private val _viewState = MutableLiveData(AuthViewState())
     val viewState: LiveData<AuthViewState> = _viewState
 
-    private val resultChannel = Channel<Result<User>>()
+    private val resultChannel = Channel<Result<AuthUser>>()
     val authResults = resultChannel.receiveAsFlow()
 
 

@@ -19,8 +19,8 @@ import com.example.mooduck.ui.theme.Cian
 @Composable
 fun CircularDialog(titleText: String){
     AlertDialog(
-        onDismissRequest = { /*TODO*/ },
-        confirmButton = { /*TODO*/ },
+        onDismissRequest = {},
+        confirmButton = {},
         title = {
             Text(
                 modifier = Modifier.fillMaxWidth(),

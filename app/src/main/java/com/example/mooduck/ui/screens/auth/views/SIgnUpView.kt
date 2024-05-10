@@ -99,7 +99,6 @@ fun SignUpView(
                         .padding(top = 25.dp),
                     textInputLabel = stringResource(id = R.string.user_name),
                     onValueChanged = onUserNameValueChanged,
-                    value = userNameValue,
                 )
 
                 TextInput(
@@ -108,7 +107,6 @@ fun SignUpView(
                         .padding(top = 25.dp),
                     textInputLabel = stringResource(id = R.string.mail),
                     onValueChanged = onEmailValueChanged,
-                    value = emailValue,
                 )
 
                 TextInput(
@@ -118,7 +116,6 @@ fun SignUpView(
                     textInputLabel = stringResource(id = R.string.password),
                     onValueChanged = onPasswordValueChanged,
                     secureText = true,
-                    value = passwordValue,
                 )
 
                 TextInput(
@@ -128,7 +125,6 @@ fun SignUpView(
                     textInputLabel = stringResource(id = R.string.repeat_password),
                     onValueChanged = onRepeatPasswordValueChanged,
                     secureText = true,
-                    value = repeatPasswordValue,
                 )
 
 

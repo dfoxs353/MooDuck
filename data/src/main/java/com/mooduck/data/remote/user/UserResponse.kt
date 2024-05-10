@@ -2,12 +2,6 @@ package com.mooduck.data.remote.user
 
 import com.mooduck.data.remote.books.BooksResponse
 
-data class UserResponse<T>(
-    val data: T?,
-    val error: Throwable?
-)
-
-
 data class ChangeUserData(
     val id: String,
     val username: String,
@@ -20,3 +14,9 @@ data class ChangeResetPasswordData(
     val password: String
 )
 
+data class UserResponse(
+    val _id: String,
+    val email: String,
+    val username: String,
+    val roles: List<String>
+)

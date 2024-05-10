@@ -4,7 +4,10 @@ import com.mooduck.data.remote.auth.AuthApi
 import com.mooduck.data.remote.auth.AuthResponse
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.mooduck.domain.repository.LocalUserRepository
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import okhttp3.Authenticator
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -19,28 +22,31 @@ class AuthAuthenticator @Inject constructor(
     private val tokenManager: LocalUserRepository,
 ): Authenticator {
     override fun authenticate(route: Route?, response: Response): Request? {
-        val user = runBlocking {
-            tokenManager.getUser()
-        }
-        return runBlocking {
-            val newToken = getNewToken(user?.refreshToken)
-            if (!newToken.isSuccessful  || newToken.body() == null) {
-                tokenManager.clearUser()
-            }
-            newToken.body()?.let {
-                tokenManager.saveUser(
-                    user!!.copy(
-                        refreshToken = it.refreshToken,
-                        accessToken = it.accessToken,
-                    )
-                )
-                response.request.newBuilder()
-                    .header("Authorization", "Bearer ${it.accessToken}")
+        val refreshToken = tokenManager.getRefreshToken()
+
+        if (refreshToken != null) {
+            val newAccessToken = tokenManager.getAccessToken()
+            if (response.request.header("Authorization") == "Bearer $newAccessToken") {
+                return response.request.newBuilder()
+                    .header("Authorization", "Bearer $newAccessToken")
                     .build()
             }
+
+            return runBlocking {
+                val newToken = getNewToken(refreshToken)
+                if (newToken != null) {
+                    response.request.newBuilder()
+                        .header("Authorization", "Bearer $newToken")
+                        .build()
+                }
+
+                tokenManager.clearUser()
+                null
+            }
         }
+        return null
     }
-    private suspend fun getNewToken(refreshToken: String?): retrofit2.Response<AuthResponse> {
+    private suspend fun getNewToken(refreshToken: String): String? {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         val okHttpClient = OkHttpClient.Builder().addInterceptor(loggingInterceptor).build()
@@ -51,6 +57,15 @@ class AuthAuthenticator @Inject constructor(
             .client(okHttpClient)
             .build()
         val service = retrofit.create(AuthApi::class.java)
-        return service.refreshToken("Bearer $refreshToken")
+
+        return try {
+            withContext(Dispatchers.IO){
+                val result = service.refreshToken(refreshToken)
+                result.await()
+            }.accessToken
+        }
+        catch (e: Exception){
+            null
+        }
     }
 }

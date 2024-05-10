@@ -7,6 +7,18 @@ enum class DetailBookSubState{
 }
 data class DetailBookViewState(
     val subState: DetailBookSubState = DetailBookSubState.Loading,
-    val book: CertainBook? = null,
+    val book: CertainBook = CertainBook(),
+    val comments: List<CommentUI> = listOf(),
     val isWantToRead: Boolean = false,
+    val isAddComment: Boolean = false,
+    val addCommentState: AddCommentState = AddCommentState()
+)
+
+enum class AddCommentSubState{
+    Nothing, Successful, Error, Loading
+}
+data class AddCommentState(
+    val title: String = "",
+    val comment: String = "",
+    val addingState: AddCommentSubState = AddCommentSubState.Nothing,
 )

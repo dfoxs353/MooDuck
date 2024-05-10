@@ -30,6 +30,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.mooduck.R
 import com.example.mooduck.ui.models.BookUI
+import com.example.mooduck.ui.theme.MooDuckTheme
 import com.example.mooduck.ui.theme.TintBlack
 import com.example.mooduck.ui.theme.White
 
@@ -54,7 +55,9 @@ fun BookView(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             AsyncImage(
-                modifier = Modifier.width(160.dp).padding(10.dp),
+                modifier = Modifier
+                    .width(160.dp)
+                    .padding(10.dp),
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(bookUIData.imgUri)
                     .crossfade(true)
@@ -119,7 +122,7 @@ fun BookView(
     }
 }
 
-@Preview
+@Preview(device = "spec:width=600dp,height=200dp,dpi=240")
 @Composable
 fun BookView_Preview() {
     val previewBookUI = BookUI(
@@ -134,9 +137,9 @@ fun BookView_Preview() {
         isWantToRead = false,
     )
 
-    BookView(
-        bookUIData = previewBookUI,
-        onAddToFavoriteClick = {},
-        onDeleteFromFavoriteClick = {},
-    )
+    MooDuckTheme {
+        BookView(bookUIData = previewBookUI, onAddToFavoriteClick = {}) {
+            
+        }
+    }
 }

@@ -16,3 +16,7 @@ val Grey = Color(0xFFA2A1A0)
 val Cian = Color(0xFF246A73)
 val Orange = Color(0xFFB65C34)
 val TintBlack = Color(0xFF160F29)
+
+val colorsComment = listOf(
+    Purple80,PurpleGrey80,Pink80,Grey,BlueWhite
+)
