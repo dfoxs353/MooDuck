@@ -15,3 +15,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "MooDuck"
 include(":app")
+include(":domain")
+include(":data")
